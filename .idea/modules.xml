@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/commonApi/commonApi.iml" filepath="$PROJECT_DIR$/commonApi/commonApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson-parent.iml" filepath="$PROJECT_DIR$/lesson-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userManagerImpl/usermanagerimpl.iml" filepath="$PROJECT_DIR$/userManagerImpl/usermanagerimpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userManagerWeb/usermanagerweb.iml" filepath="$PROJECT_DIR$/userManagerWeb/usermanagerweb.iml" />
+    </modules>
+  </component>
+</project>

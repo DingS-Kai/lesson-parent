@@ -1,0 +1,25 @@
+server:
+  port: 8661
+spring:
+  datasource:
+#    druid:
+      url: 'jdbc:mysql://localhost:3306/autolesson?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
+      username: root
+      password:
+      driver-class-name: com.mysql.jdbc.Driver
+dubbo:
+#  scan:
+#    base-packages: com.fosu.usermanager.service
+  application:
+    name: usermanagerImpl
+    id: usermanagerImpl
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 33337
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    check: false
+mybatis:
+  type-aliases-package: com.fosu.lesson.pojo
+  mapper-locations: classpath:mapper/*.xml

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fosu.lesson.dao.UserManagerMapper">
+
+    <select id="qryUser" resultType="com.fosu.lesson.pojo.User">
+        select * from t_student
+    </select>
+
+
+</mapper>

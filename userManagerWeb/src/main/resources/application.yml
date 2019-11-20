@@ -1,0 +1,24 @@
+server:
+  port: 8663
+  servlet:
+    context-path: /lesson   #当前web应用的名称  http://localhost:8663/lesson/hell
+spring:
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+dubbo:
+  scan:
+    base-packages: com.fosu.lesson.service.impl
+  application:
+    name: usermanagerweb
+    id: usermanagerweb
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 33337
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    check: false
