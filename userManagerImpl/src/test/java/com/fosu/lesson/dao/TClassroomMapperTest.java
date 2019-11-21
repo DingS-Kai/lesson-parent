@@ -25,9 +25,11 @@ public class TClassroomMapperTest {
         TScheduleExample tScheduleExample = new TScheduleExample();
         tScheduleExample.createCriteria().andClassIdEqualTo("101");
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
+        System.out.println("===================================================");
         for (TSchedule t:list){
             System.out.println(t.toString());
         }
+        System.out.println("===================================================");
     }
 
 
