@@ -2,11 +2,10 @@ package com.fosu.lesson.dao;
 
 import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.pojo.TClassExample;
-
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TClassMapper {

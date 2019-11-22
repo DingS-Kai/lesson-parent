@@ -1,3 +1,4 @@
+/*
 package com.fosu.lesson.dao;
 
 import com.fosu.lesson.pojo.TClass;
@@ -16,7 +17,7 @@ public class TClassMapperTest {
 
     @Test
     public void insert() {
-/*
+
         String []str = {"一","二","三","四","五"};
         TClass tClass = new TClass();
         tClass.setTotalNum(40+"");
@@ -30,7 +31,7 @@ public class TClassMapperTest {
                 tClassMapper.insert(tClass);
             }
             
-        }*/
+        }
         System.out.println("=======================");
     }
-}
+}*/

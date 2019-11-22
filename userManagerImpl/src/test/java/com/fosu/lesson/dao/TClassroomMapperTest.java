@@ -1,17 +1,15 @@
+/*
 package com.fosu.lesson.dao;
 
 import com.fosu.lesson.pojo.*;
-import com.fosu.lesson.utils.CreatName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import com.fosu.lesson.utils.CreatName;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TClassroomMapperTest {
@@ -75,7 +73,8 @@ public class TClassroomMapperTest {
         }
     }
 
-    /*
+    */
+/*
     CREATE TABLE `t_teacher` (
   `teacher_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '教师号',
   `teacher_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '教师名字',
@@ -85,7 +84,8 @@ public class TClassroomMapperTest {
   `teacher_pw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`teacher_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='教师表';
-     */
+     *//*
+
 
     @Autowired
     private TTeacherMapper tTeacherMapper;
@@ -123,7 +123,8 @@ public class TClassroomMapperTest {
         }
     }
 
-    /*
+    */
+/*
     CREATE TABLE `t_course` (
   `course_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '课程代码',
   `class_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -134,7 +135,8 @@ public class TClassroomMapperTest {
   `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='课程表';
-     */
+     *//*
+
     @Autowired
     private TCourseMapper tCourseMapper;
     @Test
@@ -155,13 +157,15 @@ public class TClassroomMapperTest {
         }
     }
 
-    /*
+    */
+/*
     CREATE TABLE `t_free` (
   `time_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `classroom_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `free` varchar(50) COLLATE utf8_unicode_ci DEFAULT '00' COMMENT '是否空闲  0空闲  1占用',
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-     */
+     *//*
+
     @Autowired
     private TFreeMapper tFreeMapper;
     @Test
@@ -179,4 +183,4 @@ public class TClassroomMapperTest {
 
 
 
-}
+}*/

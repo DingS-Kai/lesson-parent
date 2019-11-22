@@ -6,7 +6,8 @@ spring:
       url: 'jdbc:mysql://localhost:3306/autolesson?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
       username: root
       password:
-      driver-class-name: com.mysql.jdbc.Driver
+      #driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
 dubbo:
 #  scan:
 #    base-packages: com.fosu.usermanager.service

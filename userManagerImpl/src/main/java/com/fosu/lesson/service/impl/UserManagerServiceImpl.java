@@ -1,11 +1,10 @@
 package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fosu.lesson.dao.UserManagerMapper;
 import com.fosu.lesson.pojo.User;
 import com.fosu.lesson.service.UserManagerService;
-import com.fosu.lesson.dao.UserManagerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
