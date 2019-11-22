@@ -5,8 +5,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//@EnableDubbo：开启注解Dubbo功能 ，其中可以加入scanBasePackages属性配置包扫描的路径，用于扫描并注册bean
 @EnableDubbo
 @SpringBootApplication
+//指定mybatis的mapper接口存放路径，用于扫描mapper接口并注册
 @MapperScan("com.fosu.lesson.dao")
 public class UsermanagerimplApplication {
 

@@ -1,26 +1,35 @@
 server:
   port: 8661
+  #spring:
+# datasource:
+#    druid:
+  #     url: 'jdbc:mysql://localhost:3306/autolesson?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
+  #     username: root
+  #     password:
+ #     driver-class-name: com.mysql.jdbc.Driver
 spring:
   datasource:
-#    druid:
-      url: 'jdbc:mysql://localhost:3306/autolesson?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
-      username: root
-      password:
-      #driver-class-name: com.mysql.jdbc.Driver
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:3306/autolesson?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
+    username: root
+    password:
+
+
 dubbo:
-#  scan:
-#    base-packages: com.fosu.usermanager.service
-  application:
-    name: usermanagerImpl
-    id: usermanagerImpl
-  protocol:
-    id: dubbo
+  scan:
+    base-packages: com.fosu.lesson.service.impl #配置包扫描的路径，用于扫描并注册bean
+  application:            #应用配置，用于配置当前应用信息，不管该应用是提供者还是消费者。
+    name: BaseProvider
+  protocol:  #协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
     name: dubbo
     port: 33337
-  registry:
+  registry:  #注册中心配置，用于配置连接注册中心相关信息。
     address: zookeeper://127.0.0.1:2181
     check: false
 mybatis:
-  type-aliases-package: com.fosu.lesson.pojo
-  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.fosu.lesson.pojo #映射别名路径，如果xml文件中select标签中没有填写resultType。mybatis会根据type-aliases-package扫描映射POJO。
+  mapper-locations: classpath:mapper/*.xml   #扫描mapper文件路径。
+# 打印sql
+logging:
+  level:
+    ssm.app.mapper : debug

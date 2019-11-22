@@ -1,7 +1,7 @@
 server:
   port: 8663
   servlet:
-    context-path: /lesson   #当前web应用的名称  http://localhost:8663/lesson/hell
+    context-path: /lesson   #当前web应用的名称  http://localhost:8663/lesson/
 spring:
   thymeleaf:
     cache: false
@@ -9,14 +9,13 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
+
 dubbo:
-  scan:
+  scan:   #服务暴露与发现消费所在的package
     base-packages: com.fosu.lesson.service.impl
   application:
-    name: usermanagerweb
-    id: usermanagerweb
-  protocol:
-    id: dubbo
+    name: BaseConsumer
+  protocol:   #协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
     name: dubbo
     port: 33337
   registry:
