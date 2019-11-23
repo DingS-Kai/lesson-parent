@@ -1,7 +1,6 @@
-/*
+
 package com.fosu.lesson.dao;
 
-import com.fosu.lesson.pojo.TClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ public class TClassMapperTest {
 
     @Test
     public void insert() {
-
-        String []str = {"一","二","三","四","五"};
+       /* String []str = {"一","二","三","四","五"};
         TClass tClass = new TClass();
         tClass.setTotalNum(40+"");
         int h=1;
@@ -32,6 +30,7 @@ public class TClassMapperTest {
             }
             
         }
+*/
         System.out.println("=======================");
     }
-}*/
+}

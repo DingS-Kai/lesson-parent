@@ -10,5 +10,4 @@ import java.util.List;
 public interface UserManagerMapper {
 
     public List<User> qryUser();
-
 }

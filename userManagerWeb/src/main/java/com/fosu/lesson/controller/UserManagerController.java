@@ -29,5 +29,17 @@ public class UserManagerController {
         return userManagerService.qryUser();
     }
 
+   /* @Reference
+    private ScheduleService scheduleService;
+
+    @GetMapping("hhh")
+    public List<TSchedule> qryOne(){
+        System.out.println("====================");
+        List<TSchedule> list = scheduleService.qryOne();
+        for (int i = 0; i <list.size() ; i++) {
+            list.toString();
+        }
+        return scheduleService.qryOne();
+    }*/
 
 }

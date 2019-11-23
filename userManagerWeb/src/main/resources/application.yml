@@ -12,6 +12,7 @@ spring:
 
 dubbo:
   scan:   #服务暴露与发现消费所在的package
+    #base-packages: com.fosu.lesson.controller
     base-packages: com.fosu.lesson.service.impl
   application:
     name: BaseConsumer
