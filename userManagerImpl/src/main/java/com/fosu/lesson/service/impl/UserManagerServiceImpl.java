@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-//@Component
 @Service(interfaceClass = UserManagerService.class)
 //@Service
 public class UserManagerServiceImpl implements UserManagerService {

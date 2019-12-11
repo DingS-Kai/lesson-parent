@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TScore {
+import java.io.Serializable;
+
+public class TScore implements Serializable {
     private String studentId;
 
     private String classId;

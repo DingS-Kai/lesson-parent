@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TCourse {
+import java.io.Serializable;
+
+public class TCourse implements Serializable {
     private String courseId;
 
     private String classId;

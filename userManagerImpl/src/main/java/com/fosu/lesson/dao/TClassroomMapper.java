@@ -23,4 +23,6 @@ public interface TClassroomMapper {
     int updateByExampleSelective(@Param("record") TClassroom record, @Param("example") TClassroomExample example);
 
     int updateByExample(@Param("record") TClassroom record, @Param("example") TClassroomExample example);
+
+    TClassroom selectOne(TClassroom tClassroom);
 }

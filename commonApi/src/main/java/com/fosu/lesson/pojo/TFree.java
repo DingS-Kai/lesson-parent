@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TFree {
+import java.io.Serializable;
+
+public class TFree implements Serializable {
     private String timeId;
 
     private String classroomId;

@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TStudent {
+import java.io.Serializable;
+
+public class TStudent implements Serializable {
     private String studentId;
 
     private String studentName;

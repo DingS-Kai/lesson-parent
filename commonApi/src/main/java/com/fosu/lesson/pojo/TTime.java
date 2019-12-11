@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TTime {
+import java.io.Serializable;
+
+public class TTime implements Serializable {
     private String timeId;
 
     private String week;

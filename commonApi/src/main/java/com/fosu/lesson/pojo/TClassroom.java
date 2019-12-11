@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TClassroom {
+import java.io.Serializable;
+
+public class TClassroom implements Serializable {
     private String classroomId;
 
     private String place;
@@ -13,20 +15,20 @@ public class TClassroom {
         return classroomId;
     }
 
-    public void setClassroomId(String classroomId) {
-        this.classroomId = classroomId == null ? null : classroomId.trim();
-    }
-
     public String getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
-        this.place = place == null ? null : place.trim();
-    }
-
     public String getClassroomNum() {
         return classroomNum;
+    }
+
+    public void setClassroomId(String classroomId) {
+        this.classroomId = classroomId == null ? null : classroomId.trim();
+    }
+
+    public void setPlace(String place) {
+        this.place = place == null ? null : place.trim();
     }
 
     public void setClassroomNum(String classroomNum) {
@@ -39,5 +41,10 @@ public class TClassroom {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "classroomId:"+classroomId+"  ,place:"+place+"  ,classroomNum:"+classroomNum;
     }
 }
