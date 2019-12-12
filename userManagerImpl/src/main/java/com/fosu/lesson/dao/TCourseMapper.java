@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
 
@@ -23,4 +24,6 @@ public interface TCourseMapper {
     int updateByExampleSelective(@Param("record") TCourse record, @Param("example") TCourseExample example);
 
     int updateByExample(@Param("record") TCourse record, @Param("example") TCourseExample example);
+
+    TCourse selectOne(TCourse tCourse);
 }

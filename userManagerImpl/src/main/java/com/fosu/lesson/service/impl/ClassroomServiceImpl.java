@@ -6,10 +6,8 @@ import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClassroom;
 import com.fosu.lesson.pojo.TClassroomExample;
 import com.fosu.lesson.service.ClassroomService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -62,6 +60,8 @@ public class ClassroomServiceImpl implements ClassroomService {
         //PageHelper.startPage(pageNo,pageSize);
         //List list = tClassroomMapper.selectByExample(null);
         //PageInfo pageInfo = new PageInfo(list);
+
+        //遍历输出
         List list = pageInfo.getList();
         Consumer consumer = (item) -> System.out.println(item.toString());
         list.forEach(consumer);

@@ -172,4 +172,28 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
+  <select id="selectOne" parameterType="com.fosu.lesson.pojo.TClass" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_class
+    <where>
+      <if test="className != null">
+      class_name = #{className,jdbcType=VARCHAR}
+      </if>
+      <if test="classId != null">
+        AND   class_id = #{classId,jdbcType=VARCHAR}
+      </if>
+      <if test="totalNum != null">
+        AND  total_num = #{totalNum,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="grade != null">
+        AND  grade = #{grade,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

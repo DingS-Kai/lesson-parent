@@ -172,4 +172,29 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
+  <select id="selectOne" parameterType="com.fosu.lesson.pojo.TTime" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_time
+    <where>
+      <if test="record.timeId != null">
+      and  time_id = #{record.timeId,jdbcType=VARCHAR}
+      </if>
+      <if test="record.week != null">
+        and  week = #{record.week,jdbcType=VARCHAR}
+      </if>
+      <if test="record.day != null">
+        and  day = #{record.day,jdbcType=VARCHAR}
+      </if>
+      <if test="record.hour != null">
+        and  hour = #{record.hour,jdbcType=VARCHAR}
+      </if>
+      <if test="record.remark != null">
+        and  remark = #{record.remark,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
 </mapper>

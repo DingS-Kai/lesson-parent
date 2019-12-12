@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TScore;
 import com.fosu.lesson.pojo.TScoreExample;
 
@@ -23,4 +24,6 @@ public interface TScoreMapper {
     int updateByExampleSelective(@Param("record") TScore record, @Param("example") TScoreExample example);
 
     int updateByExample(@Param("record") TScore record, @Param("example") TScoreExample example);
+
+    TScore selectOne(TScore tScore);
 }

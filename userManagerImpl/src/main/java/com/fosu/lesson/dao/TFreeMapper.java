@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TFree;
 import com.fosu.lesson.pojo.TFreeExample;
 
@@ -23,4 +24,6 @@ public interface TFreeMapper {
     int updateByExampleSelective(@Param("record") TFree record, @Param("example") TFreeExample example);
 
     int updateByExample(@Param("record") TFree record, @Param("example") TFreeExample example);
+
+    TFree selectOne(TFree tFree);
 }

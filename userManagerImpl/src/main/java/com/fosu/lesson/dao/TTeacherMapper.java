@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
 import com.fosu.lesson.pojo.TTeacherExample;
 
@@ -23,4 +24,6 @@ public interface TTeacherMapper {
     int updateByExampleSelective(@Param("record") TTeacher record, @Param("example") TTeacherExample example);
 
     int updateByExample(@Param("record") TTeacher record, @Param("example") TTeacherExample example);
+
+    TTeacher selectOne(TTeacher tTeacher);
 }

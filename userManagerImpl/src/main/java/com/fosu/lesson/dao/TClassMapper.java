@@ -2,6 +2,7 @@ package com.fosu.lesson.dao;
 
 import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.pojo.TClassExample;
+import com.fosu.lesson.pojo.TClassroom;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,6 @@ public interface TClassMapper {
     int updateByExampleSelective(@Param("record") TClass record, @Param("example") TClassExample example);
 
     int updateByExample(@Param("record") TClass record, @Param("example") TClassExample example);
+
+    TClass selectOne(TClass tClass);
 }

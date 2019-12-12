@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTime;
 import com.fosu.lesson.pojo.TTimeExample;
 
@@ -23,4 +24,6 @@ public interface TTimeMapper {
     int updateByExampleSelective(@Param("record") TTime record, @Param("example") TTimeExample example);
 
     int updateByExample(@Param("record") TTime record, @Param("example") TTimeExample example);
+
+    TTime selectOne(TTime tTime);
 }

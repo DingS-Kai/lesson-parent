@@ -1,19 +1,17 @@
 package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClassroom;
 import com.fosu.lesson.service.ClassroomService;
-import com.fosu.lesson.pojo.PageResult;
 import io.swagger.annotations.*;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.spring5.context.SpringContextUtils;
 
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/Classroom")
+@RequestMapping("/classroom")
 @Api(tags = "基本信息管理-教室")
 public class ClassroomController {
 
@@ -23,8 +21,8 @@ public class ClassroomController {
     @GetMapping("/findByPage")
     @ApiOperation(value = "分页查找" )
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo" , value = "页码") ,
-            @ApiImplicitParam(name = "pageSize" , value = "一页的条数")
+            @ApiImplicitParam(name = "pageNo" , value = "页码" , dataType = "int") ,
+            @ApiImplicitParam(name = "pageSize" , value = "一页的条数" , dataType = "int")
     })
     @ApiResponses({
             @ApiResponse(code=400,message="请求参数没填好") ,
@@ -37,7 +35,7 @@ public class ClassroomController {
 
     @PostMapping("/findOne")
     @ApiOperation(value = "查找一个教室信息" , notes = "通过教室的部分信息获取教室的完整信息")
-    @ApiImplicitParam(name = "tClassroom" , value = "教室的部分信息作为参数" ,required = true )
+    @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" ,value = "教室的部分信息作为参数" ,required = true )
     @ApiResponses({
             @ApiResponse(code=400,message="请求参数没填好"),
             @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
@@ -59,7 +57,7 @@ public class ClassroomController {
     //增加
     @PostMapping("/save")
     @ApiOperation(value = "新增教室信息" )
-    @ApiImplicitParam(name = "tClassroom" , value = "新增的教室信息,classroomId不能为空" ,required = true )
+    @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" , value = "新增的教室信息,classroomId不能为空" ,required = true )
     @ApiResponses({
             @ApiResponse(code=400,message="请求参数没填好"),
             @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
@@ -78,8 +76,11 @@ public class ClassroomController {
         return flag == 1 ? true : false;
     }
 
+
+    //allowMultiple=true,————表示是数组格式的参数
+    //dataType = "String"————表示数组中参数的类型
     @ApiOperation(value = "删除教室信息" )
-    @ApiImplicitParam(name = "ids" , value = "删除教室信息" ,required = true )
+    @ApiImplicitParam(name = "ids" ,allowMultiple = true, dataType = "String", value = "删除教室信息" ,required = true )
     @ApiResponses({
             @ApiResponse(code=400,message="请求参数没填好"),
             @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
@@ -103,7 +104,7 @@ public class ClassroomController {
     }
 
     @ApiOperation(value = "更新教室信息" )
-    @ApiImplicitParam(name = "tClassroom" , value = "更新的教室信息" ,required = true )
+    @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" ,value = "更新的教室信息" ,required = true )
     @ApiResponses({
             @ApiResponse(code=400,message="请求参数没填好"),
             @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
