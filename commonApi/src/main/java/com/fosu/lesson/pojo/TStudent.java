@@ -17,6 +17,12 @@ public class TStudent implements Serializable {
 
     private String studentPw;
 
+    @Override
+    public String toString() {
+        return "studentId:"+studentId+"  ,studentName:"+studentName+"  ,telephoto:"+telephoto+
+                "  ,email:"+email+"  ,classId:"+classId;
+    }
+
     public String getStudentId() {
         return studentId;
     }

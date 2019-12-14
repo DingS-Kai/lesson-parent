@@ -6,6 +6,7 @@ import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClassroom;
 import com.fosu.lesson.pojo.TClassroomExample;
 import com.fosu.lesson.service.ClassroomService;
+import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,12 @@ public class ClassroomServiceImpl implements ClassroomService {
     public PageResult findByPage(int pageNo, int pageSize) {
         PageResult pageResult = new PageResult();
         PageInfo<TClassroom> pageInfo = PageHelper.startPage(pageNo, pageSize).doSelectPageInfo(
-                () -> tClassroomMapper.selectByExample(null));
+                new ISelect() {
+                    @Override
+                    public void doSelect() {
+                        tClassroomMapper.selectByExample(null);
+                    }
+                });
         //PageHelper.startPage(pageNo,pageSize);
         //List list = tClassroomMapper.selectByExample(null);
         //PageInfo pageInfo = new PageInfo(list);

@@ -15,6 +15,12 @@ public class TTeacher implements Serializable {
 
     private String teacherPw;
 
+    @Override
+    public String toString() {
+        return "teacherId:"+teacherId+"  ,teacherName:"+teacherName+"  ,telephoto:"+telephoto+
+                "  ,email:"+email+"  ,remark:"+remark;
+    }
+
     public String getTeacherId() {
         return teacherId;
     }

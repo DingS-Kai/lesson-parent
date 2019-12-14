@@ -170,4 +170,14 @@
     </where>
   </select>
 
+
+  <delete id="deleteList">
+    delete from t_free
+    where
+    <foreach collection="list" item="item" index="index" separator="or">
+      (time_id = #{item.timeId}
+      and classroom_id = #{item.classroomId})
+    </foreach>
+  </delete>
+
 </mapper>

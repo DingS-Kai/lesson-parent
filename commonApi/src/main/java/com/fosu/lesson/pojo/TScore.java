@@ -11,6 +11,11 @@ public class TScore implements Serializable {
 
     private String score;
 
+    @Override
+    public String toString() {
+        return "studentId: "+studentId+" ,classId:"+classId+",courseId:"+courseId
+                +" ,score:"+score;
+    }
     public String getStudentId() {
         return studentId;
     }

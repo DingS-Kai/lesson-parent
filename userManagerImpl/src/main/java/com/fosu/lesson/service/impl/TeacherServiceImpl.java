@@ -6,6 +6,7 @@ import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TTeacher;
 import com.fosu.lesson.pojo.TTeacherExample;
 import com.fosu.lesson.service.TeacherService;
+import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,12 @@ public class TeacherServiceImpl implements TeacherService {
     public PageResult findByPage(int pageNo, int pageSize) {
         PageResult pageResult = new PageResult();
         Page<TTeacher> page = PageHelper.startPage(pageNo, pageSize).doSelectPage(
-                () -> tTeacherMapper.selectByExample(null)
+                new ISelect() {
+                    @Override
+                    public void doSelect() {
+                        tTeacherMapper.selectByExample(null);
+                    }
+                }
         );
 
         List<TTeacher> result = page.getResult();

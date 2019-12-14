@@ -197,7 +197,6 @@
     </if>
   </update>
 
-
   <select id="selectOne" parameterType="com.fosu.lesson.pojo.TStudent" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

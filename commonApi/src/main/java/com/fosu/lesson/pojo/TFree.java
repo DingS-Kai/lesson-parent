@@ -32,4 +32,9 @@ public class TFree implements Serializable {
     public void setFree(String free) {
         this.free = free == null ? null : free.trim();
     }
+
+    @Override
+    public String toString() {
+        return "timeId: "+timeId+" ,classroomId:"+classroomId+",free:"+free;
+    }
 }

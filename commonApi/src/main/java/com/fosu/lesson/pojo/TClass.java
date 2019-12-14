@@ -52,4 +52,9 @@ public class TClass implements Serializable {
     public void setGrade(String grade) {
         this.grade = grade == null ? null : grade.trim();
     }
+
+    @Override
+    public String toString() {
+        return "className: "+className+" ,classId:"+classId+",totalNum:"+totalNum+" ,grade:"+grade+",remark:"+remark;
+    }
 }

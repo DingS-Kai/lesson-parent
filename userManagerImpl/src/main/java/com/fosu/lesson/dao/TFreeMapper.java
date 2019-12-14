@@ -26,4 +26,6 @@ public interface TFreeMapper {
     int updateByExample(@Param("record") TFree record, @Param("example") TFreeExample example);
 
     TFree selectOne(TFree tFree);
+
+    void deleteList(List<TFree> list);
 }

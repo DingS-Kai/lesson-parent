@@ -17,6 +17,11 @@ public class TCourse implements Serializable {
 
     private String remark;
 
+    @Override
+    public String toString() {
+        return "courseId: "+courseId+" ,classId:"+classId+",teacherId:"+teacherId+" ,courseName:"+courseName+",courseSort:"+courseSort+" ,classHour:"+classHour+",remark:"+remark;
+    }
+
     public String getCourseId() {
         return courseId;
     }
@@ -72,4 +77,5 @@ public class TCourse implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
 }
