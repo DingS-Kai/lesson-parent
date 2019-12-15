@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -47,7 +48,7 @@ public class CourseServiceImpl implements CourseService {
         TCourseExample tCourseExample = new TCourseExample();
         TCourseExample.Criteria criteria = tCourseExample.createCriteria();
 
-        criteria.andClassIdIn(Arrays.asList(ids));
+        criteria.andCourseIdIn(Arrays.asList(ids));
         tCourseMapper.deleteByExample(tCourseExample);
     }
 

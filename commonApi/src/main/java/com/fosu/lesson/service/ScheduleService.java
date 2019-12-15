@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface ScheduleService {
 
+
+
+
     //查一个
-    TSchedule findOne(TSchedule tSchedule);
+    List<TSchedule> findOne(TSchedule tSchedule);
 
     //查全部
     List<TSchedule> findAll();
