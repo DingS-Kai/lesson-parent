@@ -26,4 +26,6 @@ public interface TCourseMapper {
     int updateByExample(@Param("record") TCourse record, @Param("example") TCourseExample example);
 
     TCourse selectOne(TCourse tCourse);
+
+    List<String> selectByColumnName(@Param("columnName") String columnName);
 }

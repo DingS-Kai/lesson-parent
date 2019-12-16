@@ -10,6 +10,7 @@ import com.fosu.lesson.service.ScheduleService;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.fosu.lesson.utils.ScheduleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -23,6 +24,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private TScheduleMapper tScheduleMapper;
+
+    @Autowired
+    private ScheduleUtils scheduleUtils;
+
+
 
     @Override
     public List<TSchedule> findOne(TSchedule tSchedule) {
