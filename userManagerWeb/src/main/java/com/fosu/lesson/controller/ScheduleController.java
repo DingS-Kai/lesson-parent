@@ -1,12 +1,11 @@
 package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fosu.lesson.pojo.PageResult;
-import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.ScheduleService;
-import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,6 +18,33 @@ public class ScheduleController {
     @Reference
     private ScheduleService scheduleService;
 
+    @GetMapping("hhhh")
+    public List<TSchedule> qryOne(){
+        List<TSchedule> list = scheduleService.findOne(new TSchedule());
+        int flag=0;
+        for (int i =1; i <=7; i++) {
+            for(int j=0;j<5;j++){
+                flag=0;
+               for(TSchedule tSchedule:list){
+                   if(tSchedule.getTimeId().equals((i+j*7)+"")){
+                       System.out.printf(tSchedule.getCourseName()+"     ");
+                       flag=1;
+                   }
+               }
+               if(flag==0){
+                   System.out.printf("空闲"+"     ");
+               }
+            }
+            System.out.println("");
+        }
+        return list;
+    }
+
+    @GetMapping("mymy")
+    public void schedulePlan(){
+
+         scheduleService.shcedule();
+    }
     @GetMapping("/findByPage")
     @ApiOperation(value = "分页查找" )
     @ApiImplicitParams({
@@ -120,5 +146,3 @@ public class ScheduleController {
         return flag == 1 ? true : false;
     }
 }
-
-
