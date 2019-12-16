@@ -69,4 +69,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public String say() {
         return null;
     }
+
+    @Override
+    public void shcedule() {
+        scheduleUtils.schedulePlan();
+    }
 }

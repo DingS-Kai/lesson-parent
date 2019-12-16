@@ -35,4 +35,6 @@ public interface ScheduleService {
     public List<TSchedule> qryOne();
 
     public String say();
+
+    void shcedule();
 }
