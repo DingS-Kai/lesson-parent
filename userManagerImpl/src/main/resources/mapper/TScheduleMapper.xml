@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fosu.lesson.dao.TScheduleMapper">
   <resultMap id="BaseResultMap" type="com.fosu.lesson.pojo.TSchedule">
+    <result column="id" jdbcType="INTEGER" property="id" />
     <result column="schedule_id" jdbcType="VARCHAR" property="scheduleId" />
     <result column="class_id" jdbcType="VARCHAR" property="classId" />
     <result column="classroom_id" jdbcType="VARCHAR" property="classroomId" />
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    schedule_id, class_id, classroom_id, course_id, teacher_id, time_id, remark, class_name, 
-    place, course_name, teacher_name
+    id, schedule_id, class_id, classroom_id, course_id, teacher_id, time_id, remark, 
+    class_name, place, course_name, teacher_name
   </sql>
   <select id="selectByExample" parameterType="com.fosu.lesson.pojo.TScheduleExample" resultMap="BaseResultMap">
     select
@@ -97,18 +98,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fosu.lesson.pojo.TSchedule">
-    insert into t_schedule (schedule_id, class_id, classroom_id, 
-      course_id, teacher_id, time_id, 
-      remark, class_name, place, 
-      course_name, teacher_name)
-    values (#{scheduleId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{classroomId,jdbcType=VARCHAR}, 
-      #{courseId,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{timeId,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
-      #{courseName,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR})
+    insert into t_schedule (id, schedule_id, class_id, 
+      classroom_id, course_id, teacher_id, 
+      time_id, remark, class_name, 
+      place, course_name, teacher_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{scheduleId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, 
+      #{classroomId,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, 
+      #{timeId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{place,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fosu.lesson.pojo.TSchedule">
     insert into t_schedule
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="scheduleId != null">
         schedule_id,
       </if>
@@ -144,6 +150,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="scheduleId != null">
         #{scheduleId,jdbcType=VARCHAR},
       </if>
@@ -188,6 +197,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_schedule
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.scheduleId != null">
         schedule_id = #{record.scheduleId,jdbcType=VARCHAR},
       </if>
@@ -228,7 +240,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_schedule
-    set schedule_id = #{record.scheduleId,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      schedule_id = #{record.scheduleId,jdbcType=VARCHAR},
       class_id = #{record.classId,jdbcType=VARCHAR},
       classroom_id = #{record.classroomId,jdbcType=VARCHAR},
       course_id = #{record.courseId,jdbcType=VARCHAR},
@@ -243,48 +256,4 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
-
-  <select id="selectOne" parameterType="com.fosu.lesson.pojo.TSchedule" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_schedule
-    <where>
-      <if test="scheduleId != null">
-       and schedule_id = #{scheduleId,jdbcType=VARCHAR}
-      </if>
-      <if test="classId != null">
-        and  class_id = #{classId,jdbcType=VARCHAR}
-      </if>
-      <if test="classroomId != null">
-        and   classroom_id = #{classroomId,jdbcType=VARCHAR}
-      </if>
-      <if test="courseId != null">
-        and   course_id = #{courseId,jdbcType=VARCHAR}
-      </if>
-      <if test="teacherId != null">
-        and   teacher_id = #{teacherId,jdbcType=VARCHAR}
-      </if>
-      <if test="timeId != null">
-        and  time_id = #{timeId,jdbcType=VARCHAR}
-      </if>
-      <if test="remark != null">
-        and    remark = #{remark,jdbcType=VARCHAR}
-      </if>
-      <if test="className != null">
-        and   class_name = #{className,jdbcType=VARCHAR}
-      </if>
-      <if test="place != null">
-        and  place = #{place,jdbcType=VARCHAR}
-      </if>
-      <if test="courseName != null">
-        and   course_name = #{courseName,jdbcType=VARCHAR}
-      </if>
-      <if test="teacherName != null">
-        and   teacher_name = #{teacherName,jdbcType=VARCHAR}
-      </if>
-    </where>
-  </select>
-
-
 </mapper>

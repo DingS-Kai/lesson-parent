@@ -2,7 +2,10 @@ package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TCourseMapper;
-import com.fosu.lesson.pojo.*;
+import com.fosu.lesson.pojo.PageResult;
+import com.fosu.lesson.pojo.TCourse;
+import com.fosu.lesson.pojo.TCourseExample;
+import com.fosu.lesson.pojo.TStudent;
 import com.fosu.lesson.service.CourseService;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
@@ -10,7 +13,6 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -39,7 +41,7 @@ public class CourseServiceImpl implements CourseService {
     public void update(TCourse tCourse) {
         TCourseExample tCourseExample = new TCourseExample();
         TCourseExample.Criteria criteria = tCourseExample.createCriteria();
-        criteria.andClassIdEqualTo(tCourse.getCourseId());
+        criteria.andCourseIdEqualTo(tCourse.getCourseId());
         tCourseMapper.updateByExampleSelective(tCourse, tCourseExample);
     }
 

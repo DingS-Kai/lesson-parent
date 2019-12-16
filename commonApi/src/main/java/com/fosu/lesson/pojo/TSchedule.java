@@ -1,8 +1,8 @@
 package com.fosu.lesson.pojo;
 
-import java.io.Serializable;
+public class TSchedule {
+    private Integer id;
 
-public class TSchedule implements Serializable {
     private String scheduleId;
 
     private String classId;
@@ -24,6 +24,14 @@ public class TSchedule implements Serializable {
     private String courseName;
 
     private String teacherName;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getScheduleId() {
         return scheduleId;
@@ -116,6 +124,7 @@ public class TSchedule implements Serializable {
     @Override
     public String toString() {
         return "TSchedule{" +
+                "id" + id + '\'' +
                 "scheduleId='" + scheduleId + '\'' +
                 ", classId='" + classId + '\'' +
                 ", classroomId='" + classroomId + '\'' +
