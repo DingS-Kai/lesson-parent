@@ -1,0 +1,9 @@
+diff a/commonApi/src/main/java/com/fosu/lesson/service/ScheduleService.java b/commonApi/src/main/java/com/fosu/lesson/service/ScheduleService.java	(rejected hunks)
+@@ -22,7 +22,6 @@
+     void update(TSchedule tSchedule);
+ 
+     //删除
+-    void delete(String[] ids);
+     void delete(Integer[] ids);
+ 
+     //分页

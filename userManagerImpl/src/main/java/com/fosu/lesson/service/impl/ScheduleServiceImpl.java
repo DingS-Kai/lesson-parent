@@ -10,7 +10,6 @@ import com.fosu.lesson.service.ScheduleService;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.fosu.lesson.utils.ScheduleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -25,19 +24,20 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private TScheduleMapper tScheduleMapper;
 
-    @Autowired
-    private ScheduleUtils scheduleUtils;
-
+ //   @Autowired
+  // private ScheduleUtils scheduleUtils;
 
 
     @Override
     public List<TSchedule> findOne(TSchedule tSchedule) {
+        System.out.println(tSchedule.getClassId());
         TScheduleExample tScheduleExample = new TScheduleExample();
 
         tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
 
+        System.out.println(tScheduleExample.getOredCriteria().toString());
        // tScheduleExample.createCriteria().andClassIdEqualTo("102");
-        List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
+        List<TSchedule> list = tScheduleMapper.selectByExample(tScheduleExample);
 
         System.out.println("===================================================");
         Consumer consumer = (item) -> System.out.println(item.toString());
@@ -46,6 +46,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return list;
     }
+
+
+
 
     @Override
     public Map<String, List<TSchedule>> findAll() {

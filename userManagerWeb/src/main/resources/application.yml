@@ -18,7 +18,7 @@ dubbo:
     name: BaseConsumer
   protocol:   #协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
     name: dubbo
-    port: 33337
+    port: 33338
   registry:
     address: zookeeper://127.0.0.1:2181
     check: false
