@@ -2,7 +2,6 @@ package com.fosu.lesson.service;
 
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
-import com.fosu.lesson.pojo.TSchedule;
 
 import java.util.List;
 import java.util.Map;

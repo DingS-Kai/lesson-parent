@@ -96,4 +96,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         pageResult.setTotal(page.getTotal());
         return pageResult;
     }
+
+    @Override
+    public void shcedule() {
+        scheduleUtils.schedulePlan();
+    }
 }

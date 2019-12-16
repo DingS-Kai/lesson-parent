@@ -53,8 +53,10 @@ public class ClassSchedulUtil {
                 return source.substring(13, 14);
             case ConstantInfo.CLASS_HOUR:
                 return source.substring(14, 15);
-            case ConstantInfo.CLASS_TIME:
+            case ConstantInfo.COURSE_ID:
                 return source.substring(15, 17);
+            case ConstantInfo.CLASS_TIME:
+                return source.substring(17,19);
             default:
                 return "";
         }
