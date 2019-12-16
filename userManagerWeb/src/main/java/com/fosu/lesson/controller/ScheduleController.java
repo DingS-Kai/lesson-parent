@@ -21,7 +21,22 @@ public class ScheduleController {
     @GetMapping("hhhh")
     public List<TSchedule> qryOne(){
         List<TSchedule> list = scheduleService.findOne(new TSchedule());
-
+        int flag=0;
+        for (int i =1; i <=7; i++) {
+            for(int j=0;j<5;j++){
+                flag=0;
+               for(TSchedule tSchedule:list){
+                   if(tSchedule.getTimeId().equals((i+j*7)+"")){
+                       System.out.printf(tSchedule.getCourseName()+"     ");
+                       flag=1;
+                   }
+               }
+               if(flag==0){
+                   System.out.printf("空闲"+"     ");
+               }
+            }
+            System.out.println("");
+        }
         return list;
     }
     /**
