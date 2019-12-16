@@ -1,11 +1,11 @@
 package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.ScheduleService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +45,7 @@ public class ScheduleController {
 
          scheduleService.shcedule();
     }
+
     @GetMapping("/findByPage")
     @ApiOperation(value = "分页查找" )
     @ApiImplicitParams({
@@ -70,12 +71,6 @@ public class ScheduleController {
     public List<TSchedule> findOne(@RequestBody TSchedule tSchedule){
         return scheduleService.findOne(tSchedule);
     }
-
-    @GetMapping("mymy")
-    public void schedulePlan(){
-        scheduleService.shcedule();
-    }
-
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")

@@ -26,4 +26,5 @@ public interface ScheduleService {
     //分页
     PageResult findByPage(int pageNo, int pageSize);
 
+    void shcedule();
 }
