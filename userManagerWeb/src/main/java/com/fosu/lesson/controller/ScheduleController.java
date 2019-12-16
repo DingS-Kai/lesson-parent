@@ -44,18 +44,12 @@ public class ScheduleController {
     public List<TSchedule> findOne(@RequestBody TSchedule tSchedule){
         return scheduleService.findOne(tSchedule);
     }
-    /**
-     * TScheduleExample tScheduleExample = new TScheduleExample();
-     *         tScheduleExample.createCriteria().andClassIdEqualTo("101");
-     *         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
-     *         System.out.println("===================================================");
-     *         for (TSchedule t:list){
-     *             System.out.println(t.toString());
-     *         }
-     *         System.out.println("===================================================");
-     */
+
     @GetMapping("mymy")
     public void schedulePlan(){
+        scheduleService.shcedule();
+    }
+
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
@@ -63,8 +57,7 @@ public class ScheduleController {
         return null;
         //return scheduleService.findAll();
     }
-         scheduleService.shcedule();
-    }
+
 
     //增加
     @PostMapping("/save")

@@ -22,7 +22,7 @@ public interface ScheduleService {
     void update(TSchedule tSchedule);
 
     //删除
-    void delete(String[] ids);
+    void delete(Integer[] ids);
 
     //分页
     PageResult findByPage(int pageNo, int pageSize);
