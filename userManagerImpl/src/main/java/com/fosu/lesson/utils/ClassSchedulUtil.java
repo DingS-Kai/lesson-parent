@@ -1,7 +1,7 @@
 package com.fosu.lesson.utils;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 public class ClassSchedulUtil {
@@ -71,7 +71,7 @@ public class ClassSchedulUtil {
         int F2 = 0;//非专业课期望总值
         int F3 = 0;//娱乐课期望总值
 
-        int F5;//课程离散程度期望总值
+        int F5=0;//课程离散程度期望总值
         double Fx;//适应度值SORT
 
         for (String gene : individualList) {
@@ -85,10 +85,75 @@ public class ClassSchedulUtil {
                 F3 = F3 + calculatePhysicalExpect(classTime);
             }
         }
-       // F5 = calculateDiscreteExpect(individualList);
-        Fx = K1 * F1 + K2 * F2 + K3 * F3;
+        F5 = calculateDiscreteExpect(individualList);
+        Fx = K1 * F1 + K2 * F2 + K3 * F3+F5*K5;
         return Fx;
     }
+
+    //计算课程离散度期望值
+    private static int calculateDiscreteExpect(List<String> individualList) {
+        int F5 = 0;//离散程度期望值
+        Map<String, List<String>> classTimeMap = courseGrouping(individualList);
+        for (List<String> classTimeList : classTimeMap.values()) {
+            if (classTimeList.size() > 1) {
+                for (int i = 0; i < classTimeList.size() -1 ; ++i) {
+                    int temp = Integer.parseInt(classTimeList.get(++i)) - Integer.parseInt(classTimeList.get(i - 1));
+                    F5 = F5 + judgingDiscreteValues(temp);
+                }
+            }
+        }
+        return F5;
+    }
+
+
+    //判断两课时间差在那个区间并返回对于的期望值
+    private static int judgingDiscreteValues(int temp) {
+        int[] tenExpectValue = {1, 8,9,15,16,22,23,30,31};//期望值为10时两课之间的时间差
+        int[] sixExpectValue = {5, 6, 12, 13, 19, 20,27,28};//期望值为6时两课之间的时间差
+        int[] fourExpectValue = {4, 11, 18, 26, 17, 18};//期望值为4时两课之间的时间差
+        int[] twoExpectValue = {7, 14, 21, 29};//期望值为2时两课之间的时间差
+        //int [] zeroExpectValue = {1,24};//期望值为0时两课之间的时间差
+        if (ArrayUtils.contains(tenExpectValue, temp)) {
+            return 10;
+        } else if (ArrayUtils.contains(sixExpectValue, temp)) {
+            return 6;
+        } else if (ArrayUtils.contains(fourExpectValue, temp)) {
+            return 4;
+        } else if (ArrayUtils.contains(twoExpectValue, temp)) {
+            return 2;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * 将一个个体（班级课表）的同一门课程的所有上课时间进行一个统计，并且进行一个分组
+     *
+     * @param individualList
+     * @return
+     */
+    private static Map<String, List<String>> courseGrouping(List<String> individualList) {
+        Map<String, List<String>> classTimeMap = new HashMap<>();
+        //先将一个班级课表所上的课程区分出来（排除掉重复的课程）
+        for (String gene : individualList) {
+            classTimeMap.put(cutGene(ConstantInfo.COURSE_NAME, gene), null);
+        }
+        //遍历课程
+        for (String courseNo : classTimeMap.keySet()) {
+            List<String> classTimeList = new ArrayList<>();
+            for (String gene : individualList) {
+                //获得同一门课程的所有上课时间片
+                if (cutGene(ConstantInfo.COURSE_NAME, gene).equals(courseNo)) {
+                    classTimeList.add(cutGene(ConstantInfo.CLASS_TIME, gene));
+                }
+            }
+            //将课程的时间片进行排序
+            Collections.sort(classTimeList);
+            classTimeMap.put(courseNo, classTimeList);
+        }
+        return classTimeMap;
+    }
+
 
     //计算专业课期望值
     private static int calculateProfessExpect(String classTime) {
