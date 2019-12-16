@@ -47,7 +47,7 @@ public class ScheduleController {
 
     @GetMapping("mymy")
     public void schedulePlan(){
-    //    scheduleService.shcedule();
+        scheduleService.shcedule();
     }
 
 

@@ -14,7 +14,7 @@ dubbo:
   protocol:  #协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
     id: dubbo
     name: dubbo
-    port: 33338
+    port: 33337
   registry:  #注册中心配置，用于配置连接注册中心相关信息。
     address: zookeeper://127.0.0.1:2181
     check: false
