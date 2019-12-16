@@ -13,6 +13,8 @@ import java.util.List;
 @CrossOrigin
 public class ScheduleController {
 
+
+
     @Reference
     private ScheduleService scheduleService;
 
@@ -32,7 +34,11 @@ public class ScheduleController {
      *         }
      *         System.out.println("===================================================");
      */
+    @GetMapping("mymy")
+    public void schedulePlan(){
 
+         scheduleService.shcedule();
+    }
 
 
 

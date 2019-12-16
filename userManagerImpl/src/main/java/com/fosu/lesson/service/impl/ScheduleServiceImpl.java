@@ -6,6 +6,7 @@ import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TScheduleExample;
 import com.fosu.lesson.service.ScheduleService;
+import com.fosu.lesson.utils.ScheduleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private TScheduleMapper tScheduleMapper;
+
+    @Autowired
+    private ScheduleUtils scheduleUtils;
+
 
 
     @Override
