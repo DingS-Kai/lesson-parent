@@ -11,11 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class SchedulePlanTest {
 
-    @Autowired
-    private ScheduleUtils scheduleUtils;
+
 
     @Test
-    void schedule(){
+    public void schedule(){
+        ScheduleUtils scheduleUtils = new ScheduleUtils();
          scheduleUtils.schedulePlan();
         System.out.println("111");
     }

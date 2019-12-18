@@ -7,13 +7,13 @@ import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class ScheduleUtils {
 
 
@@ -26,6 +26,10 @@ public class ScheduleUtils {
    @Autowired
    private TScheduleMapper tScheduleMapper;
 
+   double maxExpect=-200000;
+   double Expect=0;
+
+
    public synchronized void schedulePlan(){
       //获取课程教师信息
       List<TCourse> TCourseList = courseService.findAll();
@@ -34,15 +38,14 @@ public class ScheduleUtils {
      //开始进行时间分配
       List<String> resultGeneList = codingTime(geneList);
       //第四步对已分配好时间的基因进行分类，生成以班级为范围的个体
-      Map<String, List<String>> individualMap = transformIndividual(resultGeneList);
-      System.out.println("111");
+      Map<String, List<String>> individualMap = transformIndividual(resultGeneList,false);
       //第五步进行遗传进化操作
-      ///还没完善
-      //individualMap = geneticEvolution(individualMap);
+      individualMap = geneticEvolution(individualMap);
       //第六步分配教室
       //List<String> resultList = finalResult(individualMap);
       //第七步对分配好时间教室的基因进行解码，准备存入数据库
       decoding(individualMap);
+
    }
 
    //解码
@@ -52,6 +55,8 @@ public class ScheduleUtils {
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
       for (String classId:classNoList) {
          List<String> geneList = individualMap.get(classId);
+         double oldExpect = ClassSchedulUtil.alculateExpectedValue(geneList);
+         System.out.println("+++++++++"+oldExpect+"+++++++++++");
          String Time_id = new String();
          String Course_id = new String();
          for (String gene:geneList) {
@@ -68,7 +73,7 @@ public class ScheduleUtils {
             tSchedule.setTeacherId(ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID,gene));
             tSchedule.setCourseId(Course_id);
             tSchedule.setTimeId(Time_id);
-            tSchedule.setClassroomId("4");
+            tSchedule.setClassroomId(ClassSchedulUtil.cutGene(ConstantInfo.CLASS_ID,gene).substring(2,3));
             tSchedule.setScheduleId("4");
             tScheduleList.add(tSchedule);
          }
@@ -118,7 +123,7 @@ public class ScheduleUtils {
    }
 
    ////将编码按班级进行分类，形成初始个体（不含教室的初始课表）
-   private Map<String, List<String>> transformIndividual(List<String> resultGeneList) {
+   private Map<String, List<String>> transformIndividual(List<String> resultGeneList,Boolean flag) {
       Map<String, List<String>> individualMap = new HashMap<>();
       //选出只有班级的列
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
@@ -132,6 +137,10 @@ public class ScheduleUtils {
          //分班填入初始化map，map<string，geneList> 键为班级号 值为这个班级的基因
          if (geneList.size() > 1) {
             individualMap.put(classNo, geneList);
+            if(flag==true){
+               Expect+=ClassSchedulUtil.alculateExpectedValue(geneList);
+            }
+
          }
       }
       return individualMap;
@@ -140,21 +149,30 @@ public class ScheduleUtils {
    private Map<String, List<String>> geneticEvolution(Map<String, List<String>> individualMap) {
       int generation = ConstantInfo.GENERATION;//进化代数设为100
       List<String> resultGeneList;
+      Map<String, List<String>> maxIndividualMap = new HashMap<>();
       for (int i = 0; i < generation; ++i) {
          //第一步完成交叉操作,产生新一代的父本
          individualMap = hybridization(individualMap);
          //第二步合拢个体准备变异
-         closedGene(individualMap);
+
          //第三步开始变异
-         resultGeneList = geneticMutation(closedGene(individualMap));
+          resultGeneList = geneticMutation(closedGene(individualMap));
          //第四步进行冲突检测并消除
          conflictResolution(resultGeneList);
          //第五步将冲突消除后的个体再次进行分割，按班级进行分配准备进入下一次的进化
-         individualMap = transformIndividual(conflictResolution(resultGeneList));
+         individualMap = transformIndividual(conflictResolution(resultGeneList),true);
+         //冲突解决后存储权重高的
+         if(maxExpect<Expect){
+            maxIndividualMap=individualMap;
+            maxExpect=Expect;
 
+         }
+         System.out.println("》》》》》》"+maxExpect+"《《《《《《"+"  》》》》》》"+Expect+"《《《《《《《");
+         Expect=0;
       }
-      return individualMap;
+      return maxIndividualMap;
    }
+
 
    //将分割好的个体（按班级分好的初始课表）重新合拢在一起，方便进行冲突检测
    private List<String> closedGene(Map<String, List<String>> individualMap) {
@@ -214,10 +232,17 @@ public class ScheduleUtils {
       for (String classNo : individualMap.keySet()) {
          List<String> individualList = individualMap.get(classNo);
          //一个班级的所有基因，先保存原有的基因
-         List<String> oldIndividualList = individualList;
+         List<String> oldIndividualList = new ArrayList<>();
+         
+         for(String oldGene:individualList){
+            oldIndividualList.add(oldGene);
+         }
          individualList = selectiveGene(individualList);//进行基因的交叉操作生成新个体
          //对父代的适应度值和新生成的子代适应值进行对比，选择适应度值高的一个进入下一代的遗传
-         if (ClassSchedulUtil.alculateExpectedValue(individualList) >= ClassSchedulUtil.alculateExpectedValue(oldIndividualList)) {
+         double oldExpect = ClassSchedulUtil.alculateExpectedValue(oldIndividualList);
+         double newExpect = ClassSchedulUtil.alculateExpectedValue(individualList);
+         System.out.println("======="+newExpect+"=========="+oldExpect);
+         if ( newExpect>= oldExpect) {
             individualMap.put(classNo, individualList);
          } else {
             individualMap.put(classNo, oldIndividualList);

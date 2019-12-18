@@ -20,4 +20,7 @@ public interface TScheduleMapper {
     int updateByExampleSelective(@Param("record") TSchedule record, @Param("example") TScheduleExample example);
 
     int updateByExample(@Param("record") TSchedule record, @Param("example") TScheduleExample example);
+
+    //添加相关的属性名，根据id
+    void updateName();
 }

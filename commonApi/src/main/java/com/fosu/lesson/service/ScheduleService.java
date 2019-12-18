@@ -27,4 +27,5 @@ public interface ScheduleService {
     PageResult findByPage(int pageNo, int pageSize);
 
     void shcedule();
+
 }

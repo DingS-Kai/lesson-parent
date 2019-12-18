@@ -24,6 +24,4 @@ public interface TClassMapper {
     int updateByExample(@Param("record") TClass record, @Param("example") TClassExample example);
 
     TClass selectOne(TClass tClass);
-
-    List<String> findGrade();
 }

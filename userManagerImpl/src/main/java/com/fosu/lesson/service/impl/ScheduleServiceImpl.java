@@ -1,12 +1,14 @@
 package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TScheduleExample;
 import com.fosu.lesson.pojo.TStudent;
 import com.fosu.lesson.service.ScheduleService;
+import com.fosu.lesson.utils.ConstantInfo;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -49,6 +51,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Map<String, List<TSchedule>> findAll() {
         //查找有多少个班级
+
+
         List<TSchedule> list = tScheduleMapper.selectByExample(null);
         Map<String, List<TSchedule>> map = new HashMap<>();
 
@@ -73,7 +77,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         tScheduleExample.createCriteria().andIdIn(Arrays.asList(ids));
     }
 
-
     @Override
     public PageResult findByPage(int pageNo, int pageSize) {
         PageResult pageResult = new PageResult();
@@ -97,6 +100,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void shcedule() {
+        ScheduleUtils scheduleUtils = new ScheduleUtils();
+        //排课
         scheduleUtils.schedulePlan();
+        //更像相关属性
+        tScheduleMapper.updateName();
     }
+
 }
