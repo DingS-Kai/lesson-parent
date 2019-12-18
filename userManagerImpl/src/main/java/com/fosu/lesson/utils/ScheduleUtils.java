@@ -6,13 +6,12 @@ import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class ScheduleUtils {
 
