@@ -3,6 +3,7 @@ package com.fosu.lesson.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
+import com.fosu.lesson.service.CourseService;
 import com.fosu.lesson.service.ScheduleService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +18,39 @@ public class ScheduleController {
 
     @Reference
     private ScheduleService scheduleService;
+    @Reference
+    private CourseService courseService;
 
     @GetMapping("hhhh")
     public List<TSchedule> qryOne(){
-        List<TSchedule> list = scheduleService.findOne(new TSchedule());
-        int flag=0;
-        for (int i =1; i <=7; i++) {
-            for(int j=0;j<5;j++){
-                flag=0;
-               for(TSchedule tSchedule:list){
-                   if(tSchedule.getTimeId().equals((i+j*7)+"")){
-                       System.out.printf(tSchedule.getCourseName()+"     ");
-                       flag=1;
-                   }
-               }
-               if(flag==0){
-                   System.out.printf("空闲"+"     ");
-               }
+        TSchedule tSchedule1 = new TSchedule();
+        List<String> classNoList = courseService.selectByColumnName("class_id");
+        for(String class_name:classNoList){
+            tSchedule1.setClassId(class_name);
+            List<TSchedule> list = scheduleService.findOne(tSchedule1);
+            int flag=0;
+            System.out.println("==================="+class_name+"班课表===================");
+            for (int i =1; i <=7; i++) {
+                for(int j=0;j<5;j++){
+                    flag=0;
+                    for(TSchedule tSchedule:list){
+                        if(tSchedule.getTimeId().equals((i+j*7)+"")){
+                            System.out.printf(tSchedule.getCourseName()+"     ");
+                            flag=1;
+                        }
+                    }
+                    if(flag==0){
+                        System.out.printf("空闲"+"     ");
+                    }
+                }
+                System.out.println("");
             }
             System.out.println("");
+            System.out.println("================================================");
+            System.out.println("");
         }
-        return list;
+
+        return null;
     }
 
     @GetMapping("mymy")

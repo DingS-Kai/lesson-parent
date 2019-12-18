@@ -7,6 +7,7 @@ import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
 import com.fosu.lesson.pojo.TStudent;
 import com.fosu.lesson.service.CourseService;
+import com.fosu.lesson.utils.ConstantInfo;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -73,5 +74,10 @@ public class CourseServiceImpl implements CourseService {
         pageResult.setRows(page.getResult());
         pageResult.setTotal(page.getTotal());
         return pageResult;
+    }
+
+    @Override
+    public List<String> selectByColumnName(String class_id) {
+        return tCourseMapper.selectByColumnName(class_id);
     }
 }

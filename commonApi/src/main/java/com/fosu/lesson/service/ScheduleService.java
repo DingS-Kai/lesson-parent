@@ -8,6 +8,8 @@ import java.util.Map;
 
 public interface ScheduleService {
 
+
+
     //查一个班的排课
     List<TSchedule> findOne(TSchedule tSchedule);
 
@@ -27,4 +29,6 @@ public interface ScheduleService {
     PageResult findByPage(int pageNo, int pageSize);
 
     void shcedule();
+
+
 }

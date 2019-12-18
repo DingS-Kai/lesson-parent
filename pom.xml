@@ -51,14 +51,9 @@
                 <artifactId>dubbo-spring-boot-actuator</artifactId>
                 <version>${dubbo-springboot.version}</version>
             </dependency>
-            <!-- spring-boot-devtools热启动依赖包 start-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <optional>true</optional>
-                <scope>true</scope>
-            </dependency>
-            <!-- spring-boot-devtools热启动依赖包 end-->
+
+
+
         </dependencies>
     </dependencyManagement>
     <build>

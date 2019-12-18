@@ -1,12 +1,14 @@
 package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TScheduleExample;
 import com.fosu.lesson.pojo.TStudent;
 import com.fosu.lesson.service.ScheduleService;
+import com.fosu.lesson.utils.ConstantInfo;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -25,8 +27,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private TScheduleMapper tScheduleMapper;
 
-    @Autowired
-    private ScheduleUtils scheduleUtils;
+/*    @Autowired
+    private ScheduleUtils scheduleUtils;*/
 
 
 
@@ -36,8 +38,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
 
-       // tScheduleExample.createCriteria().andClassIdEqualTo("102");
-        List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
+        // tScheduleExample.createCriteria().andClassIdEqualTo("102");
+        List<TSchedule> list = tScheduleMapper.selectByExample(tScheduleExample);
 
         System.out.println("===================================================");
         Consumer consumer = (item) -> System.out.println(item.toString());
@@ -99,6 +101,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void shcedule() {
+        ScheduleUtils scheduleUtils = new ScheduleUtils();
+        //排课
         scheduleUtils.schedulePlan();
+        //更像相关属性
+        tScheduleMapper.updateName();
     }
+
+
 }

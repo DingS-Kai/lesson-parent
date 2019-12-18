@@ -7,7 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 public class ClassSchedulUtil {
     public static String randomTime(String gene, List<String> resultGeneList) {
         int min = 1;
-        int max = 35;
+        int max = 34;
         String time;
         //随机生成1到25范围的数字，并将其转化为字符串，方便进行编码
         int temp = min + (int) (Math.random() * (max + 1 - min));
@@ -65,13 +65,16 @@ public class ClassSchedulUtil {
     public static double alculateExpectedValue(List<String> individualList) {
         double K1 = 0.3;//专业课所占权重
         double K2 = 0.2;//非专业课所占权重
-        double K3 = 0.1;//娱乐课所占权重
+        double K3 = 0.2;//娱乐课所占权重
+        double K4 = 0.2;//空闲时间权重
         double K5 = 0.2;//课程离散程度所占权重
+        double K6 = 0.2;//一天顶多两门相同课的权重
         int F1 = 0;//专业课期望总值
         int F2 = 0;//非专业课期望总值
         int F3 = 0;//娱乐课期望总值
-
+        int F4 = 0;//空闲时间总值
         int F5=0;//课程离散程度期望总值
+        int F6=0;//一天顶多两门相同课的总值
         double Fx;//适应度值SORT
 
         for (String gene : individualList) {
@@ -85,10 +88,67 @@ public class ClassSchedulUtil {
                 F3 = F3 + calculatePhysicalExpect(classTime);
             }
         }
+        //=calculateFreeTime(individualList);
         F5 = calculateDiscreteExpect(individualList);
-        Fx = K1 * F1 + K2 * F2 + K3 * F3+F5*K5;
+        F6=calculateOnedayCourse(individualList);
+        Fx = K1 * F1 + K2 * F2 + K3 * F3  + K6 * F6;
+       // Fx=K4*F4;
         return Fx;
     }
+
+    //计算空闲时间总值
+    private static int calculateFreeTime(List<String> individualList){
+        String[] maxExpectValue = {"04", "11",  "18","25", "32", "07","14", "21","28", "35"};//专业课期望值为10时的时间片值
+        int num=0;
+        for (String gene : individualList){
+            if (ArrayUtils.contains(maxExpectValue, ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME,gene))) {
+               num++;
+            }
+        }
+        if(num==7){
+            return 10;
+        }else{
+            return -20;
+        }
+    }
+
+    //计算一天顶多两门相同课的总值
+    private static int calculateOnedayCourse(List<String> individualList){
+        Set<String> mon = new HashSet<>();
+        Set<String> tue = new HashSet<>();
+        Set<String> wed = new HashSet<>();
+        Set<String> thu = new HashSet<>();
+        Set<String> fri = new HashSet<>();
+        int num = 0;
+        int F6=0;
+        for(String s:individualList){
+            num=Integer.parseInt(ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME,s));
+            if(num<8){
+                mon.add(ClassSchedulUtil.cutGene(ConstantInfo.COURSE_NAME,s));
+            }else if(num<15){
+                tue.add(ClassSchedulUtil.cutGene(ConstantInfo.COURSE_NAME,s));
+            }else if(num<22){
+                wed.add(ClassSchedulUtil.cutGene(ConstantInfo.COURSE_NAME,s));
+            }else if(num<29){
+                thu.add(ClassSchedulUtil.cutGene(ConstantInfo.COURSE_NAME,s));
+            }else{
+                fri.add(ClassSchedulUtil.cutGene(ConstantInfo.COURSE_NAME,s));
+            }
+
+        }
+        F6=calculateOneDaySum(mon)+calculateOneDaySum(tue)+calculateOneDaySum(wed)+calculateOneDaySum(thu)+calculateOneDaySum(fri);
+        return F6;
+    }
+
+    //计算一天课程的期望值（一天顶多两门同柯城）
+    private static int calculateOneDaySum(Set<String> day) {
+        if(day.size()<=5){
+            return -10;
+        }else{
+            return 2;
+        }
+    }
+
 
     //计算课程离散度期望值
     private static int calculateDiscreteExpect(List<String> individualList) {

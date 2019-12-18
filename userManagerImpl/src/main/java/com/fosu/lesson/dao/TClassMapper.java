@@ -3,12 +3,13 @@ package com.fosu.lesson.dao;
 import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.pojo.TClassExample;
 import com.fosu.lesson.pojo.TClassroom;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface TClassMapper {
     long countByExample(TClassExample example);
 
