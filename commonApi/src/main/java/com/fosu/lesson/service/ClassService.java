@@ -2,7 +2,6 @@ package com.fosu.lesson.service;
 
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClass;
-import com.fosu.lesson.pojo.TTeacher;
 
 import java.util.List;
 
@@ -24,4 +23,10 @@ public interface ClassService {
 
     //分页
     PageResult findByPage(int pageNo, int pageSize);
+
+    //查一个年级有多少个班
+    List<String> findClass(String grade);
+
+    //返回所有的年级
+    List<String> findGrade();
 }

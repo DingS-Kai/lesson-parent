@@ -12,9 +12,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -73,5 +75,39 @@ public class ClassServiceImpl implements ClassService {
         pageResult.setRows(page.getResult());
         pageResult.setTotal(page.getTotal());
         return pageResult;
+    }
+
+
+    @Override
+    public List<String> findClass(String grade) {
+        TClassExample tClassExample = new TClassExample();
+        TClassExample.Criteria criteria = tClassExample.createCriteria();
+
+        criteria.andGradeEqualTo(grade);
+        List<TClass> list = tClassMapper.selectByExample(tClassExample);
+
+        System.out.println("===========================");
+        Consumer consumer = (item) -> System.out.println(item.toString());
+        list.forEach(consumer);
+        System.out.println("========================================");
+
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String s = (list.get(i)).getClassName();
+            list1.add(s);
+        }
+        return list1;
+    }
+
+    @Override
+    public List<String> findGrade() {
+        List<String> list = tClassMapper.findGrade();
+
+        System.out.println("===========================");
+        Consumer consumer = (item) -> System.out.println(item.toString());
+        list.forEach(consumer);
+        System.out.println("========================================");
+
+        return list;
     }
 }

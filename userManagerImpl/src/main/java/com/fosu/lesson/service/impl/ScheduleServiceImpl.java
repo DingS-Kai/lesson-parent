@@ -36,7 +36,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
 
-       // tScheduleExample.createCriteria().andClassIdEqualTo("102");
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
 
         System.out.println("===================================================");
@@ -50,8 +49,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Map<String, List<TSchedule>> findAll() {
         //查找有多少个班级
-
-
         List<TSchedule> list = tScheduleMapper.selectByExample(null);
         Map<String, List<TSchedule>> map = new HashMap<>();
 
@@ -75,6 +72,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         TScheduleExample tScheduleExample = new TScheduleExample();
         tScheduleExample.createCriteria().andIdIn(Arrays.asList(ids));
     }
+
 
     @Override
     public PageResult findByPage(int pageNo, int pageSize) {

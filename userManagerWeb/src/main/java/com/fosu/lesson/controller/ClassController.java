@@ -3,7 +3,6 @@ package com.fosu.lesson.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClass;
-import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.service.ClassService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
@@ -110,4 +109,28 @@ public class ClassController {
         }
         return flag == 1 ? true : false;
     }
+
+
+    @ApiOperation(value = "查找一个年级有几个班,返回该年级对应的班别" )
+    @ApiImplicitParam(name = "grade" , dataType = "String" , value = "传入一个年级grade" ,required = true )
+    @ApiResponses({
+            @ApiResponse(code=400,message="请求参数没填好"),
+            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
+    })
+    @PostMapping("/findclass/{grade}")
+    public List<String> findClass(@PathVariable String grade){
+        System.out.println(grade);
+        return classService.findClass(grade);
+    }
+
+    @ApiOperation(value = "返回所有的年级" )
+    @ApiResponses({
+            @ApiResponse(code=400,message="请求参数没填好"),
+            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
+    })
+    @PostMapping("/findgrade")
+    public List<String> findGrade(){
+        return classService.findGrade();
+    }
+
 }

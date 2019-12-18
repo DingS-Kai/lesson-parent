@@ -19,6 +19,7 @@ public class ScheduleUtils {
 
    @Autowired
    private TCourseMapper tCourseMapper;
+
    @Autowired
    private  CourseServiceImpl courseService;
 

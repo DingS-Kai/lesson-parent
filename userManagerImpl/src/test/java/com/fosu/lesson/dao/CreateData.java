@@ -144,13 +144,4 @@ public class CreateData {
             tCourseMapper.insert(tCourse);
         }
     }
-
-
-
-
-    @Test
-    public void test(){
-        String[] teacherName701 = {"马冬晓","陈岩","陈红星","钱萍","a","a","王金保","顾哲羽","王育忠","李子鹏","钱萍","陈丽娟","沈芝蕊","秦伟","a","周俊才","陈红星"};
-        getTeacherIdList(teacherName701);
-    }
 }
