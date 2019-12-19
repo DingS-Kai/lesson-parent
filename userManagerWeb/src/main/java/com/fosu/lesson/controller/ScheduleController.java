@@ -35,7 +35,7 @@ public class ScheduleController {
                     flag=0;
                     for(TSchedule tSchedule:list){
                         if(tSchedule.getTimeId().equals((i+j*7)+"")){
-                            System.out.printf(tSchedule.getCourseName()+"     ");
+                            System.out.printf(tSchedule.getCourseName()+" "+tSchedule.getTeacherName()+"     ");
                             flag=1;
                         }
                     }
@@ -52,11 +52,25 @@ public class ScheduleController {
 
         return null;
     }
-
+    //排课
     @GetMapping("mymy")
     public void schedulePlan(){
 
          scheduleService.shcedule();
+    }
+
+    //单个老师的课表
+    @GetMapping("TeacherPlan")
+    public void tercherPlan(){
+        String tercherId="20160312";
+        List<TSchedule> tScheduleList =scheduleService.getOneTercherPlan(tercherId);
+    }
+
+    //单个学生的课表
+    @GetMapping("StudentPlan")
+    public void StudentPlan(){
+        String classID="701";
+        List<TSchedule> tScheduleList =scheduleService.getOneStudentPlan(classID);
     }
 
     @GetMapping("/findByPage")

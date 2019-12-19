@@ -28,4 +28,7 @@ public interface ScheduleService {
 
     void shcedule();
 
+    List<TSchedule> getOneTercherPlan(String tercherId);
+
+    List<TSchedule> getOneStudentPlan(String classID);
 }

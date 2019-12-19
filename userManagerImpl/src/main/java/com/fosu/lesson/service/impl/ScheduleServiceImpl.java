@@ -13,10 +13,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Service
@@ -102,6 +99,63 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleUtils.schedulePlan();
         //更像相关属性
         tScheduleMapper.updateName();
+    }
+
+    @Override
+    public List<TSchedule> getOneTercherPlan(String tercherId) {
+
+        TScheduleExample tScheduleExample = new TScheduleExample();
+
+        tScheduleExample.createCriteria().andTeacherIdEqualTo(tercherId);
+
+        List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
+
+        //根据时间片排序
+        Collections.sort(list, new Comparator<TSchedule>() {
+            @Override
+            public int compare(TSchedule o1, TSchedule o2) {
+                if(o1.getTimeId().length()>o2.getTimeId().length()){
+                    return 1;
+                }else if(o1.getTimeId().length()==o2.getTimeId().length()){
+                    return o1.getTimeId().compareTo(o2.getTimeId());
+                }
+                return -1;
+            }
+        });
+
+        System.out.println("===================================================");
+        Consumer consumer = (item) -> System.out.println(item.toString());
+        list.forEach(consumer);
+        System.out.println("===================================================");
+        return list;
+    }
+
+    @Override
+    public List<TSchedule> getOneStudentPlan(String classID) {
+        TScheduleExample tScheduleExample = new TScheduleExample();
+
+        tScheduleExample.createCriteria().andClassIdEqualTo(classID);
+
+        List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
+
+        Collections.sort(list, new Comparator<TSchedule>() {
+            @Override
+            public int compare(TSchedule o1, TSchedule o2) {
+                if(o1.getTimeId().length()>o2.getTimeId().length()){
+                    return 1;
+                }else if(o1.getTimeId().length()==o2.getTimeId().length()){
+                    return o1.getTimeId().compareTo(o2.getTimeId());
+                }
+                return -1;
+            }
+        });
+
+        System.out.println("===================================================");
+        Consumer consumer = (item) -> System.out.println(item.toString());
+        list.forEach(consumer);
+        System.out.println("===================================================");
+
+        return list;
     }
 
 }
