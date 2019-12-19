@@ -258,7 +258,10 @@
   </update>
   <update id="updateName">
      UPDATE t_schedule a,t_class b,t_classroom c,t_course d,t_teacher e
-     SET a.course_name=d.remark,a.class_name=b.class_name,a.place=c.place,a.teacher_name=e.teacher_name
+     SET a.course_name=d.remark,a.class_name=CONCAT(b.grade,b.class_name),a.place=c.place,a.teacher_name=e.teacher_name
      WHERE a.classroom_id=c.classroom_id AND a.class_id=b.class_id AND a.course_id=d.course_id and a.teacher_id=e.teacher_id
   </update>
+  <update id="deleteAll">
+    truncate table t_schedule
+</update>
 </mapper>

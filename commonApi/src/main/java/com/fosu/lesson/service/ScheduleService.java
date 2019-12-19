@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ScheduleService {
 
     //查一个班的排课
-    List<TSchedule> findOne(TSchedule tSchedule);
+    List<TSchedule> findOne(TSchedule tSchedule ,Boolean flag);
 
     //查全部班的排课
     Map<String, List<TSchedule>> findAll();

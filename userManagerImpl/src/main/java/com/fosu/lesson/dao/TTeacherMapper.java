@@ -26,4 +26,6 @@ public interface TTeacherMapper {
     int updateByExample(@Param("record") TTeacher record, @Param("example") TTeacherExample example);
 
     TTeacher selectOne(TTeacher tTeacher);
+    // 查出所有的教师id
+    List<String> selectByColumnName(@Param("teacher_name") String teacher_name);
 }

@@ -23,4 +23,7 @@ public interface TScheduleMapper {
 
     //添加相关的属性名，根据id
     void updateName();
+
+    //清空表数据
+    void deleteAll();
 }

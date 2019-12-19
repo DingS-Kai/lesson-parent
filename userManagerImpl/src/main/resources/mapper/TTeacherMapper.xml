@@ -211,5 +211,8 @@
       </if>
     </where>
   </select>
+  <select id="selectByColumnName" resultType="java.lang.String" parameterType="java.lang.String">
+       select distinct  ${teacher_name} from t_teacher;
+    </select>
 
 </mapper>

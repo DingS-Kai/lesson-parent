@@ -73,4 +73,9 @@ public class TeacherServiceImpl implements TeacherService {
         pageResult.setTotal(page.getTotal());
         return pageResult;
     }
+
+    @Override
+    public List<String> selectByColumnName(String teacher_name) {
+        return tTeacherMapper.selectByColumnName(teacher_name);
+    }
 }

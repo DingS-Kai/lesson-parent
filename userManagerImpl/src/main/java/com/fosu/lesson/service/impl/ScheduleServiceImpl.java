@@ -27,10 +27,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     @Override
-    public List<TSchedule> findOne(TSchedule tSchedule) {
+    public List<TSchedule> findOne(TSchedule tSchedule,Boolean flag) {
         TScheduleExample tScheduleExample = new TScheduleExample();
+        if(flag==true){
+            tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
+        }else{
+            tScheduleExample.createCriteria().andTeacherNameEqualTo(tSchedule.getTeacherName());
+        }
 
-        tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
 
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
 
@@ -94,7 +98,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void shcedule() {
-
+        //清空的数据
+        tScheduleMapper.deleteAll();
         //排课
         scheduleUtils.schedulePlan();
         //更像相关属性

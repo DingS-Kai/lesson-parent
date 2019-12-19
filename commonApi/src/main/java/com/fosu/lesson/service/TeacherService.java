@@ -24,4 +24,6 @@ public interface TeacherService {
 
     //分页
     PageResult findByPage(int pageNo, int pageSize);
+
+    List<String> selectByColumnName(String teacher_name);
 }
