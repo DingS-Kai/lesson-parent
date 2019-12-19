@@ -1,18 +1,20 @@
 package com.fosu.lesson.utils;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Component
 public class ScheduleUtils {
 
 
@@ -31,7 +33,7 @@ public class ScheduleUtils {
 
    public synchronized void schedulePlan(){
       //获取课程教师信息
-      List<TCourse> TCourseList = courseService.findAll();
+      List<TCourse> TCourseList = tCourseMapper.selectByExample(null);
       //对开课任务进行编码
       Map<String, List<String>> geneList = coding(TCourseList);
      //开始进行时间分配
@@ -60,8 +62,10 @@ public class ScheduleUtils {
          String Course_id = new String();
          for (String gene:geneList) {
             Course_id=ClassSchedulUtil.cutGene(ConstantInfo.COURSE_ID,gene);
-            if(Course_id.substring(0,1).equals("0")){
-               Course_id=Course_id.substring(1,2);
+            if(Course_id.substring(0,2).equals("00")){
+               Course_id=Course_id.substring(2,3);
+            }else if(Course_id.substring(0,1).equals("0")){
+               Course_id=Course_id.substring(1,3);
             }
             Time_id=ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME,gene);
             if(Time_id.substring(0,1).equals("0")){
@@ -79,6 +83,7 @@ public class ScheduleUtils {
 
 
       }
+      System.out.println("1");
       for (TSchedule tSchedule:tScheduleList) {
          tScheduleMapper.insert(tSchedule);
       }
@@ -96,6 +101,8 @@ public class ScheduleUtils {
          for (int i = 0; i < size; i++) {
             String courseID = tCourse.getCourseId();
             if(courseID.length()<2){
+               courseID="00"+courseID;
+            }else if(courseID.length()<3){
                courseID="0"+courseID;
             }
 
@@ -115,7 +122,7 @@ public class ScheduleUtils {
       for (String gene : unFixedTimeGeneList) {
          //获取一个不重复的时间片值
          String classTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-         gene = gene.substring(0, 17) + classTime;
+         gene = gene.substring(0, 18) + classTime;
          resultGeneList.add(gene);
       }
       return resultGeneList;
@@ -194,11 +201,12 @@ public class ScheduleUtils {
       for (int i = 0; i < mutationNumber; ) {
          int temp = min + (int) (Math.random() * (max + 1 - min));//生成随机数
          String gene = resultGeneList.get(temp);
-
+         if(!(gene.substring(0,1).equals("9"))){
             String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-            gene = gene.substring(0, 17) + newClassTime;
+            gene = gene.substring(0, 18) + newClassTime;
             resultGeneList.remove(temp);
             resultGeneList.add(temp, gene);
+         }
             i = i + 1;
          }
       return resultGeneList;
@@ -217,7 +225,7 @@ public class ScheduleUtils {
             String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
             if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
                String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-               gene = gene.substring(0, 17) + newClassTime;
+               gene = gene.substring(0, 18) + newClassTime;
                continue exit;
             }
 
@@ -270,8 +278,8 @@ public class ScheduleUtils {
             String firstClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, firstGene);
             String secondClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, secondGene);
             //将它们的时间进行交换
-            firstGene = firstGene.substring(0, 17) + secondClassTime;
-            secondGene = secondGene.substring(0, 17) + firstClassTime;
+            firstGene = firstGene.substring(0, 18) + secondClassTime;
+            secondGene = secondGene.substring(0, 18) + firstClassTime;
             //对原有的基因进行移除，然后将交换过时间的两条基因添加进去
             individualList.remove(firstTemp);
             individualList.add(firstTemp, firstGene);

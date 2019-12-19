@@ -6,10 +6,10 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class ClassSchedulUtil {
     public static String randomTime(String gene, List<String> resultGeneList) {
-        int min = 1;
-        int max = 34;
+       /* int min = 1;
+        int max = 35;
         String time;
-        //随机生成1到25范围的数字，并将其转化为字符串，方便进行编码
+        //随机生成1到35范围的数字，并将其转化为字符串，方便进行编码
         int temp = min + (int) (Math.random() * (max + 1 - min));
         if (temp < 10) {
             time = "0" + temp;
@@ -19,9 +19,22 @@ public class ClassSchedulUtil {
         if (isTimeRepe(time, gene, resultGeneList)) {
             return time;
         } else {
-            return randomTime(gene, resultGeneList);
-        }
+            time=null;
+            return randomTime(gene, resultGeneList);*/
+       String time;
+       for(int i=1;i<=35;i++){
+           if (i < 10) {
+               time = "0" + i;
+           } else {
+               time = "" + i;
+           }
+           if (isTimeRepe(time, gene, resultGeneList)) {
+               return time;
+           }
 
+       }
+        System.out.println("11111");
+       return "00";
     }
 
     //判断同一个班是否在同一时间内上课有重复
@@ -54,9 +67,9 @@ public class ClassSchedulUtil {
             case ConstantInfo.CLASS_HOUR:
                 return source.substring(14, 15);
             case ConstantInfo.COURSE_ID:
-                return source.substring(15, 17);
+                return source.substring(15, 18);
             case ConstantInfo.CLASS_TIME:
-                return source.substring(17,19);
+                return source.substring(18,20);
             default:
                 return "";
         }
@@ -88,10 +101,10 @@ public class ClassSchedulUtil {
                 F3 = F3 + calculatePhysicalExpect(classTime);
             }
         }
-        //=calculateFreeTime(individualList);
+        F4=calculateFreeTime(individualList);
         F5 = calculateDiscreteExpect(individualList);
         F6=calculateOnedayCourse(individualList);
-        Fx = K1 * F1 + K2 * F2 + K3 * F3  + K6 * F6;
+        Fx = K1 * F1 + K2 * F2 + K3 * F3  + F4 * K4 + K6 * F6;
        // Fx=K4*F4;
         return Fx;
     }
@@ -105,7 +118,7 @@ public class ClassSchedulUtil {
                num++;
             }
         }
-        if(num==7){
+        if(num==9){
             return 10;
         }else{
             return -20;

@@ -25,6 +25,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private TScheduleMapper tScheduleMapper;
 
+    @Autowired
+    private   ScheduleUtils scheduleUtils;
+
+
     @Override
     public List<TSchedule> findOne(TSchedule tSchedule) {
         TScheduleExample tScheduleExample = new TScheduleExample();
@@ -93,7 +97,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void shcedule() {
-        ScheduleUtils scheduleUtils = new ScheduleUtils();
+
         //排课
         scheduleUtils.schedulePlan();
         //更像相关属性
