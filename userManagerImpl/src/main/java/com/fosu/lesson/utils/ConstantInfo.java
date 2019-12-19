@@ -12,7 +12,6 @@ public class ConstantInfo {
     public static final String ELECTIVE_CODE = "2";//非专业课码值
     public static final String PHYSICAL_CODE = "3";//娱乐课码值
 
-
     public static final int GENERATION = 100;//遗传代数
 
 }

@@ -24,10 +24,6 @@ public class ClassroomController {
             @ApiImplicitParam(name = "pageNo" , value = "页码" , dataType = "int") ,
             @ApiImplicitParam(name = "pageSize" , value = "一页的条数" , dataType = "int")
     })
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好") ,
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public PageResult findByPage(int pageNo, int pageSize) {
         System.out.println(pageNo+"======="+pageSize);
         return classroomService.findByPage(pageNo, pageSize);
@@ -36,10 +32,6 @@ public class ClassroomController {
     @PostMapping("/findOne")
     @ApiOperation(value = "查找一个教室信息" , notes = "通过教室的部分信息获取教室的完整信息")
     @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" ,value = "教室的部分信息作为参数" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public TClassroom findOne(@RequestBody TClassroom tClassroom){
         System.out.println(tClassroom.getClassroomId()+"-----------"+tClassroom.getClassroomNum());
         tClassroom = classroomService.findOne(tClassroom);
@@ -58,10 +50,6 @@ public class ClassroomController {
     @PostMapping("/save")
     @ApiOperation(value = "新增教室信息" )
     @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" , value = "新增的教室信息,classroomId不能为空" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public boolean save(@RequestBody TClassroom tClassroom){
         System.out.println("===============controller=============");
         System.out.println(tClassroom.toString());
@@ -81,10 +69,6 @@ public class ClassroomController {
     //dataType = "String"————表示数组中参数的类型
     @ApiOperation(value = "删除教室信息" )
     @ApiImplicitParam(name = "ids" ,allowMultiple = true, dataType = "String", value = "删除教室信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @GetMapping("/deleteByIds")
     public boolean del(String[] ids){
         System.out.println("===============controller=============");
@@ -105,10 +89,6 @@ public class ClassroomController {
 
     @ApiOperation(value = "更新教室信息" )
     @ApiImplicitParam(name = "tClassroom" , dataType = "TClassroom" ,value = "更新的教室信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @PostMapping("/update")
     public boolean update(@RequestBody TClassroom tClassroom){
         System.out.println("===============controller=============");

@@ -12,6 +12,7 @@ import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -29,7 +30,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<TSchedule> findOne(TSchedule tSchedule) {
         TScheduleExample tScheduleExample = new TScheduleExample();
-
         tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
 
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
@@ -45,12 +45,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Map<String, List<TSchedule>> findAll() {
         //查找有多少个班级
-
-
-        List<TSchedule> list = tScheduleMapper.selectByExample(null);
+        List<String> distinctClassId = findDistinctClassId();
         Map<String, List<TSchedule>> map = new HashMap<>();
-
-        return null;
+        for (int i = 0; i < distinctClassId.size(); i++) {
+            String s = distinctClassId.get(i);
+            List<TSchedule> oneStudentPlan = getOneStudentPlan(s);
+            map.put(s, oneStudentPlan);
+        }
+        return map;
     }
 
     @Override
@@ -92,9 +94,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         return pageResult;
     }
 
+    @Transactional
     @Override
     public void shcedule() {
-
         //排课
         scheduleUtils.schedulePlan();
         //更像相关属性
@@ -156,6 +158,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         System.out.println("===================================================");
 
         return list;
+    }
+
+    @Override
+    public List<String> findDistinctClassId() {
+        return tScheduleMapper.findDistinctClassId();
     }
 
 }

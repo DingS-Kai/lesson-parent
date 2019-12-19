@@ -30,5 +30,9 @@ public interface ScheduleService {
 
     List<TSchedule> getOneTercherPlan(String tercherId);
 
+    //查一个班的排课，有序
     List<TSchedule> getOneStudentPlan(String classID);
+
+    //查排课表里排的班级的classId
+    List<String> findDistinctClassId();
 }

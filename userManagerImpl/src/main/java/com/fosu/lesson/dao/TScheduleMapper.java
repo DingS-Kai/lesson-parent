@@ -25,4 +25,6 @@ public interface TScheduleMapper {
 
     //添加相关的属性名，根据id
     void updateName();
+
+    List<String> findDistinctClassId();
 }

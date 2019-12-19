@@ -24,10 +24,6 @@ public class FreeController {
             @ApiImplicitParam(name = "pageNo" , dataType = "int" ,value = "页码" ) ,
             @ApiImplicitParam(name = "pageSize" , dataType = "int" , value = "一页的条数")
     })
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好") ,
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public PageResult findByPage(int pageNo, int pageSize) {
         System.out.println(pageNo+"======="+pageSize);
         return freeService.findByPage(pageNo, pageSize);
@@ -36,10 +32,6 @@ public class FreeController {
     @PostMapping("/findOne")
     @ApiOperation(value = "查找一个教室空闲表信息" , notes = "通过教室空闲表的部分信息获取教室空闲表的完整信息")
     @ApiImplicitParam(name = "tFree" ,dataType = "TFree" , value = "教室空闲表的部分信息作为参数" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public TFree findOne(@RequestBody TFree tFree){
         System.out.println(" findOne(@RequestBody TFree tFree)=="+tFree.toString());
         return freeService.findOne(tFree);
@@ -55,10 +47,6 @@ public class FreeController {
     @PostMapping("/save")
     @ApiOperation(value = "新增教室空闲表信息" )
     @ApiImplicitParam(name = "tFree" ,dataType = "TFree" , value = "新增的教室空闲表信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public boolean save(@RequestBody TFree tFree){
         System.out.println(" save(@RequestBody TFree tFree)=="+tFree.toString());
         int flag = 1;
@@ -73,10 +61,6 @@ public class FreeController {
 
     @ApiOperation(value = "删除教室空闲表信息" )
     @ApiImplicitParam(name = "list" ,allowMultiple = true, dataType = "TFree" ,value = "删除教室空闲表信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @GetMapping("/deleteByIds")
     public boolean del(List<TFree> list){
         System.out.println("===============controller=============");
@@ -97,10 +81,6 @@ public class FreeController {
 
     @ApiOperation(value = "更新教室空闲表信息" )
     @ApiImplicitParam(name = "tFree" , dataType = "TFree" , value = "更新的教室空闲表信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @PostMapping("/update")
     public boolean update(@RequestBody TFree tFree){
         System.out.println(" update(@RequestBody TFree tFree)=="+tFree.toString());
