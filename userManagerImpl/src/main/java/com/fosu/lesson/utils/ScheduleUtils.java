@@ -5,7 +5,6 @@ import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TSchedule;
-import com.fosu.lesson.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,21 +16,18 @@ import java.util.Map;
 @Component
 public class ScheduleUtils {
 
+   @Autowired
+   private TScheduleMapper tScheduleMapper;
 
    @Autowired
    private TCourseMapper tCourseMapper;
-
-   @Autowired
-   private  CourseServiceImpl courseService;
-
-   @Autowired
-   private TScheduleMapper tScheduleMapper;
 
    double maxExpect=-200000;
    double Expect=0;
 
 
    public synchronized void schedulePlan(){
+
       //获取课程教师信息
       List<TCourse> TCourseList = tCourseMapper.selectByExample(null);
       //对开课任务进行编码

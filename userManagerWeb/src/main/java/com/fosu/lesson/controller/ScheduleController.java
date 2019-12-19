@@ -55,7 +55,6 @@ public class ScheduleController {
     //排课
     @GetMapping("mymy")
     public void schedulePlan(){
-
          scheduleService.shcedule();
     }
 
