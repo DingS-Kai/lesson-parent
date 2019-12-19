@@ -1,6 +1,5 @@
 package com.fosu.lesson.dao;
 
-import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TScheduleExample;
 import org.apache.ibatis.annotations.Param;
@@ -24,5 +23,8 @@ public interface TScheduleMapper {
 
     int updateByExample(@Param("record") TSchedule record, @Param("example") TScheduleExample example);
 
-    TSchedule selectOne(TSchedule tSchedule);
+    //添加相关的属性名，根据id
+    void updateName();
+
+    List<String> findDistinctClassId();
 }

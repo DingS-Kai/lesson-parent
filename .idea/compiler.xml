@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="usermanagerweb" />
-        <module name="usermanagerimpl" />
         <module name="commonApi" />
+        <module name="usermanagerimpl" />
+        <module name="usermanagerweb" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

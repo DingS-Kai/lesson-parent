@@ -69,10 +69,8 @@ public class Paike1 {
 					dp[h][l] = 0;
 					map.add(num);
 				}
-				
 			}
 		}
-
 	}
 	// 判断是不是可以插入数据
 	private static int jduge(int h, int l, int i) {
