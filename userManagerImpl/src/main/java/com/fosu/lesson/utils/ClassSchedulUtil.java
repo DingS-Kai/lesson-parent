@@ -1,8 +1,8 @@
 package com.fosu.lesson.utils;
 
-import java.util.*;
-
 import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.*;
 
 public class ClassSchedulUtil {
     public static String randomTime(String gene, List<String> resultGeneList) {

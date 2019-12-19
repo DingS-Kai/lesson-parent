@@ -12,6 +12,7 @@ import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -96,6 +97,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         return pageResult;
     }
 
+    @Transactional
     @Override
     public void shcedule() {
         //清空的数据

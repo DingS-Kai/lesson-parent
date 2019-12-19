@@ -3,6 +3,7 @@ package com.fosu.lesson.dao;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.pojo.TScheduleExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface TScheduleMapper {
 
     //清空表数据
     void deleteAll();
+
+    List<String> findDistinctClassId();
 }

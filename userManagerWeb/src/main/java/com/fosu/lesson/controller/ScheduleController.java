@@ -10,7 +10,11 @@ import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author Administrator
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/schedule")
@@ -24,7 +28,9 @@ public class ScheduleController {
     @Reference
     private TeacherService teacherService;
 
-    @GetMapping("hhhh")
+
+    @ApiOperation(value = "查找班级排课信息后台测试用" )
+    @GetMapping("/qryOne")
     public List<TSchedule> qryOne(){
         TSchedule tSchedule1 = new TSchedule();
         TSchedule tSchedule2 = new TSchedule();
@@ -82,25 +88,26 @@ public class ScheduleController {
 
         return null;
     }
-    //排课
-    @GetMapping("mymy")
-    public void schedulePlan(){
 
+
+    @ApiOperation(value = "开始排课" )
+    @GetMapping("/schedule")
+    public void schedulePlan(){
          scheduleService.shcedule();
     }
 
-    //单个老师的课表
-    @GetMapping("TeacherPlan")
-    public void tercherPlan(){
-        String tercherId="20160312";
-        List<TSchedule> tScheduleList =scheduleService.getOneTercherPlan(tercherId);
+    @ApiOperation(value = "单个老师的课表" )
+    @ApiImplicitParam(name = "tercherId" , dataType = "String" ,value = "传入一个老师的id" ,required = true )
+    @GetMapping("/teacherplan")
+    public List<TSchedule> tercherPlan(String tercherId){
+        return scheduleService.getOneTercherPlan(tercherId);
     }
 
-    //单个学生的课表
-    @GetMapping("StudentPlan")
-    public void StudentPlan(){
-        String classID="701";
-        List<TSchedule> tScheduleList =scheduleService.getOneStudentPlan(classID);
+    @ApiOperation(value = "单个学生的课表" )
+    @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
+    @GetMapping("/studentplan")
+    public List<TSchedule> StudentPlan(String classId){
+         return scheduleService.getOneStudentPlan(classId);
     }
 
     @GetMapping("/findByPage")
@@ -108,10 +115,6 @@ public class ScheduleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo" , dataType = "int" ,value = "页码" ) ,
             @ApiImplicitParam(name = "pageSize" , dataType = "int" , value = "一页的条数")
-    })
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好") ,
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
     })
     public PageResult findByPage(int pageNo, int pageSize) {
         System.out.println(pageNo+"======="+pageSize);
@@ -121,19 +124,14 @@ public class ScheduleController {
     @PostMapping("/findOne")
     @ApiOperation(value = "查找一个班级排课信息" , notes = "通过班级排课的部分信息获取班级排课的完整信息")
     @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "班级排课的部分信息作为参数" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public List<TSchedule> findOne(@RequestBody TSchedule tSchedule){
         return scheduleService.findOne(tSchedule,true);
     }
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
-    public List findAll(){
-        return null;
-        //return scheduleService.findAll();
+    public Map<String, List<TSchedule>> findAll(){
+        return scheduleService.findAll();
     }
 
 
@@ -141,10 +139,6 @@ public class ScheduleController {
     @PostMapping("/save")
     @ApiOperation(value = "新增班级排课信息" )
     @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "新增的班级排课信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     public boolean save(@RequestBody TSchedule tSchedule){
         int flag = 1;
         try {
@@ -158,10 +152,6 @@ public class ScheduleController {
 
     @ApiOperation(value = "删除班级排课信息" )
     @ApiImplicitParam(name = "ids" ,allowMultiple = true, dataType = "String" ,value = "删除班级排课信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @GetMapping("/deleteByIds")
     public boolean del(Integer[] ids){
         System.out.println("===============controller=============");
@@ -182,10 +172,6 @@ public class ScheduleController {
 
     @ApiOperation(value = "更新班级排课信息" )
     @ApiImplicitParam(name = "tSchedule" , dataType = "TSchedule" , value = "更新的班级排课信息" ,required = true )
-    @ApiResponses({
-            @ApiResponse(code=400,message="请求参数没填好"),
-            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
-    })
     @PostMapping("/update")
     public boolean update(@RequestBody TSchedule tSchedule){
         int flag = 1;
