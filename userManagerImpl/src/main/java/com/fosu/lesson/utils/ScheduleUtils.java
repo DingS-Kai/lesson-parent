@@ -56,6 +56,7 @@ public class ScheduleUtils {
          System.out.println("+++++++++"+oldExpect+"+++++++++++");
          String Time_id = new String();
          String Course_id = new String();
+         int classroomId=1;
          for (String gene:geneList) {
             Course_id=ClassSchedulUtil.cutGene(ConstantInfo.COURSE_ID,gene);
             if(Course_id.substring(0,2).equals("00")){
@@ -72,7 +73,8 @@ public class ScheduleUtils {
             tSchedule.setTeacherId(ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID,gene));
             tSchedule.setCourseId(Course_id);
             tSchedule.setTimeId(Time_id);
-            tSchedule.setClassroomId(ClassSchedulUtil.cutGene(ConstantInfo.CLASS_ID,gene).substring(2,3));
+            tSchedule.setClassroomId(classroomId+"");
+            classroomId++;
             tSchedule.setScheduleId("4");
             tScheduleList.add(tSchedule);
          }

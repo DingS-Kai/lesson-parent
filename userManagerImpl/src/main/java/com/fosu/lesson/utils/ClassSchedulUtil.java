@@ -22,7 +22,7 @@ public class ClassSchedulUtil {
             time=null;
             return randomTime(gene, resultGeneList);*/
        String time;
-       for(int i=1;i<=35;i++){
+       for(int i=1;i<=ConstantInfo.TIMENUM;i++){
            if (i < 10) {
                time = "0" + i;
            } else {
@@ -76,12 +76,12 @@ public class ClassSchedulUtil {
     }
 
     public static double alculateExpectedValue(List<String> individualList) {
-        double K1 = 0.3;//专业课所占权重
-        double K2 = 0.2;//非专业课所占权重
-        double K3 = 0.2;//娱乐课所占权重
-        double K4 = 0.2;//空闲时间权重
-        double K5 = 0.2;//课程离散程度所占权重
-        double K6 = 0.2;//一天顶多两门相同课的权重
+        double K1 = ConstantInfo.K1;//专业课所占权重
+        double K2 = ConstantInfo.K2;//非专业课所占权重
+        double K3 = ConstantInfo.K3;//娱乐课所占权重
+        double K4 = ConstantInfo.K4;//空闲时间权重
+        double K5 = ConstantInfo.K5;//课程离散程度所占权重
+        double K6 = ConstantInfo.K6;//一天顶多两门相同课的权重
         int F1 = 0;//专业课期望总值
         int F2 = 0;//非专业课期望总值
         int F3 = 0;//娱乐课期望总值
@@ -119,9 +119,9 @@ public class ClassSchedulUtil {
             }
         }
         if(num==9){
-            return 10;
+            return ConstantInfo.F9;
         }else{
-            return -20;
+            return ConstantInfo.F1;
         }
     }
 
@@ -156,9 +156,9 @@ public class ClassSchedulUtil {
     //计算一天课程的期望值（一天顶多两门同柯城）
     private static int calculateOneDaySum(Set<String> day) {
         if(day.size()<=5){
-            return -10;
+            return ConstantInfo.F2;
         }else{
-            return 2;
+            return ConstantInfo.F5;
         }
     }
 
@@ -187,15 +187,15 @@ public class ClassSchedulUtil {
         int[] twoExpectValue = {7, 14, 21, 29};//期望值为2时两课之间的时间差
         //int [] zeroExpectValue = {1,24};//期望值为0时两课之间的时间差
         if (ArrayUtils.contains(tenExpectValue, temp)) {
-            return 10;
+            return ConstantInfo.F9;
         } else if (ArrayUtils.contains(sixExpectValue, temp)) {
-            return 6;
+            return ConstantInfo.F8;
         } else if (ArrayUtils.contains(fourExpectValue, temp)) {
-            return 4;
+            return ConstantInfo.F6;
         } else if (ArrayUtils.contains(twoExpectValue, temp)) {
-            return 2;
+            return ConstantInfo.F5;
         } else {
-            return 0;
+            return ConstantInfo.F4;
         }
     }
 
@@ -236,15 +236,15 @@ public class ClassSchedulUtil {
         String[] twoExpectValue = {"7", "14", "21", "28", "35"};//专业课期望值为2时的时间片值
 
         if (ArrayUtils.contains(tenExpectValue, classTime)) {
-            return 10;
+            return ConstantInfo.F9;
         } else if (ArrayUtils.contains(eightExpectValue, classTime)) {
-            return 8;
+            return ConstantInfo.F8;
         } else if (ArrayUtils.contains(fourExpectValue, classTime)) {
-            return 4;
+            return ConstantInfo.F6;
         } else if (ArrayUtils.contains(twoExpectValue, classTime)) {
-            return 2;
+            return ConstantInfo.F5;
         } else {
-            return 0;
+            return ConstantInfo.F4;
         }
     }
 
@@ -256,13 +256,13 @@ public class ClassSchedulUtil {
         //String [] zeroExpectValue = {"05","10","15","20","25"};//选修课期望值为0时的时间片值
 
         if (ArrayUtils.contains(tenExpectValue, classTime)) {
-            return 10;
+            return ConstantInfo.F9;
         } else if (ArrayUtils.contains(eightExpectValue, classTime)) {
-            return 8;
+            return ConstantInfo.F8;
         } else if (ArrayUtils.contains(fourExpectValue, classTime)) {
-            return 4;
+            return ConstantInfo.F6;
         } else {
-            return 0;
+            return ConstantInfo.F4;
         }
     }
 
@@ -274,9 +274,9 @@ public class ClassSchedulUtil {
         //String [] zeroExpectValue = {"01","05","06","10","11","15","16","20","21","23","24","25"};//体育课期望值为0时的时间片值
 
         if (ArrayUtils.contains(tenExpectValue, classTime)) {
-            return 10;
+            return ConstantInfo.F9;
         }  else {
-            return 0;
+            return ConstantInfo.F4;
         }
     }
 

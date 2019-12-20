@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface TScheduleMapper {
     long countByExample(TScheduleExample example);
 
@@ -25,6 +24,9 @@ public interface TScheduleMapper {
 
     //添加相关的属性名，根据id
     void updateName();
+
+    //清空表数据
+    void deleteAll();
 
     List<String> findDistinctClassId();
 }

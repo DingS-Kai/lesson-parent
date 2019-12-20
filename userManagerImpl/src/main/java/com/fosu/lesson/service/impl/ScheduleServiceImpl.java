@@ -28,9 +28,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     @Override
-    public List<TSchedule> findOne(TSchedule tSchedule) {
+    public List<TSchedule> findOne(TSchedule tSchedule,Boolean flag) {
         TScheduleExample tScheduleExample = new TScheduleExample();
-        tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
+        if(flag==true){
+            tScheduleExample.createCriteria().andClassIdEqualTo(tSchedule.getClassId());
+        }else{
+            tScheduleExample.createCriteria().andTeacherNameEqualTo(tSchedule.getTeacherName());
+        }
+
 
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
 
@@ -45,14 +50,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Map<String, List<TSchedule>> findAll() {
         //查找有多少个班级
-        List<String> distinctClassId = findDistinctClassId();
+
+
+        List<TSchedule> list = tScheduleMapper.selectByExample(null);
         Map<String, List<TSchedule>> map = new HashMap<>();
-        for (int i = 0; i < distinctClassId.size(); i++) {
-            String s = distinctClassId.get(i);
-            List<TSchedule> oneStudentPlan = getOneStudentPlan(s);
-            map.put(s, oneStudentPlan);
-        }
-        return map;
+
+        return null;
     }
 
     @Override
@@ -97,6 +100,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional
     @Override
     public void shcedule() {
+        //清空的数据
+        tScheduleMapper.deleteAll();
         //排课
         scheduleUtils.schedulePlan();
         //更像相关属性
@@ -158,11 +163,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         System.out.println("===================================================");
 
         return list;
-    }
-
-    @Override
-    public List<String> findDistinctClassId() {
-        return tScheduleMapper.findDistinctClassId();
     }
 
 }
