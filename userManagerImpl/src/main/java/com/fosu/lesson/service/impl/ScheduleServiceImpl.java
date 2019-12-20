@@ -165,4 +165,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         return list;
     }
 
+    @Override
+    public List<String> findDistinctClassId() {
+        return null;
+    }
+
 }

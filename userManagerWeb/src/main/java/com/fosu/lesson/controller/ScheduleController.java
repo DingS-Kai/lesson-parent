@@ -36,7 +36,7 @@ public class ScheduleController {
         TSchedule tSchedule2 = new TSchedule();
         List<String> classNoList = courseService.selectByColumnName("class_id");
         List<String> teacherIdList = teacherService.selectByColumnName("teacher_name");
-        /*for(String class_name:classNoList){
+        for(String class_name:classNoList){
             tSchedule1.setClassId(class_name);
             List<TSchedule> list = scheduleService.findOne(tSchedule1,true);
             int flag=0;
@@ -60,7 +60,6 @@ public class ScheduleController {
             System.out.println("================================================");
             System.out.println("");
         }
-*/
         for(String teacher :teacherIdList){
             tSchedule2.setTeacherName(teacher);
             List<TSchedule> list = scheduleService.findOne(tSchedule2,false);

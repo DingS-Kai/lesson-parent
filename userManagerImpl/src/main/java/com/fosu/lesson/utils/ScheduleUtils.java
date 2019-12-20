@@ -157,12 +157,10 @@ public class ScheduleUtils {
       for (int i = 0; i < generation; ++i) {
          //第一步完成交叉操作,产生新一代的父本
          individualMap = hybridization(individualMap);
-         //第二步合拢个体准备变异
-
+         //第二步合拢个体准备变异 closedGene(individualMap)
          //第三步开始变异
           resultGeneList = geneticMutation(closedGene(individualMap));
-         //第四步进行冲突检测并消除
-         conflictResolution(resultGeneList);
+         //第四步进行冲突检测并消除  conflictResolution(resultGeneList);
          //第五步将冲突消除后的个体再次进行分割，按班级进行分配准备进入下一次的进化
          individualMap = transformIndividual(conflictResolution(resultGeneList),true);
          //冲突解决后存储权重高的
@@ -175,6 +173,28 @@ public class ScheduleUtils {
          Expect=0;
       }
       return maxIndividualMap;
+   }
+
+   //判断老师课程是否冲突，冲突更换时间，递归更换；
+   private List<String> judgeConflict(List<String> resultGeneList,String gene) {
+      for (int i = 0; i < resultGeneList.size(); ++i) {
+         String newGene = resultGeneList.get(i);
+         String teacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, newGene);
+         String classTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, newGene);
+         String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene);
+         String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
+            if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
+               String newClassTime = ClassSchedulUtil.randomTime(newGene, resultGeneList);
+               newGene = newGene.substring(0, 18) + newClassTime;
+               resultGeneList.remove(i);
+               resultGeneList.add(i,newGene);
+
+            }
+
+
+      }
+      return resultGeneList;
+
    }
 
 
@@ -222,13 +242,14 @@ public class ScheduleUtils {
             String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene);
             String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
             if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
-               String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-               gene = gene.substring(0, 18) + newClassTime;
-               continue exit;
+                  String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
+                  gene = gene.substring(0, 18) + newClassTime;
+                  resultGeneList.remove(i);
+                  resultGeneList.add(gene);
+                  continue exit;
+               }
             }
-
          }
-      }
       return resultGeneList;
    }
 
