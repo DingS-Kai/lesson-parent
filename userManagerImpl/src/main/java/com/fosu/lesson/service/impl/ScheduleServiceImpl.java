@@ -157,11 +157,21 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         });
 
+
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getTimeId().equals((i+1)+"")){
+                continue;
+            }else{
+                TSchedule tSchedule=new TSchedule();
+                tSchedule.setTimeId((i+1)+"");
+                list.add(i,tSchedule);
+                i=36;
+            }
+        }
         System.out.println("===================================================");
         Consumer consumer = (item) -> System.out.println(item.toString());
         list.forEach(consumer);
         System.out.println("===================================================");
-
         return list;
     }
 
