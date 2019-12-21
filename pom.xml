@@ -64,6 +64,15 @@
                 <scope>true</scope>
             </dependency>
             <!-- spring-boot-devtools热启动依赖包 end-->
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>2.1.4</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
     <build>
