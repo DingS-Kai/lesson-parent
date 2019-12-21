@@ -25,7 +25,7 @@ public interface ClassService {
     PageResult findByPage(int pageNo, int pageSize);
 
     //查一个年级有多少个班
-    List<String> findClass(String grade);
+    List<TClass> findClass(String grade);
 
     //返回所有的年级
     List<String> findGrade();

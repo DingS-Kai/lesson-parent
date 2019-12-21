@@ -92,15 +92,15 @@ public class ClassController {
 
 
     @ApiOperation(value = "查找一个年级有几个班,返回该年级对应的班别" )
-    @ApiImplicitParam(name = "grade" , dataType = "String" , value = "传入一个年级grade" ,required = true )
-    @PostMapping("/findclass/{grade}")
-    public List<String> findClass(@PathVariable String grade){
+    @ApiImplicitParam(name = "grade" ,allowMultiple = true, dataType = "TClass" , value = "传入一个年级grade" ,required = true )
+    @GetMapping("/findclass/{grade}")
+    public List<TClass> findClass(@PathVariable String grade){
         System.out.println(grade);
         return classService.findClass(grade);
     }
 
     @ApiOperation(value = "返回所有的年级" )
-    @PostMapping("/findgrade")
+    @GetMapping("/findgrade")
     public List<String> findGrade(){
         return classService.findGrade();
     }

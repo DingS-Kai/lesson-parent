@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @Service
@@ -50,12 +51,25 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Map<String, List<TSchedule>> findAll() {
         //查找有多少个班级
+        List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
 
-
-        List<TSchedule> list = tScheduleMapper.selectByExample(null);
         Map<String, List<TSchedule>> map = new HashMap<>();
 
-        return null;
+        for (int i = 0; i < distinctClassId.size(); i++) {
+            String classId = distinctClassId.get(i);
+            List<TSchedule> oneStudentPlan = getOneStudentPlan(classId);
+            map.put(classId, oneStudentPlan);
+        }
+
+        System.out.println("================================");
+        BiConsumer biConsumer = (k, v) -> {
+            System.out.println(k.toString());
+            System.out.println(v.toString());
+            System.out.println();
+        };
+        map.forEach(biConsumer);
+        System.out.println("================================");
+        return map;
     }
 
     @Override
