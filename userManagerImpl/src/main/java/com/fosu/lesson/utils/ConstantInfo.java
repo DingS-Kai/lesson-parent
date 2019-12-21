@@ -33,6 +33,6 @@ public class ConstantInfo {
 
 
 
-    public static final int GENERATION = 20;//遗传代数
+    public static final int GENERATION = 100;//遗传代数
 
 }

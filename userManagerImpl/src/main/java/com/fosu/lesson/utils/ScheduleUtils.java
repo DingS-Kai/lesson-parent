@@ -42,7 +42,8 @@ public class ScheduleUtils {
       //List<String> resultList = finalResult(individualMap);
       //第七步对分配好时间教室的基因进行解码，准备存入数据库
       decoding(individualMap);
-
+      maxExpect=-200000;
+      Expect=0;
    }
 
    //解码
@@ -127,10 +128,12 @@ public class ScheduleUtils {
 
    ////将编码按班级进行分类，形成初始个体（不含教室的初始课表）
    private Map<String, List<String>> transformIndividual(List<String> resultGeneList,Boolean flag) {
+
       Map<String, List<String>> individualMap = new HashMap<>();
       //选出只有班级的列
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
       if(flag==true){
+         Expect=0;
          Expect+=judgeConflict(resultGeneList);
       }
       for (String classNo : classNoList) {
@@ -141,18 +144,17 @@ public class ScheduleUtils {
             }
          }
          //分班填入初始化map，map<string，geneList> 键为班级号 值为这个班级的基因
-         if (geneList.size() > 1) {
+         if (geneList.size() >= 1) {
             individualMap.put(classNo, geneList);
             if(flag==true){
                Expect+=ClassSchedulUtil.alculateExpectedValue(geneList);
             }
-
          }
       }
       return individualMap;
    }
 
-   private Map<String, List<String>> geneticEvolution(Map<String, List<String>> individualMap) {
+      private Map<String, List<String>> geneticEvolution(Map<String, List<String>> individualMap) {
       int generation = ConstantInfo.GENERATION;//进化代数设为100
       List<String> resultGeneList;
       Map<String, List<String>> maxIndividualMap = new HashMap<>();
@@ -167,27 +169,24 @@ public class ScheduleUtils {
          individualMap = transformIndividual(conflictResolution(resultGeneList),true);
          //冲突解决后存储权重高的
          if(maxExpect<Expect){
-            maxIndividualMap=individualMap;
+            maxIndividualMap = individualMap;
             maxExpect=Expect;
 
          }
          System.out.println("》》》》》》"+maxExpect+"《《《《《《"+"  》》》》》》"+Expect+"《《《《《《《");
-         Expect=0;
       }
       return maxIndividualMap;
    }
 
    //判断老师课程是否冲突；
    private double judgeConflict(List<String> resultGeneList) {
-      for (int i = 0; i < resultGeneList.size()-1; i++) {
+      for (int i = 0; i < resultGeneList.size(); ++i) {
          String gene = resultGeneList.get(i);
-         String teacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene);
-         String classTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
-         for (int j = i + 1; j < resultGeneList.size(); j++) {
+         String teacherNoAndClassTime = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene)+ ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
+         for (int j = i + 1; j < resultGeneList.size(); ++j) {
             String tempGene = resultGeneList.get(j);
-            String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene);
-            String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
-            if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
+            String teacherNoAndClassTime2 = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene)+ ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
+            if (teacherNoAndClassTime2.equals(teacherNoAndClassTime)) {
               return  -10000;
             }
          }

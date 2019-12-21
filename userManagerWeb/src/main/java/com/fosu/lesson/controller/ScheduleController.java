@@ -21,11 +21,11 @@ import java.util.Map;
 @Api(tags = "基本信息管理-排课")
 public class ScheduleController {
 
-    @Reference
+    @Reference(retries = 0)
     private ScheduleService scheduleService;
-    @Reference
+    @Reference(retries = 0)
     private CourseService courseService;
-    @Reference
+    @Reference(retries = 0)
     private TeacherService teacherService;
 
 
