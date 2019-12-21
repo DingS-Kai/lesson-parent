@@ -153,7 +153,7 @@ public class ClassSchedulUtil {
         return F6;
     }
 
-    //计算一天课程的期望值（一天顶多两门同柯城）
+    //计算一天课程的期望值（一天顶多两门同课程）
     private static int calculateOneDaySum(Set<String> day) {
         if(day.size()<=5){
             return ConstantInfo.F2;
