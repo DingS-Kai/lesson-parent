@@ -75,13 +75,12 @@ public class ScheduleUtils {
             tSchedule.setTimeId(Time_id);
             tSchedule.setClassroomId(classroomId+"");
             classroomId++;
-            tSchedule.setScheduleId("4");
+            tSchedule.setScheduleId("2018-2019上学期");
             tScheduleList.add(tSchedule);
          }
 
 
       }
-      System.out.println("1");
       for (TSchedule tSchedule:tScheduleList) {
          tScheduleMapper.insert(tSchedule);
       }
@@ -131,6 +130,9 @@ public class ScheduleUtils {
       Map<String, List<String>> individualMap = new HashMap<>();
       //选出只有班级的列
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
+      if(flag==true){
+         Expect+=judgeConflict(resultGeneList);
+      }
       for (String classNo : classNoList) {
          List<String> geneList = new ArrayList<>();
          for (String gene : resultGeneList) {
@@ -175,26 +177,22 @@ public class ScheduleUtils {
       return maxIndividualMap;
    }
 
-   //判断老师课程是否冲突，冲突更换时间，递归更换；
-   private List<String> judgeConflict(List<String> resultGeneList,String gene) {
-      for (int i = 0; i < resultGeneList.size(); ++i) {
-         String newGene = resultGeneList.get(i);
-         String teacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, newGene);
-         String classTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, newGene);
-         String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene);
-         String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
+   //判断老师课程是否冲突；
+   private double judgeConflict(List<String> resultGeneList) {
+      for (int i = 0; i < resultGeneList.size()-1; i++) {
+         String gene = resultGeneList.get(i);
+         String teacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene);
+         String classTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
+         for (int j = i + 1; j < resultGeneList.size(); j++) {
+            String tempGene = resultGeneList.get(j);
+            String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene);
+            String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
             if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
-               String newClassTime = ClassSchedulUtil.randomTime(newGene, resultGeneList);
-               newGene = newGene.substring(0, 18) + newClassTime;
-               resultGeneList.remove(i);
-               resultGeneList.add(i,newGene);
-
+              return  -10000;
             }
-
-
+         }
       }
-      return resultGeneList;
-
+      return 0;
    }
 
 
@@ -233,11 +231,11 @@ public class ScheduleUtils {
    //解决冲突，同一时间一个教师上多门课的冲突
    private List<String> conflictResolution(List<String> resultGeneList) {
       exit:
-      for (int i = 0; i < resultGeneList.size(); ++i) {
+      for (int i = 0; i < resultGeneList.size()-1; i++) {
          String gene = resultGeneList.get(i);
          String teacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, gene);
          String classTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, gene);
-         for (int j = i + 1; j < resultGeneList.size(); ++j) {
+         for (int j = i + 1; j < resultGeneList.size(); j++) {
             String tempGene = resultGeneList.get(j);
             String tempTeacherNo = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene);
             String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
@@ -246,6 +244,7 @@ public class ScheduleUtils {
                   gene = gene.substring(0, 18) + newClassTime;
                   resultGeneList.remove(i);
                   resultGeneList.add(gene);
+                  i=i-1;
                   continue exit;
                }
             }
