@@ -121,7 +121,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/findOne")
-    @ApiOperation(value = "查找一个班级排课信息" , notes = "通过班级排课的部分信息获取班级排课的完整信息")
+    @ApiOperation(value = "查找一个班级排课信息--后台测试用" , notes = "通过班级排课的部分信息获取班级排课的完整信息")
     @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "班级排课的部分信息作为参数" ,required = true )
     public List<TSchedule> findOne(@RequestBody TSchedule tSchedule){
         return scheduleService.findOne(tSchedule,true);

@@ -12,7 +12,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -79,7 +78,7 @@ public class ClassServiceImpl implements ClassService {
 
 
     @Override
-    public List<String> findClass(String grade) {
+    public List<TClass> findClass(String grade) {
         TClassExample tClassExample = new TClassExample();
         TClassExample.Criteria criteria = tClassExample.createCriteria();
 
@@ -91,12 +90,12 @@ public class ClassServiceImpl implements ClassService {
         list.forEach(consumer);
         System.out.println("========================================");
 
-        List<String> list1 = new ArrayList<>();
+      /*  List<String> list1 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String s = (list.get(i)).getClassName();
             list1.add(s);
-        }
-        return list1;
+        }*/
+        return list;
     }
 
     @Override
