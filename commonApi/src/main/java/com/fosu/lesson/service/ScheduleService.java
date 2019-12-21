@@ -1,5 +1,6 @@
 package com.fosu.lesson.service;
 
+import com.fosu.lesson.pojo.ClassSchedule;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 
@@ -13,6 +14,9 @@ public interface ScheduleService {
 
     //查全部班的排课
     Map<String, List<TSchedule>> findAll();
+
+    //查全部班的排课
+    List<ClassSchedule> findAllSchedule();
 
     //增加
     void save(TSchedule tSchedule);

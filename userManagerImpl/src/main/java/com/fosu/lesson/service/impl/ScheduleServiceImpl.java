@@ -2,10 +2,7 @@ package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TScheduleMapper;
-import com.fosu.lesson.pojo.PageResult;
-import com.fosu.lesson.pojo.TSchedule;
-import com.fosu.lesson.pojo.TScheduleExample;
-import com.fosu.lesson.pojo.TStudent;
+import com.fosu.lesson.pojo.*;
 import com.fosu.lesson.service.ScheduleService;
 import com.fosu.lesson.utils.ScheduleUtils;
 import com.github.pagehelper.ISelect;
@@ -70,6 +67,31 @@ public class ScheduleServiceImpl implements ScheduleService {
         map.forEach(biConsumer);
         System.out.println("================================");
         return map;
+    }
+
+    @Override
+    public List<ClassSchedule> findAllSchedule(){
+        //查找有多少个班级
+        List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
+
+        List<ClassSchedule> list = new ArrayList<>();
+
+        for (int i = 0; i < distinctClassId.size(); i++) {
+            String classId = distinctClassId.get(i);
+            List<TSchedule> oneStudentPlan = getOneStudentPlan(classId);
+            ClassSchedule cs = new ClassSchedule();
+            cs.setClassId(classId);
+            cs.setCurriculum(oneStudentPlan);
+            list.add(cs);
+        }
+
+        System.out.println("================================");
+        for (ClassSchedule cs: list
+             ) {
+            System.out.println(cs);
+        }
+        System.out.println("================================");
+        return list;
     }
 
     @Override

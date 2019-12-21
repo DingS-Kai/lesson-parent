@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="commonApi" />
+        <module name="usermanagerimpl" />
+        <module name="usermanagerweb" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="commonApi" target="1.8" />
+      <module name="lesson-parent" target="1.8" />
+      <module name="usermanagerimpl" target="1.8" />
+      <module name="usermanagerweb" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="commonApi" options="-parameters" />
+      <module name="usermanagerimpl" options="-parameters" />
+      <module name="usermanagerweb" options="-parameters" />
+    </option>
+  </component>
+</project>

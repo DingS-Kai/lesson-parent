@@ -1,6 +1,7 @@
 package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fosu.lesson.pojo.ClassSchedule;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.CourseService;
@@ -133,6 +134,11 @@ public class ScheduleController {
         return scheduleService.findAll();
     }
 
+    @ApiOperation(value = "查找所有班级排课信息*")
+    @GetMapping("/findAllSchedule")
+    public List<ClassSchedule> findAllSchedule(){
+        return scheduleService.findAllSchedule();
+    }
 
     //增加
     @PostMapping("/save")

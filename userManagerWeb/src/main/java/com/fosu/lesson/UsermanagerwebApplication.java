@@ -31,14 +31,14 @@ public class UsermanagerwebApplication {
 package com.fosu.lesson;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.fosu.lesson.service.UserManagerService;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+        import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
+        import com.fosu.lesson.service.UserManagerService;
+        import org.springframework.boot.SpringApplication;
+        import org.springframework.boot.autoconfigure.SpringBootApplication;
+        import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+        import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.annotation.PostConstruct;
+        import javax.annotation.PostConstruct;
 
 @EnableSwagger2
 @EnableDubbo
