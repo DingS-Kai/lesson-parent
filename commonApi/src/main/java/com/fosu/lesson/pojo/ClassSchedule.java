@@ -8,15 +8,15 @@ import java.util.List;
  *
  */
 public class ClassSchedule implements Serializable {
-    private String classId;
+    private TClass tClass;
     private List<TSchedule> curriculum;
 
-    public String getClassId() {
-        return classId;
+    public TClass gettClass() {
+        return tClass;
     }
 
-    public void setClassId(String classId) {
-        this.classId = classId;
+    public void settClass(TClass tClass) {
+        this.tClass = tClass;
     }
 
     public List<TSchedule> getCurriculum() {
@@ -27,10 +27,11 @@ public class ClassSchedule implements Serializable {
         this.curriculum = curriculum;
     }
 
+
     @Override
     public String toString() {
         return "ClassSchedule{" +
-                "classId='" + classId + '\'' +
+                "tClass=" + tClass +
                 ", curriculum=" + curriculum +
                 '}';
     }
