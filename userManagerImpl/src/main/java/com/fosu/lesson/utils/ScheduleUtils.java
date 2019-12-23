@@ -27,7 +27,8 @@ public class ScheduleUtils {
 
 
    public synchronized void schedulePlan(){
-
+      maxExpect=-200000;
+      Expect=0;
       //获取课程教师信息
       List<TCourse> TCourseList = tCourseMapper.selectByExample(null);
       //对开课任务进行编码
@@ -42,14 +43,14 @@ public class ScheduleUtils {
       //List<String> resultList = finalResult(individualMap);
       //第七步对分配好时间教室的基因进行解码，准备存入数据库
       decoding(individualMap);
-      maxExpect=-200000;
-      Expect=0;
+
    }
 
    //解码
    private void decoding(Map<String, List<String>> individualMap) {
       //选出只有班级的列
       List<TSchedule> tScheduleList =new ArrayList<>();
+       System.out.println(judgeConflict(closedGene(individualMap))+"我太难了");
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
       for (String classId:classNoList) {
          List<String> geneList = individualMap.get(classId);
@@ -169,7 +170,11 @@ public class ScheduleUtils {
          individualMap = transformIndividual(conflictResolution(resultGeneList),true);
          //冲突解决后存储权重高的
          if(maxExpect<Expect){
-            maxIndividualMap = individualMap;
+            for (Map.Entry<String, List<String>> entry : individualMap.entrySet())
+            {
+               maxIndividualMap.put(entry.getKey(),
+                       new ArrayList<String>(entry.getValue()));
+            }
             maxExpect=Expect;
 
          }
@@ -187,7 +192,7 @@ public class ScheduleUtils {
             String tempGene = resultGeneList.get(j);
             String teacherNoAndClassTime2 = ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID, tempGene)+ ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
             if (teacherNoAndClassTime2.equals(teacherNoAndClassTime)) {
-              return  -10000;
+              return  -200000;
             }
          }
       }
