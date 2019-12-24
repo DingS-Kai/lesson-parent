@@ -1,6 +1,8 @@
 package com.fosu.lesson.pojo;
 
-public class TScheduletask {
+import java.io.Serializable;
+
+public class TScheduletask implements Serializable {
     private Integer id;
 
     private String scheduleId;

@@ -50,27 +50,27 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Map<String, List<TSchedule>> findAll() {
-        //查找有多少个班级
-        List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
+    public Map<String, List<TSchedule>> findAll(String grade) {
+            //查找有多少个班级
+            List<String> distinctClassId = tScheduleMapper.findDistinctClassId(grade);
 
-        Map<String, List<TSchedule>> map = new HashMap<>();
+            Map<String, List<TSchedule>> map = new HashMap<>();
 
-        for (int i = 0; i < distinctClassId.size(); i++) {
-            String classId = distinctClassId.get(i);
-            List<TSchedule> oneStudentPlan = getOneStudentPlan(classId);
-            map.put(classId, oneStudentPlan);
-        }
+            for (int i = 0; i < distinctClassId.size(); i++) {
+                String classId = distinctClassId.get(i);
+                List<TSchedule> oneStudentPlan = getOneStudentPlan(classId);
+                map.put(classId, oneStudentPlan);
+            }
 
-        System.out.println("================================");
-        BiConsumer biConsumer = (k, v) -> {
-            System.out.println(k.toString());
-            System.out.println(v.toString());
-            System.out.println();
-        };
-        map.forEach(biConsumer);
-        System.out.println("================================");
-        return map;
+            System.out.println("================================");
+            BiConsumer biConsumer = (k, v) -> {
+                System.out.println(k.toString());
+                System.out.println(v.toString());
+                System.out.println();
+            };
+            map.forEach(biConsumer);
+            System.out.println("================================");
+            return map;
     }
 
     @Override

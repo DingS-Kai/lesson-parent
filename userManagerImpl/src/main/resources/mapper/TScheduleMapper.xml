@@ -265,7 +265,10 @@
     truncate table t_schedule
 </update>
 
-  <select id="findDistinctClassId" resultType="java.lang.String">
-    SELECT DISTINCT class_id FROM t_schedule;
+  <select id="findDistinctClassId" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT DISTINCT class_id FROM t_schedule
+    <if test="grade != null">
+        where grade like '#{grade}%'
+    </if>
   </select>
 </mapper>

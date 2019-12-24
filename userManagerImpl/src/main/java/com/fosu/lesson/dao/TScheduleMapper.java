@@ -29,5 +29,5 @@ public interface TScheduleMapper {
     //清空表数据
     void deleteAll();
 
-    List<String> findDistinctClassId();
+    List<String> findDistinctClassId(@Param("grade") String grade);
 }

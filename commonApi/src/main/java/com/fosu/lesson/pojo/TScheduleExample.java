@@ -1,9 +1,10 @@
 package com.fosu.lesson.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TScheduleExample {
+public class TScheduleExample implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;

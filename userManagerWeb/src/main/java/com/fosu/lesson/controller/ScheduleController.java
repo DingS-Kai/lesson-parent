@@ -130,8 +130,8 @@ public class ScheduleController {
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
-    public Map<String, List<TSchedule>> findAll(){
-        return scheduleService.findAll();
+    public Map<String, List<TSchedule>> findAll(String grade){
+        return scheduleService.findAll(grade);
     }
 
     @ApiOperation(value = "查找所有班级排课信息*")
