@@ -1,8 +1,8 @@
 package com.fosu.lesson.pojo;
 
-import java.io.Serializable;
+public class TCourse {
+    private String grade;
 
-public class TCourse implements Serializable {
     private String courseId;
 
     private String classId;
@@ -17,9 +17,20 @@ public class TCourse implements Serializable {
 
     private String remark;
 
+    private String free;
+
+    private String teachertime;
+
     @Override
     public String toString() {
         return "courseId: "+courseId+" ,classId:"+classId+",teacherId:"+teacherId+" ,courseName:"+courseName+",courseSort:"+courseSort+" ,classHour:"+classHour+",remark:"+remark;
+    }
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade == null ? null : grade.trim();
     }
 
     public String getCourseId() {
@@ -78,4 +89,19 @@ public class TCourse implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
+    public String getFree() {
+        return free;
+    }
+
+    public void setFree(String free) {
+        this.free = free == null ? null : free.trim();
+    }
+
+    public String getTeachertime() {
+        return teachertime;
+    }
+
+    public void setTeachertime(String teachertime) {
+        this.teachertime = teachertime == null ? null : teachertime.trim();
+    }
 }

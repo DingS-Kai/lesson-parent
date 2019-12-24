@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fosu.lesson.dao.TCourseMapper">
   <resultMap id="BaseResultMap" type="com.fosu.lesson.pojo.TCourse">
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="course_id" jdbcType="VARCHAR" property="courseId" />
     <result column="class_id" jdbcType="VARCHAR" property="classId" />
     <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
@@ -9,6 +10,8 @@
     <result column="course_sort" jdbcType="VARCHAR" property="courseSort" />
     <result column="class_hour" jdbcType="VARCHAR" property="classHour" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="free" jdbcType="VARCHAR" property="free" />
+    <result column="teachertime" jdbcType="VARCHAR" property="teachertime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    course_id, class_id, teacher_id, course_name, course_sort, class_hour, remark
+    grade, course_id, class_id, teacher_id, course_name, course_sort, class_hour, remark, 
+    free, teachertime
   </sql>
   <select id="selectByExample" parameterType="com.fosu.lesson.pojo.TCourseExample" resultMap="BaseResultMap">
     select
@@ -92,16 +96,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fosu.lesson.pojo.TCourse">
-    insert into t_course (course_id, class_id, teacher_id, 
-      course_name, course_sort, class_hour, 
-      remark)
-    values (#{courseId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, 
-      #{courseName,jdbcType=VARCHAR}, #{courseSort,jdbcType=VARCHAR}, #{classHour,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+    insert into t_course (grade, course_id, class_id, 
+      teacher_id, course_name, course_sort, 
+      class_hour, remark, free, 
+      teachertime)
+    values (#{grade,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, 
+      #{teacherId,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{courseSort,jdbcType=VARCHAR}, 
+      #{classHour,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{free,jdbcType=VARCHAR}, 
+      #{teachertime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fosu.lesson.pojo.TCourse">
     insert into t_course
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grade != null">
+        grade,
+      </if>
       <if test="courseId != null">
         course_id,
       </if>
@@ -123,8 +132,17 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="free != null">
+        free,
+      </if>
+      <if test="teachertime != null">
+        teachertime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
       <if test="courseId != null">
         #{courseId,jdbcType=VARCHAR},
       </if>
@@ -146,6 +164,12 @@
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="free != null">
+        #{free,jdbcType=VARCHAR},
+      </if>
+      <if test="teachertime != null">
+        #{teachertime,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.fosu.lesson.pojo.TCourseExample" resultType="java.lang.Long">
@@ -157,6 +181,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_course
     <set>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
       <if test="record.courseId != null">
         course_id = #{record.courseId,jdbcType=VARCHAR},
       </if>
@@ -178,6 +205,12 @@
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.free != null">
+        free = #{record.free,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachertime != null">
+        teachertime = #{record.teachertime,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -185,18 +218,20 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_course
-    set course_id = #{record.courseId,jdbcType=VARCHAR},
+    set grade = #{record.grade,jdbcType=VARCHAR},
+      course_id = #{record.courseId,jdbcType=VARCHAR},
       class_id = #{record.classId,jdbcType=VARCHAR},
       teacher_id = #{record.teacherId,jdbcType=VARCHAR},
       course_name = #{record.courseName,jdbcType=VARCHAR},
       course_sort = #{record.courseSort,jdbcType=VARCHAR},
       class_hour = #{record.classHour,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      free = #{record.free,jdbcType=VARCHAR},
+      teachertime = #{record.teachertime,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
 
 
   <select id="selectOne" parameterType="com.fosu.lesson.pojo.TCourse" resultMap="BaseResultMap">
@@ -205,7 +240,7 @@
     from t_course
     <where>
       <if test="courseId != null">
-       and course_id = #{courseId,jdbcType=VARCHAR}
+        and course_id = #{courseId,jdbcType=VARCHAR}
       </if>
       <if test="classId != null">
         and  class_id = #{classId,jdbcType=VARCHAR}
@@ -231,5 +266,4 @@
   <select id="selectByColumnName" resultType="java.lang.String" parameterType="java.lang.String">
        select distinct  ${columnName} from t_course
     </select>
-
 </mapper>

@@ -1,15 +1,11 @@
 package com.fosu.lesson.dao;
 
-import com.fosu.lesson.pojo.TClass;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
-@Repository
 public interface TCourseMapper {
     long countByExample(TCourseExample example);
 
