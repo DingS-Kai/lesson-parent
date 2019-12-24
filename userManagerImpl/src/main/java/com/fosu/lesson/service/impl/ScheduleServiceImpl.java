@@ -1,6 +1,7 @@
 package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fosu.lesson.dao.TClassMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.*;
 import com.fosu.lesson.service.ScheduleService;
@@ -23,6 +24,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private   ScheduleUtils scheduleUtils;
+
+    @Autowired
+    private TClassMapper tClassMapper;
 
 
     @Override
@@ -72,23 +76,33 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ClassSchedule> findAllSchedule(){
         //查找有多少个班级
-        List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
+        //List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
+        //查找所有的班级
+        List<TClass> classList = tClassMapper.selectByExample(null);
 
         List<ClassSchedule> list = new ArrayList<>();
 
-        for (int i = 0; i < distinctClassId.size(); i++) {
-            String classId = distinctClassId.get(i);
+        for (int i = 0; i < classList.size(); i++) {
+            TClass tClass = classList.get(i); //获得每一个班级
+            String classId = tClass.getClassId();  //获得每个班级的id
             List<TSchedule> oneStudentPlan = getOneStudentPlan(classId);
             ClassSchedule cs = new ClassSchedule();
-            cs.setClassId(classId);
-            cs.setCurriculum(oneStudentPlan);
+
+            //班级的课表存在，则把班级信息和课表信息添加到封装类classSchedule中
+            if( oneStudentPlan!=null && oneStudentPlan.size()>0 ) {
+                cs.settClass(tClass);
+                cs.setCurriculum(oneStudentPlan);
+            }else{
+                continue;
+            }
             list.add(cs);
         }
 
         System.out.println("================================");
-        for (ClassSchedule cs: list
-             ) {
-            System.out.println(cs);
+        for (ClassSchedule cs: list ) {
+            System.out.println("classId:"+cs.gettClass().getClassId());
+            System.out.println(cs.getCurriculum());
+            System.out.println("===");
         }
         System.out.println("================================");
         return list;
