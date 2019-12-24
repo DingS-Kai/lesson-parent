@@ -101,7 +101,7 @@ public class ClassSchedulUtil {
                 F3 = F3 + calculatePhysicalExpect(classTime);
             }
         }
-        F4=calculateFreeTime(individualList);
+        F4=calculateFreeTime(individualList);//
         F5 = calculateDiscreteExpect(individualList);
         F6=calculateOnedayCourse(individualList);
         Fx = K1 * F1 + K2 * F2 + K3 * F3  + F4 * K4 + K6 * F6;

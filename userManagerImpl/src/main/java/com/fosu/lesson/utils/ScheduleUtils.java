@@ -50,7 +50,7 @@ public class ScheduleUtils {
    private void decoding(Map<String, List<String>> individualMap) {
       //选出只有班级的列
       List<TSchedule> tScheduleList =new ArrayList<>();
-       System.out.println(judgeConflict(closedGene(individualMap))+"我太难了");
+     //  System.out.println(judgeConflict(closedGene(individualMap))+"我太难了");
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
       for (String classId:classNoList) {
          List<String> geneList = individualMap.get(classId);
@@ -270,7 +270,7 @@ public class ScheduleUtils {
          //对父代的适应度值和新生成的子代适应值进行对比，选择适应度值高的一个进入下一代的遗传
          double oldExpect = ClassSchedulUtil.alculateExpectedValue(oldIndividualList);
          double newExpect = ClassSchedulUtil.alculateExpectedValue(individualList);
-         System.out.println("======="+newExpect+"=========="+oldExpect);
+         //System.out.println("======="+newExpect+"=========="+oldExpect);
          if ( newExpect>= oldExpect) {
             individualMap.put(classNo, individualList);
          } else {
