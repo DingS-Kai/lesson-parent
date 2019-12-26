@@ -3,6 +3,7 @@ package com.fosu.lesson.utils;
 import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.TCourse;
+import com.fosu.lesson.pojo.TCourseExample;
 import com.fosu.lesson.pojo.TSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,13 +26,20 @@ public class ScheduleUtils {
    double Expect=0;
 
 
-   public synchronized void schedulePlan(List<TSchedule> tScheduleList){
+   public synchronized void schedulePlan(List<TSchedule> tScheduleList,String grade){
       maxExpect=-200000;
       Expect=0;
+      List<TCourse> TCourseList;
       //获取课程教师信息
-      List<TCourse> TCourseList = tCourseMapper.selectByExample(null);
-      //对开课任务进行编码
+      if(grade!=null&&!(grade.equals(""))){
+         TCourseExample tCourseExample = new TCourseExample();
+         tCourseExample.createCriteria().andGradeEqualTo(grade);
+          TCourseList = tCourseMapper.selectByExample(tCourseExample);
+      }else{
+          TCourseList = tCourseMapper.selectByExample(null);
+      }
 
+      //对开课任务进行编码
       List<Map<String, List<String>>> geneList = coding(TCourseList,tScheduleList);
      //开始进行时间分配
       List<String> resultGeneList = codingTime(geneList);
@@ -54,32 +62,33 @@ public class ScheduleUtils {
       List<String> classNoList = tCourseMapper.selectByColumnName(ConstantInfo.CLASS_ID);
       for (String classId:classNoList) {
          List<String> geneList = individualMap.get(classId);
-         double oldExpect = ClassSchedulUtil.alculateExpectedValue(geneList);
-         System.out.println("+++++++++"+oldExpect+"+++++++++++");
-         String Time_id = new String();
-         String Course_id = new String();
-         int classroomId=1;
-         for (String gene:geneList) {
-            Course_id=ClassSchedulUtil.cutGene(ConstantInfo.COURSE_ID,gene);
-            if(Course_id.substring(0,2).equals("00")){
-               Course_id=Course_id.substring(2,3);
-            }else if(Course_id.substring(0,1).equals("0")){
-               Course_id=Course_id.substring(1,3);
+         if(geneList!=null){
+            double oldExpect = ClassSchedulUtil.alculateExpectedValue(geneList);
+            System.out.println("+++++++++"+oldExpect+"+++++++++++");
+            String Time_id = new String();
+            String Course_id = new String();
+            for (String gene:geneList) {
+               Course_id=ClassSchedulUtil.cutGene(ConstantInfo.COURSE_ID,gene);
+               if(Course_id.substring(0,2).equals("00")){
+                  Course_id=Course_id.substring(2,3);
+               }else if(Course_id.substring(0,1).equals("0")){
+                  Course_id=Course_id.substring(1,3);
+               }
+               Time_id=ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME,gene);
+               if(Time_id.substring(0,1).equals("0")){
+                  Time_id=Time_id.substring(1,2);
+               }
+               TSchedule tSchedule = new TSchedule();
+               tSchedule.setClassId(ClassSchedulUtil.cutGene(ConstantInfo.CLASS_ID,gene));
+               tSchedule.setTeacherId(ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID,gene));
+               tSchedule.setCourseId(Course_id);
+               tSchedule.setTimeId(Time_id);
+               tSchedule.setClassroomId((Integer.parseInt(gene.substring(0,1))-6)+gene.substring(2,3));
+               tSchedule.setScheduleId("2018-2019上学期");
+               tScheduleList.add(tSchedule);
             }
-            Time_id=ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME,gene);
-            if(Time_id.substring(0,1).equals("0")){
-               Time_id=Time_id.substring(1,2);
-            }
-            TSchedule tSchedule = new TSchedule();
-            tSchedule.setClassId(ClassSchedulUtil.cutGene(ConstantInfo.CLASS_ID,gene));
-            tSchedule.setTeacherId(ClassSchedulUtil.cutGene(ConstantInfo.TEACHER_ID,gene));
-            tSchedule.setCourseId(Course_id);
-            tSchedule.setTimeId(Time_id);
-            tSchedule.setClassroomId(classroomId+"");
-            classroomId++;
-            tSchedule.setScheduleId("2018-2019上学期");
-            tScheduleList.add(tSchedule);
          }
+
 
 
       }

@@ -12,12 +12,7 @@ public class SchedulePlanTest {
 
 
 
-    @Test
-    public void schedule(){
-        ScheduleUtils scheduleUtils = new ScheduleUtils();
-         scheduleUtils.schedulePlan(null);
-        System.out.println("111");
-    }
+
 
 
 

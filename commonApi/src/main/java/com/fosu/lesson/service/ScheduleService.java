@@ -16,7 +16,7 @@ public interface ScheduleService {
     Map<String, List<TSchedule>> findAll(String grade);
 
     //查全部班的排课
-    List<ClassSchedule> findAllSchedule();
+    List<ClassSchedule> findAllSchedule(String grade);
 
     //增加
     void save(TSchedule tSchedule);
@@ -30,7 +30,7 @@ public interface ScheduleService {
     //分页
     PageResult findByPage(int pageNo, int pageSize);
 
-    void shcedule();
+    void shcedule(String grade);
 
     List<TSchedule> getOneTercherPlan(String tercherId);
 
@@ -40,5 +40,5 @@ public interface ScheduleService {
     //查排课表里排的班级的classId
     List<String> findDistinctClassId();
 
-    void shcedule(List<TSchedule> tScheduleList);
+    void shcedule(List<TSchedule> tScheduleList,String grade);
 }

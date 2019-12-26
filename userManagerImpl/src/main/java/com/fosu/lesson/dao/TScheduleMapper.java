@@ -30,4 +30,6 @@ public interface TScheduleMapper {
     void deleteAll();
 
     List<String> findDistinctClassId(@Param("grade") String grade);
+
+    void deleteOneGrade(@Param("grade") String grade);
 }

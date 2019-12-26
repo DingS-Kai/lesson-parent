@@ -74,11 +74,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ClassSchedule> findAllSchedule(){
+    public List<ClassSchedule> findAllSchedule(String grade){
         //查找有多少个班级
         //List<String> distinctClassId = tScheduleMapper.findDistinctClassId();
         //查找所有的班级
-        List<TClass> classList = tClassMapper.selectByExample(null);
+        List<TClass> classList;
+        if(grade==null||grade.equals("")){
+            classList = tClassMapper.selectByExample(null);
+        }else{
+            TClassExample tClassExample = new TClassExample();
+            tClassExample.createCriteria().andGradeEqualTo(grade);
+            classList = tClassMapper.selectByExample(tClassExample);
+        }
+
 
         List<ClassSchedule> list = new ArrayList<>();
 
@@ -149,21 +157,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Transactional
     @Override
-    public void shcedule() {
+    public void shcedule(String grade) {
         //清空的数据
         tScheduleMapper.deleteAll();
         //排课
-        scheduleUtils.schedulePlan(null);
+        scheduleUtils.schedulePlan(null,null);
         //更像相关属性
         tScheduleMapper.updateName();
     }
 
     @Override
-    public void shcedule(List<TSchedule> tScheduleList) {
-        //清空的数据
-        tScheduleMapper.deleteAll();
+    public void shcedule(List<TSchedule> tScheduleList,String grade) {
+        if(grade==null||grade.equals("")){
+            //清空的数据
+            tScheduleMapper.deleteAll();
+        }else{
+
+            tScheduleMapper.deleteOneGrade(grade);
+        }
+
         //排课
-        scheduleUtils.schedulePlan(tScheduleList);
+        scheduleUtils.schedulePlan(tScheduleList,grade);
         //更像相关属性
         tScheduleMapper.updateName();
     }

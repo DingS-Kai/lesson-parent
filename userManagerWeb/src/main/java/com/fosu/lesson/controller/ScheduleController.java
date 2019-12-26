@@ -105,20 +105,17 @@ public class ScheduleController {
         t1.setCourseName("语文");
         t1.setTeacherId("20160312");
         t1.setClassId("701");
-        t1.setTimeId("3");
+        t1.setTimeId("8");
 
         TSchedule t2 = new TSchedule();
         t2.setCourseName("英语");
         t2.setTeacherId("20160343");
         t2.setClassId("903");
-        t2.setTimeId("34");
+        t2.setTimeId("8");
         tScheduleList.add(t1);
         tScheduleList.add(t2);
-        if(tScheduleList==null){
-            scheduleService.shcedule();
-        }else{
-            scheduleService.shcedule(tScheduleList);
-        }
+            scheduleService.shcedule(tScheduleList,"初三");
+
 
     }
 
@@ -162,8 +159,8 @@ public class ScheduleController {
 
     @ApiOperation(value = "查找所有班级排课信息*")
     @GetMapping("/findAllSchedule")
-    public List<ClassSchedule> findAllSchedule(){
-        return scheduleService.findAllSchedule();
+    public List<ClassSchedule> findAllSchedule(@RequestParam(required=false) String grade){
+        return scheduleService.findAllSchedule(grade);
     }
 
     //增加
@@ -396,7 +393,7 @@ public class ScheduleController {
     public void downloadTeacher(HttpServletResponse response) throws IOException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
-            List<ClassSchedule> list = findAllSchedule();
+            List<ClassSchedule> list = findAllSchedule(null);
             List<DownloadAll> d = new ArrayList<>();
 
             for (int i = 0; i < list.size(); i++) {

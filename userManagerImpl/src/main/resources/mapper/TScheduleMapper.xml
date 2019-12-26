@@ -271,4 +271,8 @@
         and class_name like '${grade}%'
     </if>
   </select>
+
+  <delete id="deleteOneGrade" parameterType="java.lang.String">
+    delete from t_schedule where class_name like '${grade}%'
+  </delete>
 </mapper>
