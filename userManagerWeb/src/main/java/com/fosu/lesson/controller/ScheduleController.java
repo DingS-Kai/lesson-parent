@@ -1,15 +1,25 @@
 package com.fosu.lesson.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.excel.EasyExcel;
 import com.fosu.lesson.pojo.ClassSchedule;
+import com.fosu.lesson.pojo.DownloadStudent;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TSchedule;
 import com.fosu.lesson.service.CourseService;
 import com.fosu.lesson.service.ScheduleService;
 import com.fosu.lesson.service.TeacherService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +38,6 @@ public class ScheduleController {
     private CourseService courseService;
     @Reference(retries = 0)
     private TeacherService teacherService;
-
 
     @ApiOperation(value = "查找班级排课信息后台测试用" )
     @GetMapping("/qryOne")
@@ -106,7 +115,7 @@ public class ScheduleController {
     @ApiOperation(value = "单个学生的课表" )
     @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
     @GetMapping("/studentplan")
-    public List<TSchedule> StudentPlan(String classId){
+    public List<TSchedule> studentPlan(String classId){
          return scheduleService.getOneStudentPlan(classId);
     }
 
@@ -188,4 +197,175 @@ public class ScheduleController {
         }
         return flag == 1 ? true : false;
     }
+
+    /**
+     * 文件下载并且失败的时候返回json（默认失败了会返回一个有部分数据的Excel）
+     *
+     * @since 2.1.1
+     */
+    @ApiOperation(value = "下载单个学生的课表" )
+    @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
+    @GetMapping("/downloadstudent/{classId}")
+    public void downloadStudent(HttpServletResponse response, @PathVariable String classId) throws IOException {
+        System.out.println(classId);
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        try {
+            List<TSchedule> list = studentPlan(classId);
+            String[] week = {"星期一","星期二","星期三","星期四","星期五"};
+            List<DownloadStudent> d = new ArrayList<>();
+            int i = 0;
+            for (int j = 0 ; j < 5; j++) {
+                DownloadStudent downloadStudent = new DownloadStudent();
+                downloadStudent.setWeek(week[j]);
+                String teacherName = list.get(i).getTeacherName();
+                String courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc1(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc2(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc3(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc4(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc5(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc6(courseName+"  "+teacherName);
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                downloadStudent.setJc7(courseName+"  "+teacherName);
+                d.add(downloadStudent);
+            }
+
+            d.stream().forEach( t -> System.out.println(t.toString()));
+
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            //String fileName = URLEncoder.encode("测试", "UTF-8"); //火狐会乱码
+            String fileName = "课程表";
+            fileName = new String(fileName.getBytes("gb2312"), "ISO8859-1");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            // 这里需要设置不关闭流
+            EasyExcel.write(response.getOutputStream(), DownloadStudent.class).autoCloseStream(Boolean.FALSE).sheet("sheet")
+                    .doWrite(d);
+        } catch (Exception e) {
+            // 重置response
+            response.reset();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("status", "failure");
+            map.put("message", "下载文件失败" + e.getMessage());
+            response.getWriter().println(JSON.toJSONString(map));
+        }
+    }
+
+    /**
+     * 文件下载并且失败的时候返回json（默认失败了会返回一个有部分数据的Excel）
+     *
+     * @since 2.1.1
+     */
+    @ApiOperation(value = "下载单个老师的课表" )
+    @ApiImplicitParam(name = "teacherId" ,dataType = "String" ,value = "传入老师teacherId" ,required = true )
+    @GetMapping("/downloadteacher/{teacherId}")
+    public void downloadTeacher(HttpServletResponse response, @PathVariable String teacherId) throws IOException {
+        System.out.println(teacherId);
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        try {
+            List<TSchedule> list = tercherPlan(teacherId);
+            String[] week = {"星期一","星期二","星期三","星期四","星期五"};
+            List<DownloadStudent> d = new ArrayList<>();
+            int i = 0;
+            for (int j = 0 ; j < 5; j++) {
+                DownloadStudent downloadStudent = new DownloadStudent();
+                downloadStudent.setWeek(week[j]);
+                String courseName = list.get(i).getCourseName();
+                String className = list.get(i).getClassName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc1(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc2(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc3(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc4(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc5(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc6(courseName+"  "+className);
+
+                className = list.get(i).getClassName();
+                courseName = list.get(i).getCourseName();
+                i++;
+                if (i > list.size() - 1)
+                    break;
+                downloadStudent.setJc7(courseName+"  "+className);
+
+                d.add(downloadStudent);
+            }
+
+            d.stream().forEach( t -> System.out.println(t.toString()));
+
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            //String fileName = URLEncoder.encode("测试", "UTF-8"); //火狐会乱码
+            String fileName = "课程表";
+            fileName = new String(fileName.getBytes("gb2312"), "ISO8859-1");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            // 这里需要设置不关闭流
+            EasyExcel.write(response.getOutputStream(), DownloadStudent.class).autoCloseStream(Boolean.FALSE).sheet("sheet")
+                    .doWrite(d);
+        } catch (Exception e) {
+            // 重置response
+            response.reset();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("status", "failure");
+            map.put("message", "下载文件失败" + e.getMessage());
+            response.getWriter().println(JSON.toJSONString(map));
+        }
+    }
+
+
 }
