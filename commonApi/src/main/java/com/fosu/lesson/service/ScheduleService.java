@@ -39,4 +39,6 @@ public interface ScheduleService {
 
     //查排课表里排的班级的classId
     List<String> findDistinctClassId();
+
+    void shcedule(List<TSchedule> tScheduleList);
 }

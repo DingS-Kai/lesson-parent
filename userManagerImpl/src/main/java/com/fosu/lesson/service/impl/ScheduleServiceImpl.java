@@ -53,7 +53,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Map<String, List<TSchedule>> findAll(String grade) {
             //查找有多少个班级
             List<String> distinctClassId = tScheduleMapper.findDistinctClassId(grade);
-
+        System.out.println("==============================="+grade);
             Map<String, List<TSchedule>> map = new HashMap<>();
 
             for (int i = 0; i < distinctClassId.size(); i++) {
@@ -153,7 +153,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         //清空的数据
         tScheduleMapper.deleteAll();
         //排课
-        scheduleUtils.schedulePlan();
+        scheduleUtils.schedulePlan(null);
+        //更像相关属性
+        tScheduleMapper.updateName();
+    }
+
+    @Override
+    public void shcedule(List<TSchedule> tScheduleList) {
+        //清空的数据
+        tScheduleMapper.deleteAll();
+        //排课
+        scheduleUtils.schedulePlan(tScheduleList);
         //更像相关属性
         tScheduleMapper.updateName();
     }
@@ -239,5 +249,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<String> findDistinctClassId() {
         return null;
     }
+
+
 
 }

@@ -10,6 +10,7 @@ import com.fosu.lesson.service.TeacherService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +94,26 @@ public class ScheduleController {
     @ApiOperation(value = "开始排课" )
     @GetMapping("/schedule")
     public void schedulePlan(){
-         scheduleService.shcedule();
+        List<TSchedule> tScheduleList=new ArrayList<>();
+        TSchedule t1 = new TSchedule();
+        t1.setCourseName("语文");
+        t1.setTeacherId("20160312");
+        t1.setClassId("701");
+        t1.setTimeId("3");
+
+        TSchedule t2 = new TSchedule();
+        t2.setCourseName("英语");
+        t2.setTeacherId("20160343");
+        t2.setClassId("903");
+        t2.setTimeId("34");
+        tScheduleList.add(t1);
+        tScheduleList.add(t2);
+        if(tScheduleList==null){
+            scheduleService.shcedule();
+        }else{
+            scheduleService.shcedule(tScheduleList);
+        }
+
     }
 
     @ApiOperation(value = "单个老师的课表" )
@@ -130,7 +150,7 @@ public class ScheduleController {
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
-    public Map<String, List<TSchedule>> findAll(String grade){
+    public Map<String, List<TSchedule>> findAll(@RequestParam(required=false) String grade){
         return scheduleService.findAll(grade);
     }
 

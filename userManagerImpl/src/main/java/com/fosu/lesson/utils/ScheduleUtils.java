@@ -1,6 +1,5 @@
 package com.fosu.lesson.utils;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.TCourse;
@@ -26,13 +25,14 @@ public class ScheduleUtils {
    double Expect=0;
 
 
-   public synchronized void schedulePlan(){
+   public synchronized void schedulePlan(List<TSchedule> tScheduleList){
       maxExpect=-200000;
       Expect=0;
       //获取课程教师信息
       List<TCourse> TCourseList = tCourseMapper.selectByExample(null);
       //对开课任务进行编码
-      Map<String, List<String>> geneList = coding(TCourseList);
+
+      List<Map<String, List<String>>> geneList = coding(TCourseList,tScheduleList);
      //开始进行时间分配
       List<String> resultGeneList = codingTime(geneList);
       //第四步对已分配好时间的基因进行分类，生成以班级为范围的个体
@@ -90,40 +90,68 @@ public class ScheduleUtils {
 
 
    //编码规则（class_id+teacher_id+course_name+course_sort+class_hour）
-   private Map<String, List<String>> coding(List<TCourse> tCourseList){
+   private List<Map<String, List<String>>> coding(List<TCourse> tCourseList, List<TSchedule> tScheduleList){
       Map<String, List<String>> geneListMap = new HashMap<>();
       List<String> unFixedTimeGeneList = new ArrayList<>();//不固定时间的编码基因组
+      List<String> FixedTimeGeneList = new ArrayList<>();//不固定时间的编码基因组
+       for (int i = 0; i <tScheduleList.size() ; i++) {
+           TSchedule tSchedule = tScheduleList.get(i);
+           for(int j = 0 ; j<tCourseList.size();j++){
+               TCourse tCourse = tCourseList.get(j);
+               if(tSchedule.getClassId().equals(tCourse.getClassId())&&tSchedule.getCourseName().equals(tCourse.getRemark())&&tSchedule.getTeacherId().equals(tCourse.getTeacherId())){
+                   String courseID = getCourseID(tCourse.getCourseId());
+                   String time = tSchedule.getTimeId();
+                   if(time.length()<2){
+                       time = "0"+time;
+                   }
+                   String gene = tCourse.getClassId() + tCourse.getTeacherId() + tCourse.getCourseName() + tCourse.getCourseSort() + tCourse.getClassHour()+courseID+"1"+time;
+                   FixedTimeGeneList.add(gene);
+                   tCourse.setClassHour((Integer.parseInt(tCourse.getClassHour())-1)+"");
+               }
+           }
+       }
       for (TCourse tCourse:tCourseList) {
          //计算一周的上课次数，一次对应一个基因，2次对应两个基因。依此类推
          int size = Integer.parseInt(tCourse.getClassHour());
          System.out.println("====================================");
          for (int i = 0; i < size; i++) {
-            String courseID = tCourse.getCourseId();
-            if(courseID.length()<2){
-               courseID="00"+courseID;
-            }else if(courseID.length()<3){
-               courseID="0"+courseID;
-            }
 
-            String gene = tCourse.getClassId() + tCourse.getTeacherId() + tCourse.getCourseName() + tCourse.getCourseSort() + tCourse.getClassHour()+courseID+"00";
+            String courseID = getCourseID(tCourse.getCourseId());
+
+            String gene = tCourse.getClassId() + tCourse.getTeacherId() + tCourse.getCourseName() + tCourse.getCourseSort() + tCourse.getClassHour()+courseID+"000";
             unFixedTimeGeneList.add(gene);
             System.out.println(gene);
          }
          System.out.println("====================================");
       }
+       geneListMap.put("FixedTime", FixedTimeGeneList);
       geneListMap.put("unFixedTime", unFixedTimeGeneList);
-      return geneListMap;
+       List<Map<String, List<String>>> list =  new ArrayList<>();
+       list.add(geneListMap);
+      return list;
    }
 
-   private List<String> codingTime(Map<String, List<String>> geneList) {
+    private String getCourseID(String courseId) {
+       if(courseId.length()<2){
+           courseId = "0"+courseId;
+       }
+       if(courseId.length()<3){
+           courseId = "0"+courseId;
+       }
+       return courseId;
+    }
+
+    private List<String> codingTime(List<Map<String, List<String>>> geneList) {
       List<String> resultGeneList = new ArrayList<>();
-      List<String> unFixedTimeGeneList = geneList.get("unFixedTime");
+      List<String> unFixedTimeGeneList = geneList.get(0).get("unFixedTime");
+       List<String> FixedTimeGeneList = geneList.get(0).get("FixedTime");
       for (String gene : unFixedTimeGeneList) {
          //获取一个不重复的时间片值
          String classTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-         gene = gene.substring(0, 18) + classTime;
+         gene = gene.substring(0, 19) + classTime;
          resultGeneList.add(gene);
       }
+       resultGeneList.addAll(FixedTimeGeneList);
       return resultGeneList;
    }
 
@@ -221,14 +249,16 @@ public class ScheduleUtils {
       for (int i = 0; i < mutationNumber; ) {
          int temp = min + (int) (Math.random() * (max + 1 - min));//生成随机数
          String gene = resultGeneList.get(temp);
-         if(!(gene.substring(0,1).equals("9"))){
+         if (ClassSchedulUtil.cutGene(ConstantInfo.IS_FIX, gene).equals("1")) {
+            break;
+         } else {
             String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-            gene = gene.substring(0, 18) + newClassTime;
+            gene = gene.substring(0, 19) + newClassTime;
             resultGeneList.remove(temp);
             resultGeneList.add(temp, gene);
-         }
             i = i + 1;
          }
+      }
       return resultGeneList;
    }
 
@@ -245,10 +275,17 @@ public class ScheduleUtils {
             String tempClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, tempGene);
             if (teacherNo.equals(tempTeacherNo) && classTime.equals(tempClassTime)) {
                   String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
-                  gene = gene.substring(0, 18) + newClassTime;
-                  resultGeneList.remove(i);
-                  resultGeneList.add(gene);
-                  i=i-1;
+                  if(ClassSchedulUtil.cutGene(ConstantInfo.IS_FIX,gene).equals("0")){
+                     gene = gene.substring(0, 19) + newClassTime;
+                     resultGeneList.remove(i);
+                     resultGeneList.add(gene);
+                     i=i-1;
+                  }else{
+                     tempGene = tempGene.substring(0, 19) + newClassTime;
+                     resultGeneList.remove(j);
+                     resultGeneList.add(tempGene);
+                  }
+
                   continue exit;
                }
             }
@@ -295,13 +332,17 @@ public class ScheduleUtils {
          //判断选择的两个随机数为否相同，确保不会选择同一条基因进行交叉操作
          if (firstTemp == secondTemp) {
             flag = false;
-         }  else {
+         }  else if(ClassSchedulUtil.cutGene(ConstantInfo.IS_FIX,firstGene).equals("1")||ClassSchedulUtil.cutGene(ConstantInfo.IS_FIX,secondGene).equals("1")){
+            //判断选择的两条基因对应的时间值是否固定，如果固定则重新选择两条
+            flag = false;
+         }
+         else {
             //分别获取所选的两条基因的时间片值
             String firstClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, firstGene);
             String secondClassTime = ClassSchedulUtil.cutGene(ConstantInfo.CLASS_TIME, secondGene);
             //将它们的时间进行交换
-            firstGene = firstGene.substring(0, 18) + secondClassTime;
-            secondGene = secondGene.substring(0, 18) + firstClassTime;
+            firstGene = firstGene.substring(0, 19) + secondClassTime;
+            secondGene = secondGene.substring(0, 19) + firstClassTime;
             //对原有的基因进行移除，然后将交换过时间的两条基因添加进去
             individualList.remove(firstTemp);
             individualList.add(firstTemp, firstGene);

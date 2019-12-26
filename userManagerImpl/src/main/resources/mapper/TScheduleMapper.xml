@@ -266,9 +266,9 @@
 </update>
 
   <select id="findDistinctClassId" parameterType="java.lang.String" resultType="java.lang.String">
-    SELECT DISTINCT class_id FROM t_schedule
-    <if test="grade != null">
-        where grade like '#{grade}%'
+    SELECT DISTINCT class_id FROM t_schedule where 1=1
+    <if test="grade != null and grade !=''">
+        and class_name like '${grade}%'
     </if>
   </select>
 </mapper>
