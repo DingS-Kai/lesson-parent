@@ -26,4 +26,6 @@ public interface CourseService {
     PageResult findByPage(int pageNo, int pageSize);
 
     List<String> selectByColumnName(String class_id);
+
+    TTeacher findTeacher(TCourse tCourse);
 }

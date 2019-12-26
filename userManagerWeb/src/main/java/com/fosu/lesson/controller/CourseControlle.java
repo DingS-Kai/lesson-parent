@@ -3,6 +3,7 @@ package com.fosu.lesson.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TCourse;
+import com.fosu.lesson.pojo.TTeacher;
 import com.fosu.lesson.service.CourseService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,13 @@ public class CourseControlle {
 
     @Reference
     private CourseService courseService;
+
+    @ApiOperation(value = "查找某班级某课程的老师")
+    @PostMapping("/findTeacher")
+    public TTeacher findTeacher(@RequestBody TCourse tCourse){
+        System.out.println(tCourse);
+        return courseService.findTeacher(tCourse);
+    }
 
     @GetMapping("/findByPage")
     @ApiOperation(value = "分页查找" )
@@ -41,6 +49,8 @@ public class CourseControlle {
     public List findAll(){
         return courseService.findAll();
     }
+
+
 
     //增加
     @PostMapping("/save")
@@ -90,4 +100,5 @@ public class CourseControlle {
         }
         return flag == 1 ? true : false;
     }
+
 }

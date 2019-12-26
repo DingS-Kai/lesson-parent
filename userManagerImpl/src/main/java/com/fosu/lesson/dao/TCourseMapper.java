@@ -2,6 +2,7 @@ package com.fosu.lesson.dao;
 
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
+import com.fosu.lesson.pojo.TTeacher;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface TCourseMapper {
     TCourse selectOne(TCourse tCourse);
 
     List<String> selectByColumnName(@Param("columnName") String columnName);
+
+    TTeacher findTeacher(TCourse record);
 }
