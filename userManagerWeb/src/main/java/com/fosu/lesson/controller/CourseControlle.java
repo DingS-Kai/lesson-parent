@@ -19,12 +19,7 @@ public class CourseControlle {
     @Reference
     private CourseService courseService;
 
-    @ApiOperation(value = "查找某班级某课程的老师")
-    @PostMapping("/findTeacher")
-    public TTeacher findTeacher(@RequestBody TCourse tCourse){
-        System.out.println(tCourse);
-        return courseService.findTeacher(tCourse);
-    }
+
 
     @GetMapping("/findByPage")
     @ApiOperation(value = "分页查找" )

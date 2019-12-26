@@ -77,8 +77,4 @@ public class CourseServiceImpl implements CourseService {
         return tCourseMapper.selectByColumnName(class_id);
     }
 
-    @Override
-    public TTeacher findTeacher(TCourse tCourse) {
-        return tCourseMapper.findTeacher(tCourse);
-    }
 }

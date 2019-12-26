@@ -27,5 +27,4 @@ public interface CourseService {
 
     List<String> selectByColumnName(String class_id);
 
-    TTeacher findTeacher(TCourse tCourse);
 }

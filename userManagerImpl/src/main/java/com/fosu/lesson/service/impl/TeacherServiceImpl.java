@@ -3,6 +3,7 @@ package com.fosu.lesson.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TTeacherMapper;
 import com.fosu.lesson.pojo.PageResult;
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
 import com.fosu.lesson.pojo.TTeacherExample;
 import com.fosu.lesson.service.TeacherService;
@@ -77,5 +78,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<String> selectByColumnName(String teacher_name) {
         return tTeacherMapper.selectByColumnName(teacher_name);
+    }
+
+    @Override
+    public TTeacher findTeacher(TCourse tCourse) {
+        return tTeacherMapper.findTeacher(tCourse);
     }
 }

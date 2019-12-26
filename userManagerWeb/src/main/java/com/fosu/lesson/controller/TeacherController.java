@@ -3,6 +3,7 @@ package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fosu.lesson.pojo.PageResult;
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
 import com.fosu.lesson.service.TeacherService;
 import io.swagger.annotations.*;
@@ -28,6 +29,13 @@ public class TeacherController {
     public PageResult findByPage(int pageNo, int pageSize) {
         System.out.println(pageNo+"======="+pageSize);
         return teacherService.findByPage(pageNo, pageSize);
+    }
+
+    @ApiOperation(value = "查找某班级某课程的老师")
+    @PostMapping("/findTeacher")
+    public TTeacher findTeacher(@RequestBody TCourse tCourse){
+        System.out.println(tCourse);
+        return teacherService.findTeacher(tCourse);
     }
 
     @PostMapping("/findOne")

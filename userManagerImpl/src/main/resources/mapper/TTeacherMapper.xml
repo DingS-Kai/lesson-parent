@@ -215,4 +215,11 @@
        select distinct  ${teacher_name} from t_teacher;
     </select>
 
+  <select id="findTeacher"  resultMap="BaseResultMap">
+      SELECT t_course.teacher_id,t_teacher.teacher_name FROM t_course, t_teacher
+      WHERE t_course.teacher_id=t_teacher.teacher_id
+      AND t_course.class_id = #{course.classId}
+      AND t_course.remark=#{course.remark}
+  </select>
+
 </mapper>

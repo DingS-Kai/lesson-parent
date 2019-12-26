@@ -26,5 +26,5 @@ public interface TCourseMapper {
 
     List<String> selectByColumnName(@Param("columnName") String columnName);
 
-    TTeacher findTeacher(TCourse record);
+
 }

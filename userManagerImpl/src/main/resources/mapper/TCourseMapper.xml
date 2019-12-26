@@ -267,10 +267,5 @@
        select distinct  ${columnName} from t_course
     </select>
 
-  <select id="findTeacher" parameterType="com.fosu.lesson.pojo.TCourse" resultType="com.fosu.lesson.pojo.TTeacher">
-      SELECT t_course.teacher_id,t_teacher.teacher_name FROM t_course, t_teacher
-      WHERE t_course.teacher_id=t_teacher.teacher_id
-      AND t_course.class_id = #{classId,jdbcType=VARCHAR}
-      AND t_course.remark=#{remark,jdbcType=VARCHAR}
-  </select>
+
 </mapper>
