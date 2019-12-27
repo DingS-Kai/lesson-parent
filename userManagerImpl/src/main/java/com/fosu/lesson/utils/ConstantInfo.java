@@ -8,6 +8,7 @@ public class ConstantInfo {
     public static final String COURSE_SORT = "course_sort";//课程属性
     public static final String CLASS_HOUR = "class_hour";//一周上课次数
     public static final String CLASS_TIME = "class_time";//上课时间
+    public static final String IS_FIX = "is_fix";//是否先排好
     public static final String PROFESSIONAL_CODE = "1";//专业课码值
     public static final String ELECTIVE_CODE = "2";//非专业课码值
     public static final String PHYSICAL_CODE = "3";//娱乐课码值

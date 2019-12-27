@@ -2,6 +2,7 @@ package com.fosu.lesson.service;
 
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TClassroom;
+import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface TeacherService {
     PageResult findByPage(int pageNo, int pageSize);
 
     List<String> selectByColumnName(String teacher_name);
+
+    TTeacher findTeacher(TCourse tCourse);
 }

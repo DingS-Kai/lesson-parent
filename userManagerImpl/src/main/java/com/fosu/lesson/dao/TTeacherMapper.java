@@ -28,4 +28,6 @@ public interface TTeacherMapper {
     TTeacher selectOne(TTeacher tTeacher);
     // 查出所有的教师id
     List<String> selectByColumnName(@Param("teacher_name") String teacher_name);
+
+    TTeacher findTeacher(@Param("course")TCourse course);
 }

@@ -266,4 +266,6 @@
   <select id="selectByColumnName" resultType="java.lang.String" parameterType="java.lang.String">
        select distinct  ${columnName} from t_course
     </select>
+
+
 </mapper>

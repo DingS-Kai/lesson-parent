@@ -68,8 +68,10 @@ public class ClassSchedulUtil {
                 return source.substring(14, 15);
             case ConstantInfo.COURSE_ID:
                 return source.substring(15, 18);
+            case ConstantInfo.IS_FIX:
+                return source.substring(18, 19);
             case ConstantInfo.CLASS_TIME:
-                return source.substring(18,20);
+                return source.substring(19,21);
             default:
                 return "";
         }

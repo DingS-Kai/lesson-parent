@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,7 +100,23 @@ public class ScheduleController {
     @ApiOperation(value = "开始排课" )
     @GetMapping("/schedule")
     public void schedulePlan(){
-         scheduleService.shcedule();
+        List<TSchedule> tScheduleList=new ArrayList<>();
+        TSchedule t1 = new TSchedule();
+        t1.setCourseName("语文");
+        t1.setTeacherId("20160312");
+        t1.setClassId("701");
+        t1.setTimeId("8");
+
+        TSchedule t2 = new TSchedule();
+        t2.setCourseName("英语");
+        t2.setTeacherId("20160343");
+        t2.setClassId("903");
+        t2.setTimeId("8");
+        tScheduleList.add(t1);
+        tScheduleList.add(t2);
+            scheduleService.shcedule(tScheduleList,"初三");
+
+
     }
 
     @ApiOperation(value = "单个老师的课表" )
@@ -136,14 +153,14 @@ public class ScheduleController {
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
-    public Map<String, List<TSchedule>> findAll(String grade){
+    public Map<String, List<TSchedule>> findAll(@RequestParam(required=false) String grade){
         return scheduleService.findAll(grade);
     }
 
     @ApiOperation(value = "查找所有班级排课信息*")
     @GetMapping("/findAllSchedule")
-    public List<ClassSchedule> findAllSchedule(){
-        return scheduleService.findAllSchedule();
+    public List<ClassSchedule> findAllSchedule(@RequestParam(required=false) String grade){
+        return scheduleService.findAllSchedule(grade);
     }
 
     //增加
@@ -377,7 +394,7 @@ public class ScheduleController {
     public void downloadTeacher(HttpServletResponse response) throws IOException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
-            List<ClassSchedule> list = findAllSchedule();
+            List<ClassSchedule> list = findAllSchedule(null);
             List<DownloadAll> d = new ArrayList<>();
 
             for (int i = 0; i < list.size(); i++) {
