@@ -114,7 +114,7 @@ public class ScheduleController {
         t2.setTimeId("8");
         tScheduleList.add(t1);
         tScheduleList.add(t2);
-            scheduleService.shcedule(tScheduleList,"初三");
+            scheduleService.shcedule(tScheduleList,null);
 
 
     }
