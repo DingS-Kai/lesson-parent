@@ -42,7 +42,7 @@ import javax.annotation.PostConstruct;
 @EnableSwagger2
 @EnableDubbo
 @SpringBootApplication
-public class UsermanagerwebApplication {
+public class    UsermanagerwebApplication {
 
     @Reference
     private UserManagerService userManagerService;
