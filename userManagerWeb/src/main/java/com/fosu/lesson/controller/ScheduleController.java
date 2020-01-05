@@ -1,8 +1,8 @@
 package com.fosu.lesson.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.fosu.lesson.pojo.*;
 import com.fosu.lesson.service.CourseService;
 import com.fosu.lesson.service.ScheduleService;
@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,9 +96,34 @@ public class ScheduleController {
     }
 
 
+//    @ApiOperation(value = "开始排课" )
+//    @GetMapping("/schedule")
+//    public void schedulePlan(){
+//        List<TSchedule> tScheduleList=new ArrayList<>();
+//        TSchedule t1 = new TSchedule();
+//        t1.setCourseName("语文");
+//        t1.setTeacherId("20160312");
+//        t1.setClassId("701");
+//        t1.setTimeId("8");
+//
+//        TSchedule t2 = new TSchedule();
+//        t2.setCourseName("英语");
+//        t2.setTeacherId("20160343");
+//        t2.setClassId("903");
+//        t2.setTimeId("8");
+//        tScheduleList.add(t1);
+//        tScheduleList.add(t2);
+//            scheduleService.shcedule(tScheduleList,null);
+//
+//
+//    }
+
     @ApiOperation(value = "开始排课" )
-    @GetMapping("/schedule")
-    public void schedulePlan(){
+    @GetMapping("/scheduleCondition")
+    public void schedulePlan(String grade){
+        System.out.println("===debut===");
+        System.out.println("grade="+grade);
+        System.out.println("============");
         List<TSchedule> tScheduleList=new ArrayList<>();
         TSchedule t1 = new TSchedule();
         t1.setCourseName("语文");
@@ -114,10 +138,11 @@ public class ScheduleController {
         t2.setTimeId("8");
         tScheduleList.add(t1);
         tScheduleList.add(t2);
-            scheduleService.shcedule(tScheduleList,null);
+        scheduleService.shcedule(tScheduleList,grade);
 
 
     }
+
 
     @ApiOperation(value = "单个老师的课表" )
     @ApiImplicitParam(name = "tercherId" , dataType = "String" ,value = "传入一个老师的id" ,required = true )
@@ -390,17 +415,21 @@ public class ScheduleController {
 
 
 
+
     /**
      * 文件下载并且失败的时候返回json（默认失败了会返回一个有部分数据的Excel）
      *
      * @since 2.1.1
      */
-    @ApiOperation(value = "下载所有课表" )
+    @ApiOperation(value = "下载所有课表/下载年级课表" )
     @GetMapping("/downloadall")
-    public void downloadTeacher(HttpServletResponse response) throws IOException {
+    public void downloadGrade(HttpServletResponse response,String grade) throws IOException {
+        System.out.println("===debut===");
+        System.out.println("grade="+grade);
+        System.out.println("============");
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
-            List<ClassSchedule> list = findAllSchedule(null);
+            List<ClassSchedule> list = findAllSchedule(grade);
             List<DownloadAll> d = new ArrayList<>();
 
             for (int i = 0; i < list.size(); i++) {
@@ -461,6 +490,12 @@ public class ScheduleController {
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
             //String fileName = URLEncoder.encode("测试", "UTF-8"); //火狐会乱码
             String fileName = "课程表";
+            if(grade!=null){
+                //如果年级不为null，修改文件名为“初一课程表，初二课程表...”
+                fileName = grade + fileName;
+                System.out.println("====fileName="+fileName);
+            }
+
             fileName = new String(fileName.getBytes("gb2312"), "ISO8859-1");
             response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
             // 这里需要设置不关闭流
