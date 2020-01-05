@@ -26,4 +26,7 @@ public interface TTimeMapper {
     int updateByExample(@Param("record") TTime record, @Param("example") TTimeExample example);
 
     TTime selectOne(TTime tTime);
+
+    List<String> findDistinctDay();
+
 }

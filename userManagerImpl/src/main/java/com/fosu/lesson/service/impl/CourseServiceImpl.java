@@ -77,4 +77,14 @@ public class CourseServiceImpl implements CourseService {
         return tCourseMapper.selectByColumnName(class_id);
     }
 
+    @Override
+    public List<CourseWithTeacher> findCourseWithTeacherByCondition(CourseWithTeacher condition) {
+        return this.tCourseMapper.findCourseWithTeacherByCondition(condition);
+    }
+
+    @Override
+    public List<CourseWithTeacher> findTeacherByCourseName(String courseName) {
+        return this.tCourseMapper.findTeacherByCourseName(courseName);
+    }
+
 }

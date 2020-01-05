@@ -27,6 +27,10 @@ public class TPreschedule implements Serializable {
 
     private String teacherName;
 
+    private String day;
+
+    private String hour;
+
     public Integer getId() {
         return id;
     }
@@ -121,5 +125,21 @@ public class TPreschedule implements Serializable {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName == null ? null : teacherName.trim();
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day == null ? null : day.trim();
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour == null ? null : hour.trim();
     }
 }

@@ -1,9 +1,10 @@
 package com.fosu.lesson.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TPrescheduleExample {
+public class TPrescheduleExample  implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -931,6 +932,146 @@ public class TPrescheduleExample {
 
         public Criteria andTeacherNameNotBetween(String value1, String value2) {
             addCriterion("teacher_name not between", value1, value2, "teacherName");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayIsNull() {
+            addCriterion("day is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayIsNotNull() {
+            addCriterion("day is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayEqualTo(String value) {
+            addCriterion("day =", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayNotEqualTo(String value) {
+            addCriterion("day <>", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayGreaterThan(String value) {
+            addCriterion("day >", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayGreaterThanOrEqualTo(String value) {
+            addCriterion("day >=", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayLessThan(String value) {
+            addCriterion("day <", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayLessThanOrEqualTo(String value) {
+            addCriterion("day <=", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayLike(String value) {
+            addCriterion("day like", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayNotLike(String value) {
+            addCriterion("day not like", value, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayIn(List<String> values) {
+            addCriterion("day in", values, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayNotIn(List<String> values) {
+            addCriterion("day not in", values, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayBetween(String value1, String value2) {
+            addCriterion("day between", value1, value2, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayNotBetween(String value1, String value2) {
+            addCriterion("day not between", value1, value2, "day");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourIsNull() {
+            addCriterion("hour is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourIsNotNull() {
+            addCriterion("hour is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourEqualTo(String value) {
+            addCriterion("hour =", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourNotEqualTo(String value) {
+            addCriterion("hour <>", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourGreaterThan(String value) {
+            addCriterion("hour >", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourGreaterThanOrEqualTo(String value) {
+            addCriterion("hour >=", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourLessThan(String value) {
+            addCriterion("hour <", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourLessThanOrEqualTo(String value) {
+            addCriterion("hour <=", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourLike(String value) {
+            addCriterion("hour like", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourNotLike(String value) {
+            addCriterion("hour not like", value, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourIn(List<String> values) {
+            addCriterion("hour in", values, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourNotIn(List<String> values) {
+            addCriterion("hour not in", values, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourBetween(String value1, String value2) {
+            addCriterion("hour between", value1, value2, "hour");
+            return (Criteria) this;
+        }
+
+        public Criteria andHourNotBetween(String value1, String value2) {
+            addCriterion("hour not between", value1, value2, "hour");
             return (Criteria) this;
         }
     }

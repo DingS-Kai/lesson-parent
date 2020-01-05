@@ -197,4 +197,8 @@
     </where>
   </select>
 
+  <select id="findDistinctDay" resultType="String">
+    SELECT DISTINCT DAY FROM t_time WHERE WEEK = 1;
+  </select>
+
 </mapper>

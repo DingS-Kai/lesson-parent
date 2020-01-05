@@ -267,5 +267,33 @@
        select distinct  ${columnName} from t_course
     </select>
 
+  <select id="findCourseWithTeacherByCondition" resultType="com.fosu.lesson.pojo.CourseWithTeacher" parameterType="com.fosu.lesson.pojo.CourseWithTeacher">
+    SELECT t_course.class_id,t_course.remark course_name, t_course.teacher_id, t_teacher.teacher_name
+    FROM t_course, t_teacher
+    <where>
+      <if test="classId != null">
+        and class_id = #{classId}
+      </if>
+      <if test="teacherId != null">
+        and t_course.teacher_id = #{teacherId}
+      </if>
+      <if test="courseName != null">
+      and t_course.remark = #{courseName}
+     </if>
+      <if test="1==1">
+        and t_course.teacher_id = t_teacher.teacher_id
+      </if>
+    </where>
+  </select>
+
+  <select id="findTeacherByCourseName" resultType="com.fosu.lesson.pojo.CourseWithTeacher" parameterType="String">
+    SELECT tmp.* FROM
+    (
+    SELECT t_course.remark course_name, t_course.teacher_id, t_teacher.teacher_name FROM t_course, t_teacher
+    WHERE class_id = #{classId} AND t_course.teacher_id = t_teacher.teacher_id
+    ) tmp
+    WHERE course_name=#{courseName}
+  </select>
+
 
 </mapper>

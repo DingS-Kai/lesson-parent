@@ -1,5 +1,6 @@
 package com.fosu.lesson.dao;
 
+import com.fosu.lesson.pojo.CourseWithTeacher;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
 import com.fosu.lesson.pojo.TTeacher;
@@ -26,5 +27,8 @@ public interface TCourseMapper {
 
     List<String> selectByColumnName(@Param("columnName") String columnName);
 
+    List<CourseWithTeacher> findCourseWithTeacherByCondition(CourseWithTeacher condition);
+
+    List<CourseWithTeacher> findTeacherByCourseName(String courseName);
 
 }

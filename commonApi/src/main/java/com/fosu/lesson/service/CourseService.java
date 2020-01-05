@@ -1,5 +1,6 @@
 package com.fosu.lesson.service;
 
+import com.fosu.lesson.pojo.CourseWithTeacher;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
@@ -26,5 +27,9 @@ public interface CourseService {
     PageResult findByPage(int pageNo, int pageSize);
 
     List<String> selectByColumnName(String class_id);
+
+    List<CourseWithTeacher> findCourseWithTeacherByCondition(CourseWithTeacher condition);
+
+    List<CourseWithTeacher> findTeacherByCourseName(String courseName);
 
 }

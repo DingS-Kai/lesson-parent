@@ -1,6 +1,7 @@
 package com.fosu.lesson.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fosu.lesson.pojo.CourseWithTeacher;
 import com.fosu.lesson.pojo.PageResult;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TTeacher;
@@ -94,6 +95,22 @@ public class CourseControlle {
             e.printStackTrace();
         }
         return flag == 1 ? true : false;
+    }
+
+    @PostMapping("/findCourseWithTeacherByCondition")
+    @ApiOperation("根据条件查找某班级的课程及课程对应的老师信息")
+    @ApiImplicitParam(name="condition",value = "传入的条件", dataType = "CourseWithTeacher",
+            paramType = "body", required = true)
+    public List<CourseWithTeacher> findCourseWithTeacherByCondition(@RequestBody  CourseWithTeacher condition){
+        System.out.println("{DEBUG}:"+condition);
+        return this.courseService.findCourseWithTeacherByCondition(condition);
+    }
+
+    @GetMapping("/findTeacherByCourseName")
+    @ApiOperation("通过课程查询教授该课程的老师（不需要用到）")
+    @ApiImplicitParam(name="courseName",value = "传入的课程名", dataType = "String", paramType = "query", required = true)
+    public List<CourseWithTeacher> findTeacherByCourseName(@RequestParam String courseName) {
+        return this.courseService.findTeacherByCourseName(courseName);
     }
 
 }
