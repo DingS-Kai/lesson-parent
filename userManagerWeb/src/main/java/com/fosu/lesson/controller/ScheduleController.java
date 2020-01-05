@@ -1,8 +1,8 @@
 package com.fosu.lesson.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.fosu.lesson.pojo.*;
 import com.fosu.lesson.service.CourseService;
 import com.fosu.lesson.service.ScheduleService;
@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
