@@ -3,6 +3,7 @@ package com.fosu.lesson.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TClassMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
+import com.fosu.lesson.dao.TScheduletaskMapper;
 import com.fosu.lesson.pojo.*;
 import com.fosu.lesson.service.ScheduleService;
 import com.fosu.lesson.utils.ScheduleUtils;
@@ -27,6 +28,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private TClassMapper tClassMapper;
+
+    @Autowired
+    private TScheduletaskMapper tScheduletaskMapper;
 
 
     @Override
@@ -158,6 +162,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional
     @Override
     public void shcedule(String grade) {
+
+
         //清空的数据
         tScheduleMapper.deleteAll();
         //排课
@@ -175,11 +181,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
             tScheduleMapper.deleteOneGrade(grade);
         }
-
         //排课
         scheduleUtils.schedulePlan(tScheduleList,grade);
         //更像相关属性
         tScheduleMapper.updateName();
+        //更改状态
+
+        tScheduletaskMapper.updateStatu(grade);
+
     }
 
     @Override
