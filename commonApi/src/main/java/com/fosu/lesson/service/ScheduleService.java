@@ -41,4 +41,6 @@ public interface ScheduleService {
     List<String> findDistinctClassId();
 
     void shcedule(List<TSchedule> tScheduleList,String grade);
+
+   void clearSchedule(String grade);
 }

@@ -144,6 +144,13 @@ public class ScheduleController {
         return scheduleService.findByPage(pageNo, pageSize);
     }
 
+    @ApiOperation(value = "清空课表" )
+    @ApiImplicitParam(name = "grade" , dataType = "String" ,value = "传入一个年级" ,required = false )
+    @GetMapping("/clearSchedule")
+    public void clearSchedule(String grade){
+        scheduleService.clearSchedule(grade);
+    }
+
     @PostMapping("/findOne")
     @ApiOperation(value = "查找一个班级排课信息--后台测试用" , notes = "通过班级排课的部分信息获取班级排课的完整信息")
     @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "班级排课的部分信息作为参数" ,required = true )

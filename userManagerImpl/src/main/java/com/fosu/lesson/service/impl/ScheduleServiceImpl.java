@@ -192,6 +192,18 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public void clearSchedule(String grade) {
+        if(grade==null||grade.equals("")){
+            //清空的数据
+            tScheduleMapper.deleteAll();
+        }else{
+
+            tScheduleMapper.deleteOneGrade(grade);
+        }
+        tScheduletaskMapper.cleanStatu(grade);
+    }
+
+    @Override
     public List<TSchedule> getOneTercherPlan(String tercherId) {
 
         TScheduleExample tScheduleExample = new TScheduleExample();

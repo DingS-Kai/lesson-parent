@@ -167,6 +167,12 @@
       and grade=#{grade}
     </if>
   </update>
+  <update id="cleanStatu" parameterType="java.lang.String">
+    update t_scheduletask set status = '0' where 1=1
+    <if test="grade != null and grade !=''">
+      and grade=#{grade}
+    </if>
+  </update>
 
 
 </mapper>

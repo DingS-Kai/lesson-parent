@@ -25,4 +25,6 @@ public interface TScheduletaskMapper {
     int updateByExample(@Param("record") TScheduletask record, @Param("example") TScheduletaskExample example);
 
     void updateStatu(@Param("grade")String grade);
+
+    void cleanStatu(@Param("grade")String grade);
 }
