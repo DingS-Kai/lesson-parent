@@ -48,6 +48,8 @@ public class PreScheduleServiceImpl implements PreScheduleService {
         List<TPreschedule> list = this.prescheduleMapper.selectByExample(example);
         if(list!=null && list.size()>0){
             //说明已经为该班的该节课添加过预排
+            TPreschedule oldPreschedule = list.get(0);
+            tPreschedule.setId(oldPreschedule.getId());
             this.update(tPreschedule);
         }else{
             this.prescheduleMapper.insertSelective(tPreschedule);
