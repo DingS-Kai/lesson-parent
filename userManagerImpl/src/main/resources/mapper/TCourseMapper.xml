@@ -295,5 +295,24 @@
     WHERE course_name=#{courseName}
   </select>
 
+  <select id="findDistinctCourseNameByClassId" resultType="String" parameterType="String">
+  SELECT DISTINCT remark FROM t_course WHERE class_id=#{classId}
+</select>
+
+  <resultMap id="teacherResultMap" type="com.fosu.lesson.pojo.TTeacher">
+    <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="telephoto" jdbcType="VARCHAR" property="telephoto" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="teacher_pw" jdbcType="VARCHAR" property="teacherPw" />
+  </resultMap>
+  <select id="findTeacherByCourse" resultMap="teacherResultMap" parameterType="com.fosu.lesson.pojo.TCourse">
+    SELECT * FROM t_teacher WHERE teacher_id IN
+    (
+    SELECT teacher_id FROM t_course WHERE class_id=#{classId} AND remark=#{remark}
+    )
+  </select>
+
 
 </mapper>

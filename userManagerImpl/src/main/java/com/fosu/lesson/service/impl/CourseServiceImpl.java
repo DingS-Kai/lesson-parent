@@ -87,4 +87,14 @@ public class CourseServiceImpl implements CourseService {
         return this.tCourseMapper.findTeacherByCourseName(courseName);
     }
 
+    @Override
+    public List<String> findDistinctCourseNameByClassId(String classId) {
+        return this.tCourseMapper.findDistinctCourseNameByClassId(classId);
+    }
+
+    @Override
+    public List<TTeacher> findTeacherByCourse(TCourse course) {
+        return this.tCourseMapper.findTeacherByCourse(course);
+    }
+
 }

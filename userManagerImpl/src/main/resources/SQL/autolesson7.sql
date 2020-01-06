@@ -118,7 +118,7 @@ CREATE TABLE `t_preschedule` (
   CONSTRAINT `fk_classroomId` FOREIGN KEY (`classroom_id`) REFERENCES `t_classroom` (`classroom_id`),
   CONSTRAINT `fk_courseId` FOREIGN KEY (`course_id`) REFERENCES `t_course` (`course_id`),
   CONSTRAINT `fk_teacherId` FOREIGN KEY (`teacher_id`) REFERENCES `t_teacher` (`teacher_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='预排表';
 
 /*Data for the table `t_preschedule` */
 

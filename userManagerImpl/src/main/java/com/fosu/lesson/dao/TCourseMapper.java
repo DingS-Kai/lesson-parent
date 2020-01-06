@@ -31,4 +31,8 @@ public interface TCourseMapper {
 
     List<CourseWithTeacher> findTeacherByCourseName(String courseName);
 
+    List<String> findDistinctCourseNameByClassId(String classId);
+
+    List<TTeacher> findTeacherByCourse(TCourse course);
+
 }

@@ -198,7 +198,7 @@
   </select>
 
   <select id="findDistinctDay" resultType="String">
-    SELECT DISTINCT DAY FROM t_time WHERE WEEK = 1;
+    SELECT DISTINCT DAY FROM t_time WHERE WEEK = 1 AND DAY NOT IN ("sta","sun");
   </select>
 
 </mapper>

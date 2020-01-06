@@ -113,4 +113,20 @@ public class CourseControlle {
         return this.courseService.findTeacherByCourseName(courseName);
     }
 
+    @GetMapping("/findDistinctCourseNameByClassId")
+    @ApiOperation("通过classId查询当前班级所开设的课程")
+    @ApiImplicitParam(name="classId",value="传入的classId",dataType = "String",paramType = "query",required = true)
+    public List<String> findDistinctCourseNameByClassId(@RequestParam  String classId){
+        return this.courseService.findDistinctCourseNameByClassId(classId);
+    }
+
+    @PostMapping("/findTeacherByCourse")
+    @ApiOperation("通过classId和课程名查询某班级指定课程的所有授课老师信息，classId和课程名由TCourse对象封装")
+    @ApiImplicitParam(name = "course", value = "封装classId和课程名条件的对象",
+            dataType = "TCourse", paramType = "body", required = true)
+    List<TTeacher> findTeacherByCourse(@RequestBody TCourse course){
+        System.out.println("{DEBUG}:"+course);
+        return this.courseService.findTeacherByCourse(course);
+    }
+
 }

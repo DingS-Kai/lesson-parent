@@ -32,4 +32,10 @@ public interface CourseService {
 
     List<CourseWithTeacher> findTeacherByCourseName(String courseName);
 
+    //通过classId查询该班级所开设的课程
+    List<String> findDistinctCourseNameByClassId(String classId);
+
+    //通过传入的course，course封装了classId和课程名的条件，  查询改班级指定课程的所有授课老师
+    List<TTeacher> findTeacherByCourse(TCourse course);
+
 }

@@ -142,4 +142,24 @@ public class TPreschedule implements Serializable {
     public void setHour(String hour) {
         this.hour = hour == null ? null : hour.trim();
     }
+
+    @Override
+    public String toString() {
+        return "TPreschedule{" +
+                "id=" + id +
+                ", scheduleId='" + scheduleId + '\'' +
+                ", classId='" + classId + '\'' +
+                ", classroomId='" + classroomId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", teacherId='" + teacherId + '\'' +
+                ", timeId='" + timeId + '\'' +
+                ", remark='" + remark + '\'' +
+                ", className='" + className + '\'' +
+                ", place='" + place + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", day='" + day + '\'' +
+                ", hour='" + hour + '\'' +
+                '}';
+    }
 }
