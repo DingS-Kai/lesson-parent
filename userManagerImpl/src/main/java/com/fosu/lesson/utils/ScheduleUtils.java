@@ -4,6 +4,7 @@ import com.fosu.lesson.dao.TCourseMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
+import com.fosu.lesson.pojo.TPreschedule;
 import com.fosu.lesson.pojo.TSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class ScheduleUtils {
    double Expect=0;
 
 
-   public synchronized void schedulePlan(List<TSchedule> tScheduleList,String grade){
+   public synchronized void schedulePlan(List<TPreschedule> tPreschedules, String grade){
       maxExpect=-200000;
       Expect=0;
       List<TCourse> TCourseList;
@@ -40,7 +41,7 @@ public class ScheduleUtils {
       }
 
       //对开课任务进行编码
-      List<Map<String, List<String>>> geneList = coding(TCourseList,tScheduleList);
+      List<Map<String, List<String>>> geneList = coding(TCourseList,tPreschedules);
      //开始进行时间分配
       List<String> resultGeneList = codingTime(geneList);
       //第四步对已分配好时间的基因进行分类，生成以班级为范围的个体
@@ -99,17 +100,17 @@ public class ScheduleUtils {
 
 
    //编码规则（class_id+teacher_id+course_name+course_sort+class_hour）
-   private List<Map<String, List<String>>> coding(List<TCourse> tCourseList, List<TSchedule> tScheduleList){
+   private List<Map<String, List<String>>> coding(List<TCourse> tCourseList, List<TPreschedule> tPreschedules){
       Map<String, List<String>> geneListMap = new HashMap<>();
       List<String> unFixedTimeGeneList = new ArrayList<>();//不固定时间的编码基因组
       List<String> FixedTimeGeneList = new ArrayList<>();//不固定时间的编码基因组
-       for (int i = 0; i <tScheduleList.size() ; i++) {
-           TSchedule tSchedule = tScheduleList.get(i);
+       for (int i = 0; i <tPreschedules.size() ; i++) {
+          TPreschedule tPreschedule = tPreschedules.get(i);
            for(int j = 0 ; j<tCourseList.size();j++){
                TCourse tCourse = tCourseList.get(j);
-               if(tSchedule.getClassId().equals(tCourse.getClassId())&&tSchedule.getCourseName().equals(tCourse.getRemark())&&tSchedule.getTeacherId().equals(tCourse.getTeacherId())){
+               if(tPreschedule.getClassId().equals(tCourse.getClassId())&&tPreschedule.getCourseName().equals(tCourse.getRemark())&&tPreschedule.getTeacherId().equals(tCourse.getTeacherId())){
                    String courseID = getCourseID(tCourse.getCourseId());
-                   String time = tSchedule.getTimeId();
+                   String time = tPreschedule.getTimeId();
                    if(time.length()<2){
                        time = "0"+time;
                    }

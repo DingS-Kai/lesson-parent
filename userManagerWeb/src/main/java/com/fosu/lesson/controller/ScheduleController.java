@@ -121,25 +121,8 @@ public class ScheduleController {
     @ApiOperation(value = "开始排课" )
     @GetMapping("/scheduleCondition")
     public void schedulePlan(String grade){
-        System.out.println("===debut===");
-        System.out.println("grade="+grade);
-        System.out.println("============");
-        List<TSchedule> tScheduleList=new ArrayList<>();
-        TSchedule t1 = new TSchedule();
-        t1.setCourseName("语文");
-        t1.setTeacherId("20160312");
-        t1.setClassId("701");
-        t1.setTimeId("8");
 
-        TSchedule t2 = new TSchedule();
-        t2.setCourseName("英语");
-        t2.setTeacherId("20160343");
-        t2.setClassId("903");
-        t2.setTimeId("8");
-        tScheduleList.add(t1);
-        tScheduleList.add(t2);
-        scheduleService.shcedule(tScheduleList,grade);
-
+        scheduleService.shcedule(null,grade);
 
     }
 

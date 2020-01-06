@@ -2,6 +2,7 @@ package com.fosu.lesson.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fosu.lesson.dao.TClassMapper;
+import com.fosu.lesson.dao.TPrescheduleMapper;
 import com.fosu.lesson.dao.TScheduleMapper;
 import com.fosu.lesson.dao.TScheduletaskMapper;
 import com.fosu.lesson.pojo.*;
@@ -19,6 +20,9 @@ import java.util.function.Consumer;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
+
+    @Autowired
+    private TPrescheduleMapper prescheduleMapper;
 
     @Autowired
     private TScheduleMapper tScheduleMapper;
@@ -181,8 +185,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
             tScheduleMapper.deleteOneGrade(grade);
         }
+        List<TPreschedule> tPreschedules = prescheduleMapper.selectByExample(null);
         //排课
-        scheduleUtils.schedulePlan(tScheduleList,grade);
+        scheduleUtils.schedulePlan(tPreschedules,grade);
         //更像相关属性
         tScheduleMapper.updateName();
         //更改状态
