@@ -39,7 +39,19 @@ public class PreScheduleServiceImpl implements PreScheduleService {
 
     @Override
     public void save(TPreschedule tPreschedule) {
-        this.prescheduleMapper.insertSelective(tPreschedule);
+        //添加之前，先查询改班级是否预排了该们课程
+        // 如果已经有预排，则直接修改
+        //根据classId 和 timeId查询
+        TPrescheduleExample example = new TPrescheduleExample();
+        example.createCriteria().andClassIdEqualTo(tPreschedule.getClassId())
+                                .andTimeIdEqualTo(tPreschedule.getTimeId());
+        List<TPreschedule> list = this.prescheduleMapper.selectByExample(example);
+        if(list!=null && list.size()>0){
+            //说明已经为该班的该节课添加过预排
+            this.update(tPreschedule);
+        }else{
+            this.prescheduleMapper.insertSelective(tPreschedule);
+        }
     }
 
     @Override
@@ -67,10 +79,12 @@ public class PreScheduleServiceImpl implements PreScheduleService {
                     @Override
                     public void doSelect() {
                         TPrescheduleExample example = new TPrescheduleExample();
-                        example.createCriteria().andClassIdEqualTo(classId);
+                        if(classId!=null){
+                            example.createCriteria().andClassIdEqualTo(classId);
+                        }
                         //SELECT * FROM t_preschedule WHERE class_id=805 ORDER BY time_id*1;
                         //这里把数字字符串按数字排序
-                        example.setOrderByClause("time_id * 1");
+                        example.setOrderByClause("class_id, time_id * 1");
                         prescheduleMapper.selectByExample(example);
                     }
                 }

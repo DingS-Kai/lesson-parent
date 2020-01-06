@@ -63,7 +63,7 @@ public class PreScheduleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNo",value="当前页码",defaultValue="1",dataType="int",required=false),
             @ApiImplicitParam(name="pageSize",value="每页大小",defaultValue="5",dataType="int",required=false),
-            @ApiImplicitParam(name="classId",value="传入的classId",dataType="String",required=true)
+            @ApiImplicitParam(name="classId",value="传入的classId",dataType="String",required=false)
     })
     public PageResult findByPage(int pageNo, int pageSize,String classId) {
         return this.preScheduleService.findByPage(pageNo,pageSize,classId);

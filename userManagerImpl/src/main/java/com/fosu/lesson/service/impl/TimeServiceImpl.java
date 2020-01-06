@@ -24,6 +24,7 @@ public class TimeServiceImpl implements TimeService {
     public List<TTime> findTimeByDay(String day) {
         TTimeExample example = new TTimeExample();
         example.createCriteria().andWeekEqualTo("1").andDayEqualTo(day);
+        example.setOrderByClause("time_id * 1");
         List<TTime> timeList = timeMapper.selectByExample(example);
         return timeList;
     }
