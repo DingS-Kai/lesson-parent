@@ -191,8 +191,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         //更像相关属性
         tScheduleMapper.updateName();
         //更改状态
-
         tScheduletaskMapper.updateStatu(grade);
+        //清空预排表
+        prescheduleMapper.deleteAll();
 
     }
 

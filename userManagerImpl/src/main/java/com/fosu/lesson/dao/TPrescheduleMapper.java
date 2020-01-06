@@ -19,4 +19,6 @@ public interface TPrescheduleMapper {
     int updateByExampleSelective(@Param("record") TPreschedule record, @Param("example") TPrescheduleExample example);
 
     int updateByExample(@Param("record") TPreschedule record, @Param("example") TPrescheduleExample example);
+
+    void deleteAll();
 }
