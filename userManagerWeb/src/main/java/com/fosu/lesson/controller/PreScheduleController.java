@@ -38,9 +38,9 @@ public class PreScheduleController {
     @PostMapping("/save")
     @ApiOperation("添加一节预排课程")
     @ApiImplicitParam(name="tPreschedule",value="添加的预排课程对象",dataType="TPreschedule",paramType="body",required=true )
-    public void save(@RequestBody  TPreschedule tPreschedule) {
+    public TPreschedule save(@RequestBody  TPreschedule tPreschedule) {
         System.out.println("{DEBUG}:添加一节预排课程  "+tPreschedule);
-        this.preScheduleService.save(tPreschedule);
+        return this.preScheduleService.save(tPreschedule);
     }
 
     @PostMapping("/update")

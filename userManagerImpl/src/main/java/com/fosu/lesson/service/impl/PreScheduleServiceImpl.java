@@ -38,11 +38,21 @@ public class PreScheduleServiceImpl implements PreScheduleService {
     }
 
     @Override
-    public void save(TPreschedule tPreschedule) {
-        //添加之前，先查询改班级是否预排了该们课程
-        // 如果已经有预排，则直接修改
-        //根据classId 和 timeId查询
+    public TPreschedule save(TPreschedule tPreschedule) {
         TPrescheduleExample example = new TPrescheduleExample();
+        //添加之前，先进行判断
+        //先判断该老师是否在该时间段有课
+        example.createCriteria().andTimeIdEqualTo(tPreschedule.getTimeId())
+                                .andTeacherIdEqualTo(tPreschedule.getTeacherId());
+        List<TPreschedule> hasList = this.prescheduleMapper.selectByExample(example);
+        if(hasList!=null && hasList.size()>0){
+            //说明该老师已经有课
+            return hasList.get(0);
+        }
+
+
+        //如果改班级在该节课已经有预排，则直接修改
+        //根据classId 和 timeId查询
         example.createCriteria().andClassIdEqualTo(tPreschedule.getClassId())
                                 .andTimeIdEqualTo(tPreschedule.getTimeId());
         List<TPreschedule> list = this.prescheduleMapper.selectByExample(example);
@@ -54,6 +64,9 @@ public class PreScheduleServiceImpl implements PreScheduleService {
         }else{
             this.prescheduleMapper.insertSelective(tPreschedule);
         }
+        //成功添加和修改，返回null
+        return null;
+
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface PreScheduleService {
     List<TPreschedule> findAll(String classId);
 
     //增加
-    void save(TPreschedule tPreschedule);
+    TPreschedule save(TPreschedule tPreschedule);
 
     //更新
     void update(TPreschedule tPreschedule);
