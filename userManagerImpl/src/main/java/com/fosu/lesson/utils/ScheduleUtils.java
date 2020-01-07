@@ -108,7 +108,7 @@ public class ScheduleUtils {
           TPreschedule tPreschedule = tPreschedules.get(i);
            for(int j = 0 ; j<tCourseList.size();j++){
                TCourse tCourse = tCourseList.get(j);
-               if(tPreschedule.getClassId().equals(tCourse.getClassId())&&tPreschedule.getCourseName().equals(tCourse.getRemark())&&tPreschedule.getTeacherId().equals(tCourse.getTeacherId())){
+               if(tPreschedule.getClassId().equals(tCourse.getClassId())&&tPreschedule.getRemark().equals(tCourse.getRemark())&&tPreschedule.getTeacherId().equals(tCourse.getTeacherId())){
                    String courseID = getCourseID(tCourse.getCourseId());
                    String time = tPreschedule.getTimeId();
                    if(time.length()<2){
