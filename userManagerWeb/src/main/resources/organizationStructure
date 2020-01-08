@@ -1,0 +1,18 @@
+lesson-parent
+|——commonApi  --公共接口
+   |-com.fosu.lesson.pojo   --实体类
+   |-com.fosu.lesson.service   --业务接口
+|——userManagerImpl  --服务提供者
+   |-com.fosu.lesson.dao    --数据库的mapper接口
+   |-com.fosu.lesson.service.impl   --业务接口的实现类
+   |-com.fosu.lesson.utils    --工具类
+   |-resource     --存放资源文件
+     |-generator   -- 整合mybatis，配置文件generatorConfig.xml
+     |-mapper   --数据库的mapper接口对应的xml文件
+     |-SQL    --本系统的数据库文件
+     |-application.yml  --配置文件
+|——userManagerWeb
+   |-com.fosu.lesson.config    --整合swagger2的配置文件类
+   |-com.fosu.lesson.controller   --控制层，处理前端请求
+   |-resource     --存放资源文件
+     |-application.yml  --配置文件
