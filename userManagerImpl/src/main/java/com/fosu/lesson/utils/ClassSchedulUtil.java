@@ -33,7 +33,6 @@ public class ClassSchedulUtil {
            }
 
        }
-        System.out.println("11111");
        return "00";
     }
 
