@@ -157,13 +157,13 @@ public class ScheduleUtils {
       List<String> resultGeneList = new ArrayList<>();
       List<String> unFixedTimeGeneList = geneList.get(0).get("unFixedTime");
        List<String> FixedTimeGeneList = geneList.get(0).get("FixedTime");
+       resultGeneList.addAll(FixedTimeGeneList);
       for (String gene : unFixedTimeGeneList) {
          //获取一个不重复的时间片值
          String classTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
          gene = gene.substring(0, 19) + classTime;
          resultGeneList.add(gene);
       }
-       resultGeneList.addAll(FixedTimeGeneList);
       return resultGeneList;
    }
 
