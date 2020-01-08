@@ -36,29 +36,29 @@ public class ScheduleController {
     @Reference(retries = 0)
     private TeacherService teacherService;
 
-    @ApiOperation(value = "查找班级排课信息后台测试用")
+    @ApiOperation(value = "查找班级排课信息后台测试用" )
     @GetMapping("/qryOne")
-    public List<TSchedule> qryOne() {
+    public List<TSchedule> qryOne(){
         TSchedule tSchedule1 = new TSchedule();
         TSchedule tSchedule2 = new TSchedule();
         List<String> classNoList = courseService.selectByColumnName("class_id");
         List<String> teacherIdList = teacherService.selectByColumnName("teacher_name");
-        for (String class_name : classNoList) {
+        for(String class_name:classNoList){
             tSchedule1.setClassId(class_name);
-            List<TSchedule> list = scheduleService.findOne(tSchedule1, true);
-            int flag = 0;
-            System.out.println("===================" + class_name + "班课表===================");
-            for (int i = 1; i <= 7; i++) {
-                for (int j = 0; j < 5; j++) {
-                    flag = 0;
-                    for (TSchedule tSchedule : list) {
-                        if (tSchedule.getTimeId().equals((i + j * 7) + "")) {
-                            System.out.printf(tSchedule.getCourseName() + " " + tSchedule.getTeacherName() + "     ");
-                            flag = 1;
+            List<TSchedule> list = scheduleService.findOne(tSchedule1,true);
+            int flag=0;
+            System.out.println("==================="+class_name+"班课表===================");
+            for (int i =1; i <=7; i++) {
+                for(int j=0;j<5;j++){
+                    flag=0;
+                    for(TSchedule tSchedule:list){
+                        if(tSchedule.getTimeId().equals((i+j*7)+"")){
+                            System.out.printf(tSchedule.getCourseName()+" "+tSchedule.getTeacherName()+"     ");
+                            flag=1;
                         }
                     }
-                    if (flag == 0) {
-                        System.out.printf("空闲 放假中" + "     ");
+                    if(flag==0){
+                        System.out.printf("空闲 放假中"+"     ");
                     }
                 }
                 System.out.println("");
@@ -67,22 +67,22 @@ public class ScheduleController {
             System.out.println("================================================");
             System.out.println("");
         }
-        for (String teacher : teacherIdList) {
+        for(String teacher :teacherIdList){
             tSchedule2.setTeacherName(teacher);
-            List<TSchedule> list = scheduleService.findOne(tSchedule2, false);
-            int flag = 0;
-            System.out.println("===================" + teacher + "课表===================");
-            for (int i = 1; i <= 7; i++) {
-                for (int j = 0; j < 5; j++) {
-                    flag = 0;
-                    for (TSchedule tSchedule : list) {
-                        if (tSchedule.getTimeId().equals((i + j * 7) + "")) {
-                            System.out.printf(tSchedule.getClassName() + " " + tSchedule.getCourseName() + "     ");
-                            flag = 1;
+            List<TSchedule> list = scheduleService.findOne(tSchedule2,false);
+            int flag=0;
+            System.out.println("==================="+teacher+"课表===================");
+            for (int i =1; i <=7; i++) {
+                for(int j=0;j<5;j++){
+                    flag=0;
+                    for(TSchedule tSchedule:list){
+                        if(tSchedule.getTimeId().equals((i+j*7)+"")){
+                            System.out.printf(tSchedule.getClassName()+" "+tSchedule.getCourseName()+"     ");
+                            flag=1;
                         }
                     }
-                    if (flag == 0) {
-                        System.out.printf("空闲   放假中" + "     ");
+                    if(flag==0){
+                        System.out.printf("空闲   放假中"+"     ");
                     }
                 }
                 System.out.println("");
@@ -118,71 +118,73 @@ public class ScheduleController {
 //
 //    }
 
-    @ApiOperation(value = "开始排课")
+    @ApiOperation(value = "开始排课" )
     @GetMapping("/scheduleCondition")
-    public void schedulePlan(String grade) {
+    public void schedulePlan(String grade){
 
-        scheduleService.shcedule(null, grade);
+        scheduleService.shcedule(null,grade);
 
     }
 
 
-    @ApiOperation(value = "单个老师的课表")
-    @ApiImplicitParam(name = "tercherId", dataType = "String", value = "传入一个老师的id", required = true)
+    @ApiOperation(value = "单个老师的课表" )
+    @ApiImplicitParam(name = "tercherId" , dataType = "String" ,value = "传入一个老师的id" ,required = true )
     @GetMapping("/teacherplan")
-    public List<TSchedule> tercherPlan(String tercherId) {
+    public List<TSchedule> tercherPlan(String tercherId){
+        System.out.println("tercherId==== "+tercherId);
         return scheduleService.getOneTercherPlan(tercherId);
     }
 
-    @ApiOperation(value = "单个学生的课表")
-    @ApiImplicitParam(name = "classId", dataType = "String", value = "传入班级classId", required = true)
+    @ApiOperation(value = "单个学生的课表" )
+    @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
     @GetMapping("/studentplan")
-    public List<TSchedule> studentPlan(String classId) {
-        return scheduleService.getOneStudentPlan(classId);
+    public List<TSchedule> studentPlan(String classId){
+        System.out.println("classId==== "+classId);
+         return scheduleService.getOneStudentPlan(classId);
     }
 
     @GetMapping("/findByPage")
-    @ApiOperation(value = "分页查找")
+    @ApiOperation(value = "分页查找" )
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", dataType = "int", value = "页码"),
-            @ApiImplicitParam(name = "pageSize", dataType = "int", value = "一页的条数")
+            @ApiImplicitParam(name = "pageNo" , dataType = "int" ,value = "页码" ) ,
+            @ApiImplicitParam(name = "pageSize" , dataType = "int" , value = "一页的条数")
     })
     public PageResult findByPage(int pageNo, int pageSize) {
-        System.out.println(pageNo + "=======" + pageSize);
+        System.out.println(pageNo+"======="+pageSize);
         return scheduleService.findByPage(pageNo, pageSize);
     }
 
-    @ApiOperation(value = "清空课表")
-    @ApiImplicitParam(name = "grade", dataType = "String", value = "传入一个年级", required = false)
+    @ApiOperation(value = "清空课表" )
+    @ApiImplicitParam(name = "grade" , dataType = "String" ,value = "传入一个年级" ,required = false )
     @GetMapping("/clearSchedule")
-    public void clearSchedule(String grade) {
+    public void clearSchedule(String grade){
         scheduleService.clearSchedule(grade);
     }
 
     @PostMapping("/findOne")
-    @ApiOperation(value = "查找一个班级排课信息--后台测试用", notes = "通过班级排课的部分信息获取班级排课的完整信息")
-    @ApiImplicitParam(name = "tSchedule", dataType = "TSchedule", value = "班级排课的部分信息作为参数", required = true)
-    public List<TSchedule> findOne(@RequestBody TSchedule tSchedule) {
-        return scheduleService.findOne(tSchedule, true);
+    @ApiOperation(value = "查找一个班级排课信息--后台测试用" , notes = "通过班级排课的部分信息获取班级排课的完整信息")
+    @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "班级排课的部分信息作为参数" ,required = true )
+    public List<TSchedule> findOne(@RequestBody TSchedule tSchedule){
+        return scheduleService.findOne(tSchedule,true);
     }
 
     @ApiOperation(value = "查找所有班级排课信息")
     @GetMapping("/findAll")
-    public Map<String, List<TSchedule>> findAll(@RequestParam(required = false) String grade) {
+    public Map<String, List<TSchedule>> findAll(@RequestParam(required=false) String grade){
         return scheduleService.findAll(grade);
     }
 
     @ApiOperation(value = "查找所有班级排课信息*")
     @GetMapping("/findAllSchedule")
-    public List<ClassSchedule> findAllSchedule(@RequestParam(required = false) String grade) {
+    public List<ClassSchedule> findAllSchedule(@RequestParam(required=false) String grade){
         return scheduleService.findAllSchedule(grade);
     }
 
     //增加
     @PostMapping("/save")
-    @ApiOperation(value = "新增班级排课信息")
-    @ApiImplicitParam(name = "tSchedule", dataType = "TSchedule", value = "新增的班级排课信息", required = true)
-    public boolean save(@RequestBody TSchedule tSchedule) {
+    @ApiOperation(value = "新增班级排课信息" )
+    @ApiImplicitParam(name = "tSchedule" ,dataType = "TSchedule" , value = "新增的班级排课信息" ,required = true )
+    public boolean save(@RequestBody TSchedule tSchedule){
         int flag = 1;
         try {
             scheduleService.save(tSchedule);
@@ -193,10 +195,10 @@ public class ScheduleController {
         return flag == 1 ? true : false;
     }
 
-    @ApiOperation(value = "删除班级排课信息")
-    @ApiImplicitParam(name = "ids", allowMultiple = true, dataType = "String", value = "删除班级排课信息", required = true)
+    @ApiOperation(value = "删除班级排课信息" )
+    @ApiImplicitParam(name = "ids" ,allowMultiple = true, dataType = "String" ,value = "删除班级排课信息" ,required = true )
     @GetMapping("/deleteByIds")
-    public boolean del(Integer[] ids) {
+    public boolean del(Integer[] ids){
         System.out.println("===============controller=============");
         for (int i = 0; i < ids.length; i++) {
             System.out.println(ids[i]);
@@ -209,14 +211,14 @@ public class ScheduleController {
             flag = 0;
             e.printStackTrace();
         }
-        System.out.println("flag=====" + flag);
+        System.out.println("flag====="+flag);
         return flag == 1 ? true : false;
     }
 
-    @ApiOperation(value = "更新班级排课信息")
-    @ApiImplicitParam(name = "tSchedule", dataType = "TSchedule", value = "更新的班级排课信息", required = true)
+    @ApiOperation(value = "更新班级排课信息" )
+    @ApiImplicitParam(name = "tSchedule" , dataType = "TSchedule" , value = "更新的班级排课信息" ,required = true )
     @PostMapping("/update")
-    public boolean update(@RequestBody TSchedule tSchedule) {
+    public boolean update(@RequestBody TSchedule tSchedule){
         int flag = 1;
         try {
             scheduleService.update(tSchedule);
@@ -232,130 +234,73 @@ public class ScheduleController {
      *
      * @since 2.1.1
      */
-    @ApiOperation(value = "下载单个学生的课表")
-    @ApiImplicitParam(name = "classId", dataType = "String", value = "传入班级classId", required = true)
+    @ApiOperation(value = "下载单个学生的课表" )
+    @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
     @GetMapping("/downloadstudent/{classId}")
     public void downloadStudent(HttpServletResponse response, @PathVariable String classId) throws IOException {
         System.out.println(classId);
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
             List<TSchedule> list = studentPlan(classId);
-            String[] week = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+            String[] week = {"星期一","星期二","星期三","星期四","星期五"};
             List<DownloadStudent> d = new ArrayList<>();
             int i = 0;
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0 ; j < 5; j++) {
                 DownloadStudent downloadStudent = new DownloadStudent();
                 downloadStudent.setWeek(week[j]);
                 String teacherName = list.get(i).getTeacherName();
                 String courseName = list.get(i).getCourseName();
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
                 i++;
+                downloadStudent.setJc1(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc1("");
 
-                downloadStudent.setJc1(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc2(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc2("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-
-                downloadStudent.setJc2(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc3(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc3("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-                downloadStudent.setJc3(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc4(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc4("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-                downloadStudent.setJc4(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc5(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc5("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-                downloadStudent.setJc5(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc6(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc6("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-                downloadStudent.setJc6(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
+                downloadStudent.setJc7(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc7("");
 
-                if (teacherName == null) {
-                    teacherName = "";
-                }
-                if (courseName == null) {
-                    courseName = "";
-                }
-                downloadStudent.setJc7(courseName + "  " + teacherName);
-                if (i > list.size() - 1) {
-                    d.add(downloadStudent);
-                    break;
-                }
                 d.add(downloadStudent);
             }
 
-            d.stream().forEach(t -> System.out.println(t.toString()));
+            d.stream().forEach( t -> System.out.println(t.toString()));
 
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding("utf-8");
@@ -384,130 +329,129 @@ public class ScheduleController {
      *
      * @since 2.1.1
      */
-    @ApiOperation(value = "下载单个老师的课表")
-    @ApiImplicitParam(name = "teacherId", dataType = "String", value = "传入老师teacherId", required = true)
+    @ApiOperation(value = "下载单个老师的课表" )
+    @ApiImplicitParam(name = "teacherId" ,dataType = "String" ,value = "传入老师teacherId" ,required = true )
     @GetMapping("/downloadteacher/{teacherId}")
     public void downloadTeacher(HttpServletResponse response, @PathVariable String teacherId) throws IOException {
         System.out.println(teacherId);
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
             List<TSchedule> list = tercherPlan(teacherId);
-            String[] week = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+            String[] week = {"星期一","星期二","星期三","星期四","星期五"};
             List<DownloadStudent> d = new ArrayList<>();
             int i = 0;
-
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0 ; j < 5; j++) {
                 DownloadStudent downloadStudent = new DownloadStudent();
                 downloadStudent.setWeek(week[j]);
                 String courseName = list.get(i).getCourseName();
                 String className = list.get(i).getClassName();
-                if (courseName == null) {
-                    courseName = "";
+                if(courseName==null){
+                    courseName="";
                 }
-                if (className == null) {
-                    className = "";
+                if(className==null){
+                    className="";
                 }
                 i++;
-
-                downloadStudent.setJc1(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc1(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                if (courseName == null) {
-                    courseName = "";
+                if(courseName==null){
+                    courseName="";
                 }
-                if (className == null) {
-                    className = "";
+                if(className==null){
+                    className="";
                 }
                 i++;
-
-                downloadStudent.setJc2(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc2(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                if (courseName == null) {
-                    courseName = "";
+                if(courseName==null){
+                    courseName="";
                 }
-                if (className == null) {
-                    className = "";
+                if(className==null){
+                    className="";
                 }
                 i++;
-
-                downloadStudent.setJc3(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc3(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
+                if(courseName==null){
+                    courseName="";
+                }
+                if(className==null){
+                    className="";
+                }
                 i++;
-                if (courseName == null) {
-                    courseName = "";
-                }
-                if (className == null) {
-                    className = "";
-                }
-
-                downloadStudent.setJc4(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc4(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
+                if(courseName==null){
+                    courseName="";
+                }
+                if(className==null){
+                    className="";
+                }
                 i++;
-                if (courseName == null) {
-                    courseName = "";
-                }
-                if (className == null) {
-                    className = "";
-                }
-
-                downloadStudent.setJc5(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc5(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
+                if(courseName==null){
+                    courseName="";
+                }
+                if(className==null){
+                    className="";
+                }
                 i++;
-                if (courseName == null) {
-                    courseName = "";
-                }
-                if (className == null) {
-                    className = "";
-                }
-
-                downloadStudent.setJc6(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc6(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
+                if(courseName==null){
+                    courseName="";
+                }
+                if(className==null){
+                    className="";
+                }
                 i++;
-                if (courseName == null) {
-                    courseName = "";
-                }
-                if (className == null) {
-                    className = "";
-                }
-
-                downloadStudent.setJc7(courseName + "  " + className);
-                if (i > list.size() - 1) {
+                downloadStudent.setJc7(courseName+"  "+className);
+                if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
+
                 d.add(downloadStudent);
             }
 
-            d.stream().forEach(t -> System.out.println(t.toString()));
+            d.stream().forEach( t -> System.out.println(t.toString()));
 
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding("utf-8");
@@ -532,16 +476,18 @@ public class ScheduleController {
     }
 
 
+
+
     /**
      * 文件下载并且失败的时候返回json（默认失败了会返回一个有部分数据的Excel）
      *
      * @since 2.1.1
      */
-    @ApiOperation(value = "下载所有课表/下载年级课表")
+    @ApiOperation(value = "下载所有课表/下载年级课表" )
     @GetMapping("/downloadall")
-    public void downloadGrade(HttpServletResponse response, String grade) throws IOException {
+    public void downloadGrade(HttpServletResponse response,String grade) throws IOException {
         System.out.println("===debut===");
-        System.out.println("grade=" + grade);
+        System.out.println("grade="+grade);
         System.out.println("============");
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         try {
@@ -553,7 +499,7 @@ public class ScheduleController {
                 String classGrade = list.get(i).gettClass().getGrade();
 
                 DownloadAll downloadAll = new DownloadAll();
-                downloadAll.setClazz(classGrade + className);
+                downloadAll.setClazz(classGrade+className);
                 List<TSchedule> curriculum = list.get(i).getCurriculum();
                 int j = 0;
                 downloadAll.setJc11(curriculum.get(j++).getCourseName());
@@ -599,17 +545,17 @@ public class ScheduleController {
                 d.add(downloadAll);
             }
 
-            d.stream().forEach(t -> System.out.println(t.toString()));
+            d.stream().forEach( t -> System.out.println(t.toString()));
 
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding("utf-8");
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
             //String fileName = URLEncoder.encode("测试", "UTF-8"); //火狐会乱码
             String fileName = "课程表";
-            if (grade != null) {
+            if(grade!=null){
                 //如果年级不为null，修改文件名为“初一课程表，初二课程表...”
                 fileName = grade + fileName;
-                System.out.println("====fileName=" + fileName);
+                System.out.println("====fileName="+fileName);
             }
 
             fileName = new String(fileName.getBytes("gb2312"), "ISO8859-1");
