@@ -53,11 +53,13 @@ public class PreScheduleServiceImpl implements PreScheduleService {
 
         //如果改班级在该节课已经有预排，则直接修改
         //根据classId 和 timeId查询
+        example = new TPrescheduleExample();//重新new一个example
         example.createCriteria().andClassIdEqualTo(tPreschedule.getClassId())
                                 .andTimeIdEqualTo(tPreschedule.getTimeId());
         List<TPreschedule> list = this.prescheduleMapper.selectByExample(example);
         if(list!=null && list.size()>0){
             //说明已经为该班的该节课添加过预排
+            System.out.println("添加预排重复："+list.get(0));
             TPreschedule oldPreschedule = list.get(0);
             tPreschedule.setId(oldPreschedule.getId());
             this.update(tPreschedule);
