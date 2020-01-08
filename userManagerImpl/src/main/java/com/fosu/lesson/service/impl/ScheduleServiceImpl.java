@@ -251,7 +251,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<TSchedule> getOneStudentPlan(String classID) {
         TScheduleExample tScheduleExample = new TScheduleExample();
-
+        System.out.println("classId==== "+classID);
         tScheduleExample.createCriteria().andClassIdEqualTo(classID);
 
         List<TSchedule> list= tScheduleMapper.selectByExample(tScheduleExample);
@@ -267,7 +267,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                 return -1;
             }
         });
-
 
         for(int i=0;i<list.size();i++){
             if(list.get(i).getTimeId().equals((i+1)+"")){

@@ -131,6 +131,7 @@ public class ScheduleController {
     @ApiImplicitParam(name = "tercherId" , dataType = "String" ,value = "传入一个老师的id" ,required = true )
     @GetMapping("/teacherplan")
     public List<TSchedule> tercherPlan(String tercherId){
+        System.out.println("tercherId==== "+tercherId);
         return scheduleService.getOneTercherPlan(tercherId);
     }
 
@@ -138,6 +139,7 @@ public class ScheduleController {
     @ApiImplicitParam(name = "classId" ,dataType = "String" ,value = "传入班级classId" ,required = true )
     @GetMapping("/studentplan")
     public List<TSchedule> studentPlan(String classId){
+        System.out.println("classId==== "+classId);
          return scheduleService.getOneStudentPlan(classId);
     }
 
@@ -248,103 +250,53 @@ public class ScheduleController {
                 downloadStudent.setWeek(week[j]);
                 String teacherName = list.get(i).getTeacherName();
                 String courseName = list.get(i).getCourseName();
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
                 downloadStudent.setJc1(courseName+"  "+teacherName);
-                teacherName = list.get(i).getTeacherName();
-                courseName = list.get(i).getCourseName();
-                i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc1("");
 
+                teacherName = list.get(i).getTeacherName();
+                courseName = list.get(i).getCourseName();
+                i++;
                 downloadStudent.setJc2(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc2("");
+
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 downloadStudent.setJc3(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc3("");
+
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 downloadStudent.setJc4(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc4("");
+
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 downloadStudent.setJc5(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc5("");
+
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 downloadStudent.setJc6(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc6("");
+
                 teacherName = list.get(i).getTeacherName();
                 courseName = list.get(i).getCourseName();
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
-                if(teacherName==null){
-                    teacherName="";
-                }
-                if(courseName==null){
-                    courseName="";
-                }
                 downloadStudent.setJc7(courseName+"  "+teacherName);
+                if(courseName == null || teacherName == null)
+                    downloadStudent.setJc7("");
+
                 d.add(downloadStudent);
             }
 
@@ -388,7 +340,6 @@ public class ScheduleController {
             String[] week = {"星期一","星期二","星期三","星期四","星期五"};
             List<DownloadStudent> d = new ArrayList<>();
             int i = 0;
-
             for (int j = 0 ; j < 5; j++) {
                 DownloadStudent downloadStudent = new DownloadStudent();
                 downloadStudent.setWeek(week[j]);
@@ -401,11 +352,11 @@ public class ScheduleController {
                     className="";
                 }
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
                 downloadStudent.setJc1(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
@@ -416,11 +367,11 @@ public class ScheduleController {
                     className="";
                 }
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
                 downloadStudent.setJc2(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
@@ -431,71 +382,72 @@ public class ScheduleController {
                     className="";
                 }
                 i++;
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
                 downloadStudent.setJc3(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                i++;
                 if(courseName==null){
                     courseName="";
                 }
                 if(className==null){
                     className="";
                 }
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
+                i++;
                 downloadStudent.setJc4(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                i++;
                 if(courseName==null){
                     courseName="";
                 }
                 if(className==null){
                     className="";
                 }
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
+                i++;
                 downloadStudent.setJc5(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                i++;
                 if(courseName==null){
                     courseName="";
                 }
                 if(className==null){
                     className="";
                 }
-                if (i > list.size() - 1){
-                    d.add(downloadStudent);
-                    break;
-                }
+                i++;
                 downloadStudent.setJc6(courseName+"  "+className);
+                if (i > list.size() - 1){
+                    d.add(downloadStudent);
+                    break;
+                }
 
                 className = list.get(i).getClassName();
                 courseName = list.get(i).getCourseName();
-                i++;
                 if(courseName==null){
                     courseName="";
                 }
                 if(className==null){
                     className="";
                 }
+                i++;
+                downloadStudent.setJc7(courseName+"  "+className);
                 if (i > list.size() - 1){
                     d.add(downloadStudent);
                     break;
                 }
-                downloadStudent.setJc7(courseName+"  "+className);
+
                 d.add(downloadStudent);
             }
 

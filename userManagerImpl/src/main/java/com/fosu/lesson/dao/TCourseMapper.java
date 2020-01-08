@@ -5,9 +5,11 @@ import com.fosu.lesson.pojo.TCourse;
 import com.fosu.lesson.pojo.TCourseExample;
 import com.fosu.lesson.pojo.TTeacher;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TCourseMapper {
     long countByExample(TCourseExample example);
 
