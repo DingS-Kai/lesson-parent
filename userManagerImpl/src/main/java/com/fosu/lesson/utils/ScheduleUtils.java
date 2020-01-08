@@ -117,6 +117,8 @@ public class ScheduleUtils {
                    String gene = tCourse.getClassId() + tCourse.getTeacherId() + tCourse.getCourseName() + tCourse.getCourseSort() + tCourse.getClassHour()+courseID+"1"+time;
                    FixedTimeGeneList.add(gene);
                    tCourse.setClassHour((Integer.parseInt(tCourse.getClassHour())-1)+"");
+                   tCourseList.remove(j);
+                   tCourseList.add(j,tCourse);
                }
            }
        }
@@ -264,10 +266,10 @@ public class ScheduleUtils {
          } else {
             String newClassTime = ClassSchedulUtil.randomTime(gene, resultGeneList);
             gene = gene.substring(0, 19) + newClassTime;
-            resultGeneList.remove(temp);
-            resultGeneList.add(temp, gene);
-            i = i + 1;
-         }
+             resultGeneList.add(temp, gene);
+             i = i + 1;
+         } resultGeneList.remove(temp);
+
       }
       return resultGeneList;
    }
@@ -294,6 +296,7 @@ public class ScheduleUtils {
                      tempGene = tempGene.substring(0, 19) + newClassTime;
                      resultGeneList.remove(j);
                      resultGeneList.add(tempGene);
+                      i=i-1;
                   }
 
                   continue exit;
